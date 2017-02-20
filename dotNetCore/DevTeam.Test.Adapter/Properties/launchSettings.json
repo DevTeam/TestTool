@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "newProfile1": {
+      "executablePath": "C:\\Projects\\a\\Microsoft.TestPlatform.CLI.15.0.0-preview-20170217-05\\contentFiles\\any\\any\\vstest.console.dll",
+      "commandLineArgs": "C:\\Projects\\DevTeam\\TestTool\\Samples\\dotNetCore.SimpleTests\\Tests\\bin\\Debug\\netstandard1.6\\DevTeam.Tests.dll /Framework:FrameworkCore10 --TestAdapterPath:C:\\Projects\\DevTeam\\TestTool\\dotNetCore\\DevTeam.Test.Adapter\\bin\\Debug\\netcoreapp1.0"
+    }
+  }
+}
