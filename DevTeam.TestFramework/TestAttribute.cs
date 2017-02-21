@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace DevTeam.Tests
+namespace DevTeam.TestFramework
 {
     [AttributeUsage(AttributeTargets.Method)]
     public class TestAttribute : Attribute

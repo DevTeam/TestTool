@@ -1,0 +1,11 @@
+{
+  "profiles": {
+    "newProfile1": {
+      "executablePath": "C:\\Program Files\\dotnet\\dotnet.exe",
+      "commandLineArgs": "C:\\Projects\\vstest\\artifacts\\Debug\\netcoreapp1.0\\vstest.console.dll C:\\Projects\\DevTeam\\TestTool\\dotNetCore\\SampleTests\\bin\\Debug\\netstandard1.6\\SampleTests.dll /Framework:FrameworkCore10 --TestAdapterPath:C:\\Projects\\DevTeam\\TestTool\\dotNetCore\\DevTeam.TestAdapter\\bin\\Debug\\netstandard1.6",
+      "environmentVariables": {
+        "VSTEST_HOST_DEBUG": "1"
+      }
+    }
+  }
+}

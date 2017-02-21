@@ -2,6 +2,7 @@
   "version": "1.0.0-*",
 
   "dependencies": {
+    "Microsoft.TestPlatform.CLI": "15.0.0-preview-20170217-05",
     "Microsoft.TestPlatform.TestHost": "15.0.0-preview-20170217-05",
     "NETStandard.Library": "1.6.0"
   },
@@ -9,9 +10,9 @@
   "frameworks": {
     "netstandard1.6": {
       "dependencies": {
-        "DevTeam.Test.Framework": {
+        "DevTeam.TestFramework": {
           "target": "project"
-        },
+        }
       },
       "imports": "dnxcore50"
     }

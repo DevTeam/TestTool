@@ -1,0 +1,2 @@
+SET VSTEST_HOST_DEBUG=1
+dotnet dotNetCore\SampleTests\bin\Debug\netstandard1.6\vstest.console.dll dotNetCore\SampleTests\bin\Debug\netstandard1.6\SampleTests.dll /Framework:FrameworkCore10 --TestAdapterPath:dotNetCore\DevTeam.TestAdapter\bin\Debug\netstandard1.6

@@ -1,0 +1,161 @@
+
+C:\Projects\DevTeam\TestTool>rd bin /S /Q 
+
+C:\Projects\DevTeam\TestTool>md bin 
+
+C:\Projects\DevTeam\TestTool>md bin\vstest 
+
+C:\Projects\DevTeam\TestTool>md bin\tests 
+
+C:\Projects\DevTeam\TestTool>SET "version=15.0.0-preview-20170217-05" 
+
+C:\Projects\DevTeam\TestTool>nuget install Microsoft.TestPlatform.TestHost -Version 15.0.0-preview-20170217-05 -prerelease -o bin 
+Feeds used:
+  C:\Users\Nikolay.Pianikov\.nuget\packages\
+  https://api.nuget.org/v3/index.json
+  C:\Program Files (x86)\Microsoft SDKs\NuGetPackages\
+
+
+
+Attempting to gather dependency information for package 'Microsoft.TestPlatform.TestHost.15.0.0-preview-20170217-05' with respect to project 'bin', targeting 'Any,Version=v0.0'
+Gathering dependency information took 1,35 sec
+Attempting to resolve dependencies for package 'Microsoft.TestPlatform.TestHost.15.0.0-preview-20170217-05' with DependencyBehavior 'Lowest'
+Resolving dependency information took 0 ms
+Resolving actions to install package 'Microsoft.TestPlatform.TestHost.15.0.0-preview-20170217-05'
+Resolved actions to install package 'Microsoft.TestPlatform.TestHost.15.0.0-preview-20170217-05'
+Retrieving package 'System.Runtime.InteropServices.RuntimeInformation 4.0.0' from 'C:\Users\Nikolay.Pianikov\.nuget\packages\'.
+Retrieving package 'Newtonsoft.Json 9.0.1' from 'C:\Users\Nikolay.Pianikov\.nuget\packages\'.
+Retrieving package 'Microsoft.TestPlatform.ObjectModel 15.0.0-preview-20170217-05' from 'C:\Users\Nikolay.Pianikov\.nuget\packages\'.
+Retrieving package 'Microsoft.TestPlatform.TestHost 15.0.0-preview-20170217-05' from 'C:\Users\Nikolay.Pianikov\.nuget\packages\'.
+Adding package 'Newtonsoft.Json.9.0.1' to folder 'C:\Projects\DevTeam\TestTool\bin'
+Added package 'Newtonsoft.Json.9.0.1' to folder 'C:\Projects\DevTeam\TestTool\bin'
+Successfully installed 'Newtonsoft.Json 9.0.1' to bin
+Adding package 'System.Runtime.InteropServices.RuntimeInformation.4.0.0' to folder 'C:\Projects\DevTeam\TestTool\bin'
+Added package 'System.Runtime.InteropServices.RuntimeInformation.4.0.0' to folder 'C:\Projects\DevTeam\TestTool\bin'
+Successfully installed 'System.Runtime.InteropServices.RuntimeInformation 4.0.0' to bin
+Adding package 'Microsoft.TestPlatform.ObjectModel.15.0.0-preview-20170217-05' to folder 'C:\Projects\DevTeam\TestTool\bin'
+Added package 'Microsoft.TestPlatform.ObjectModel.15.0.0-preview-20170217-05' to folder 'C:\Projects\DevTeam\TestTool\bin'
+Successfully installed 'Microsoft.TestPlatform.ObjectModel 15.0.0-preview-20170217-05' to bin
+Adding package 'Microsoft.TestPlatform.TestHost.15.0.0-preview-20170217-05' to folder 'C:\Projects\DevTeam\TestTool\bin'
+Added package 'Microsoft.TestPlatform.TestHost.15.0.0-preview-20170217-05' to folder 'C:\Projects\DevTeam\TestTool\bin'
+Successfully installed 'Microsoft.TestPlatform.TestHost 15.0.0-preview-20170217-05' to bin
+Executing nuget actions took 1,56 sec
+
+C:\Projects\DevTeam\TestTool>XCOPY /E /Q bin\Microsoft.TestPlatform.TestHost.15.0.0-preview-20170217-05\contentFiles\any\any bin\tests 
+0 File(s) copied
+
+C:\Projects\DevTeam\TestTool>rd bin\Microsoft.TestPlatform.TestHost.15.0.0-preview-20170217-05 /S /Q 
+
+C:\Projects\DevTeam\TestTool>XCOPY /E /Q bin\Microsoft.TestPlatform.ObjectModel.15.0.0-preview-20170217-05\contentFiles\any\any bin\tests 
+0 File(s) copied
+
+C:\Projects\DevTeam\TestTool>rd bin\Microsoft.TestPlatform.ObjectModel.15.0.0-preview-20170217-05 /S /Q 
+
+C:\Projects\DevTeam\TestTool>XCOPY /E /Q bin\Newtonsoft.Json.9.0.1\contentFiles\any\any bin\tests 
+0 File(s) copied
+
+C:\Projects\DevTeam\TestTool>rd bin\Newtonsoft.Json.9.0.1 /S /Q 
+
+C:\Projects\DevTeam\TestTool>XCOPY /E /Q bin\System.Runtime.InteropServices.RuntimeInformation.4.0.0\contentFiles\any\any bin\tests 
+0 File(s) copied
+
+C:\Projects\DevTeam\TestTool>rd bin\System.Runtime.InteropServices.RuntimeInformation.4.0.0 /S /Q 
+
+C:\Projects\DevTeam\TestTool>nuget install Microsoft.TestPlatform.CLI -Version 15.0.0-preview-20170217-05 -prerelease -o bin 
+Feeds used:
+  C:\Users\Nikolay.Pianikov\.nuget\packages\
+  https://api.nuget.org/v3/index.json
+  C:\Program Files (x86)\Microsoft SDKs\NuGetPackages\
+
+
+
+Attempting to gather dependency information for package 'Microsoft.TestPlatform.CLI.15.0.0-preview-20170217-05' with respect to project 'bin', targeting 'Any,Version=v0.0'
+Gathering dependency information took 977,5 ms
+Attempting to resolve dependencies for package 'Microsoft.TestPlatform.CLI.15.0.0-preview-20170217-05' with DependencyBehavior 'Lowest'
+Resolving dependency information took 0 ms
+Resolving actions to install package 'Microsoft.TestPlatform.CLI.15.0.0-preview-20170217-05'
+Resolved actions to install package 'Microsoft.TestPlatform.CLI.15.0.0-preview-20170217-05'
+Retrieving package 'Microsoft.TestPlatform.CLI 15.0.0-preview-20170217-05' from 'C:\Users\Nikolay.Pianikov\.nuget\packages\'.
+Adding package 'Microsoft.TestPlatform.CLI.15.0.0-preview-20170217-05' to folder 'C:\Projects\DevTeam\TestTool\bin'
+Added package 'Microsoft.TestPlatform.CLI.15.0.0-preview-20170217-05' to folder 'C:\Projects\DevTeam\TestTool\bin'
+Successfully installed 'Microsoft.TestPlatform.CLI 15.0.0-preview-20170217-05' to bin
+Executing nuget actions took 2,16 sec
+
+C:\Projects\DevTeam\TestTool>XCOPY /E /Q bin\Microsoft.TestPlatform.CLI.15.0.0-preview-20170217-05\contentFiles\any\any bin\vstest 
+200 File(s) copied
+
+C:\Projects\DevTeam\TestTool>rd bin\Microsoft.TestPlatform.CLI.15.0.0-preview-20170217-05 /S /Q 
+
+C:\Projects\DevTeam\TestTool>msbuild DevTeam.TestTool.sln /p:Configuration=Debug 
+Microsoft (R) Build Engine version 14.0.25420.1
+Copyright (C) Microsoft Corporation. All rights reserved.
+
+Building the projects in this solution one at a time. To enable parallel build, please add the "/m" switch.
+Build started 21.02.2017 14:04:03.
+Project "C:\Projects\DevTeam\TestTool\DevTeam.TestTool.sln" on node 1 (default targets).
+ValidateSolutionConfiguration:
+  Building solution configuration "Debug|Any CPU".
+The target "_ConvertPdbFiles" listed in a BeforeTargets attribute at "C:\Program Files (x86)\MSBuild\14.0\Microsoft.Common.targets\ImportAfter\Xamarin.Common.targets (34,37)" does not exist in the project, and will be ignored.
+The target "_CollectPdbFiles" listed in an AfterTargets attribute at "C:\Program Files (x86)\MSBuild\14.0\Microsoft.Common.targets\ImportAfter\Xamarin.Common.targets (34,70)" does not exist in the project, and will be ignored.
+The target "_CollectMdbFiles" listed in a BeforeTargets attribute at "C:\Program Files (x86)\MSBuild\14.0\Microsoft.Common.targets\ImportAfter\Xamarin.Common.targets (41,38)" does not exist in the project, and will be ignored.
+The target "_CopyMdbFiles" listed in an AfterTargets attribute at "C:\Program Files (x86)\MSBuild\14.0\Microsoft.Common.targets\ImportAfter\Xamarin.Common.targets (41,71)" does not exist in the project, and will be ignored.
+Project "C:\Projects\DevTeam\TestTool\DevTeam.TestTool.sln" (1) is building "C:\Projects\DevTeam\TestTool\DevTeam.TestFramework\DevTeam.TestFramework.csproj" (2) on node 1 (default targets).
+GenerateTargetFrameworkMonikerAttribute:
+Skipping target "GenerateTargetFrameworkMonikerAttribute" because all output files are up-to-date with respect to the input files.
+CoreCompile:
+Skipping target "CoreCompile" because all output files are up-to-date with respect to the input files.
+CopyFilesToOutputDirectory:
+  DevTeam.TestFramework -> C:\Projects\DevTeam\TestTool\DevTeam.TestFramework\bin\Debug\DevTeam.TestFramework.dll
+ComputeProcessXamlFiles:
+  (Out) ProcessedXamlFiles == 
+CustomOutputGroupForPackaging:
+  (Out) Project='DevTeam.TestFramework' ProcessedXamlFiles == 
+  (Out) XamlPackagingRootFolder == bin\Debug\\
+  (Out) ProcessedXamlFilesFullPath == 
+  (Out) Project='DevTeam.TestFramework' CustomOutputGroupForPackagingOutput == 
+GetPackagingOutputs:
+  DevTeam.TestFramework : DevTeam.TestFramework.BuiltProjectOutputGroup : C:\Projects\DevTeam\TestTool\DevTeam.TestFramework\bin\Debug\DevTeam.TestFramework.dll -> DevTeam.TestFramework.dll
+  DevTeam.TestFramework : DevTeam.TestFramework.DebugSymbolsProjectOutputGroup : C:\Projects\DevTeam\TestTool\DevTeam.TestFramework\bin\Debug\DevTeam.TestFramework.pdb -> DevTeam.TestFramework.pdb
+  DevTeam.TestFramework : DevTeam.TestFramework._GetProjectArchitecture : neutral -> 
+Done Building Project "C:\Projects\DevTeam\TestTool\DevTeam.TestFramework\DevTeam.TestFramework.csproj" (default targets).
+The target "_ConvertPdbFiles" listed in a BeforeTargets attribute at "C:\Program Files (x86)\MSBuild\14.0\Microsoft.Common.targets\ImportAfter\Xamarin.Common.targets (34,37)" does not exist in the project, and will be ignored.
+The target "_CollectPdbFiles" listed in an AfterTargets attribute at "C:\Program Files (x86)\MSBuild\14.0\Microsoft.Common.targets\ImportAfter\Xamarin.Common.targets (34,70)" does not exist in the project, and will be ignored.
+The target "_CollectMdbFiles" listed in a BeforeTargets attribute at "C:\Program Files (x86)\MSBuild\14.0\Microsoft.Common.targets\ImportAfter\Xamarin.Common.targets (41,38)" does not exist in the project, and will be ignored.
+The target "_CopyMdbFiles" listed in an AfterTargets attribute at "C:\Program Files (x86)\MSBuild\14.0\Microsoft.Common.targets\ImportAfter\Xamarin.Common.targets (41,71)" does not exist in the project, and will be ignored.
+Project "C:\Projects\DevTeam\TestTool\DevTeam.TestTool.sln" (1) is building "C:\Projects\DevTeam\TestTool\dotNetCore\DevTeam.TestAdapter\DevTeam.TestAdapter.xproj" (3) on node 1 (default targets).
+CoreCompile:
+  C:\Program Files\dotnet\dotnet.exe build "C:\Projects\DevTeam\TestTool\dotNetCore\DevTeam.TestAdapter" --configuration Debug --no-dependencies
+  Project DevTeam.TestAdapter (.NETStandard,Version=v1.6) was previously compiled. Skipping compilation.
+Done Building Project "C:\Projects\DevTeam\TestTool\dotNetCore\DevTeam.TestAdapter\DevTeam.TestAdapter.xproj" (default targets).
+The target "_ConvertPdbFiles" listed in a BeforeTargets attribute at "C:\Program Files (x86)\MSBuild\14.0\Microsoft.Common.targets\ImportAfter\Xamarin.Common.targets (34,37)" does not exist in the project, and will be ignored.
+The target "_CollectPdbFiles" listed in an AfterTargets attribute at "C:\Program Files (x86)\MSBuild\14.0\Microsoft.Common.targets\ImportAfter\Xamarin.Common.targets (34,70)" does not exist in the project, and will be ignored.
+The target "_CollectMdbFiles" listed in a BeforeTargets attribute at "C:\Program Files (x86)\MSBuild\14.0\Microsoft.Common.targets\ImportAfter\Xamarin.Common.targets (41,38)" does not exist in the project, and will be ignored.
+The target "_CopyMdbFiles" listed in an AfterTargets attribute at "C:\Program Files (x86)\MSBuild\14.0\Microsoft.Common.targets\ImportAfter\Xamarin.Common.targets (41,71)" does not exist in the project, and will be ignored.
+Project "C:\Projects\DevTeam\TestTool\DevTeam.TestTool.sln" (1) is building "C:\Projects\DevTeam\TestTool\dotNetCore\SampleTests\SampleTests.xproj" (4) on node 1 (default targets).
+CoreCompile:
+  C:\Program Files\dotnet\dotnet.exe build "C:\Projects\DevTeam\TestTool\dotNetCore\SampleTests" --configuration Debug --no-dependencies
+  Project SampleTests (.NETStandard,Version=v1.6) will be compiled because inputs were modified
+  Compiling SampleTests for .NETStandard,Version=v1.6
+  Compilation succeeded.
+      0 Warning(s)
+      0 Error(s)
+  Time elapsed 00:00:00.7554325
+   
+Done Building Project "C:\Projects\DevTeam\TestTool\dotNetCore\SampleTests\SampleTests.xproj" (default targets).
+Done Building Project "C:\Projects\DevTeam\TestTool\DevTeam.TestTool.sln" (default targets).
+
+Build succeeded.
+    0 Warning(s)
+    0 Error(s)
+
+Time Elapsed 00:00:02.07
+
+C:\Projects\DevTeam\TestTool>XCOPY /E /Q dotNetCore\SampleTests\bin\Debug\netstandard1.6\ bin\tests 
+0 File(s) copied
+
+C:\Projects\DevTeam\TestTool>SET VSTEST_HOST_DEBUG=1 
+
+C:\Projects\DevTeam\TestTool>dotnet bin\vstest\vstest.console.dll bin\tests\SampleTests.dll /Framework:FrameworkCore10 --TestAdapterPath:dotNetCore\DevTeam.TestAdapter\bin\Debug\netstandard1.6 
+Microsoft (R) Test Execution Command Line Tool Version 15.0.0.0
+Copyright (c) Microsoft Corporation.  All rights reserved.
+
