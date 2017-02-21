@@ -8,6 +8,14 @@
 
   "frameworks": {
     "netstandard1.6": {
+      "dependencies": {
+        "DevTeam.TestEngine": {
+          "target": "project"
+        },
+        "DevTeam.TestEngine.Contracts": {
+          "target": "project"
+        }
+      },
       "imports": "dnxcore50"
     }
   }

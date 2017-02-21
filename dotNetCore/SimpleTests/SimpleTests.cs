@@ -1,4 +1,4 @@
-﻿namespace SampleTests
+﻿namespace SimpleTests
 {
     using DevTeam.TestFramework;
 
