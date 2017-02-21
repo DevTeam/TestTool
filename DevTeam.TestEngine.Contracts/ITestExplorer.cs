@@ -2,6 +2,6 @@
 {
     public interface ITestExplorer
     {
-        [NotNull] TestAssembly Explore([NotNull] string source);
+        [NotNull] ITestAssembly Explore([NotNull] string source);
     }
 }

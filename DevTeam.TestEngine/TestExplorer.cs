@@ -17,11 +17,25 @@
             _reflection = reflection;
         }
 
-        public TestAssembly Explore(string source)
+        public ITestAssembly Explore(string source)
         {
             if (string.IsNullOrWhiteSpace(source)) throw new ArgumentException("Value cannot be null or whitespace.", nameof(source));
             var assembly = _reflection.LoadAssembly(source);
-            return new TestAssembly(Guid.NewGuid(), assembly.FullName, assembly.GetName().Name, source, GetClasses(assembly));
+            var testAssembly = new TestAssembly(Guid.NewGuid(), assembly.FullName, assembly.GetName().Name, source, GetClasses(assembly).ToArray());
+            foreach (var testClass in testAssembly.Classes.Cast<TestClass>())
+            {
+                testClass.Assembly = testAssembly;
+                foreach (var testMethod in testClass.Methods.Cast<TestMethod>())
+                {
+                    testMethod.Class = testClass;
+                    foreach (var testCase in testMethod.Cases.Cast<TestCase>())
+                    {
+                        testCase.Method = testMethod;
+                    }
+                }
+            }
+
+            return testAssembly;
         }
 
         private IEnumerable<TestClass> GetClasses([NotNull] Assembly assembly)
@@ -29,7 +43,7 @@
             if (assembly == null) throw new ArgumentNullException(nameof(assembly));
             return
                 from type in assembly.DefinedTypes
-                select new TestClass(Guid.NewGuid(), type.FullName, type.Name, GetMethods(type));
+                select new TestClass(Guid.NewGuid(), type.FullName, type.Name, GetMethods(type).ToArray());
         }
 
         private IEnumerable<TestMethod> GetMethods([NotNull] TypeInfo type)
@@ -37,7 +51,7 @@
             if (type == null) throw new ArgumentNullException(nameof(type));
             return
                 from method in type.DeclaredMethods
-                select new TestMethod(Guid.NewGuid(), method.ToString(), method.Name, GetCases(method));
+                select new TestMethod(Guid.NewGuid(), method.ToString(), method.Name, GetCases(method).ToArray());
         }
 
         private IEnumerable<TestCase> GetCases([NotNull] MethodInfo method)

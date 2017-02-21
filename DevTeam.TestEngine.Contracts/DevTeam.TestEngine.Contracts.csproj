@@ -43,13 +43,13 @@
     <Compile Include="Environment.cs" />
     <Compile Include="IEventAggergator.cs" />
     <Compile Include="IReflection.cs" />
+    <Compile Include="ITestAssembly.cs" />
+    <Compile Include="ITestCase.cs" />
+    <Compile Include="ITestClass.cs" />
     <Compile Include="ITestElement.cs" />
     <Compile Include="ITestExplorer.cs" />
+    <Compile Include="ITestMethod.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TestAssembly.cs" />
-    <Compile Include="TestCase.cs" />
-    <Compile Include="TestClass.cs" />
-    <Compile Include="TestMethod.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

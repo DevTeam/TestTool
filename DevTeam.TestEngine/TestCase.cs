@@ -1,8 +1,9 @@
-﻿namespace DevTeam.TestEngine.Contracts
+﻿namespace DevTeam.TestEngine
 {
     using System;
+    using Contracts;
 
-    public class TestCase : ITestElement
+    internal class TestCase : ITestCase
     {
         public TestCase(
             Guid id,
@@ -22,6 +23,8 @@
         public string FullyQualifiedName { get; }
 
         public string DisplayName { get; }
+
+        public ITestMethod Method { get; [NotNull] set; }
 
         [CanBeNull] public string CodeFilePath { get; set; }
 

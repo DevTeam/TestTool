@@ -1,28 +1,25 @@
-﻿namespace DevTeam.TestEngine.Contracts
+﻿namespace DevTeam.TestEngine
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
+    using Contracts;
 
-    public class TestAssembly: ITestElement
+    internal class TestClass : ITestClass
     {
-        public TestAssembly(
+        public TestClass(
             Guid id,
             [NotNull] string fullyQualifiedName,
             [NotNull] string displayName,
-            [NotNull] string source,
-            [NotNull] IEnumerable<TestClass> classes)
+            [NotNull] IEnumerable<ITestMethod> methods)
         {
             if (id == Guid.Empty) throw new ArgumentException("Value cannot be empty.", nameof(id));
             if (string.IsNullOrWhiteSpace(fullyQualifiedName)) throw new ArgumentException("Value cannot be null or whitespace.", nameof(fullyQualifiedName));
             if (string.IsNullOrWhiteSpace(displayName)) throw new ArgumentException("Value cannot be null or whitespace.", nameof(displayName));
-            if (string.IsNullOrWhiteSpace(source)) throw new ArgumentException("Value cannot be null or whitespace.", nameof(source));
-            if (classes == null) throw new ArgumentNullException(nameof(classes));
+            if (methods == null) throw new ArgumentNullException(nameof(methods));
             Id = id;
             FullyQualifiedName = fullyQualifiedName;
             DisplayName = displayName;
-            Source = source;
-            Classes = classes.ToArray();
+            Methods = methods;
         }
 
         public Guid Id { get; }
@@ -31,8 +28,8 @@
 
         public string DisplayName { get; }
 
-        public string Source { get; }
+        public ITestAssembly Assembly { get; [NotNull] set; }
 
-        public IEnumerable<TestClass> Classes { [NotNull] get; }
+        public IEnumerable<ITestMethod> Methods { [NotNull] get; }
     }
 }

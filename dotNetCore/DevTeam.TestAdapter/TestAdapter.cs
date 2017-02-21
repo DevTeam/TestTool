@@ -24,6 +24,7 @@
             IMessageLogger logger,
             ITestCaseDiscoverySink discoverySink)
         {
+            logger.SendMessage(TestMessageLevel.Informational, "DiscoverTests");
             foreach (var testCase in GetTestCases(sources))
             {
                 discoverySink.SendTestCase(testCase);
@@ -32,11 +33,14 @@
 
         public void RunTests(IEnumerable<TestCase> tests, IRunContext runContext, IFrameworkHandle frameworkHandle)
         {
+            frameworkHandle.SendMessage(TestMessageLevel.Informational, "RunTests");
+            frameworkHandle.SendMessage(TestMessageLevel.Informational, runContext.RunSettings.SettingsXml);
             foreach (var test in tests)
             {
                 frameworkHandle.RecordStart(test);
-                frameworkHandle.RecordResult(new TestResult() {Outcome = TestOutcome.Passed, DisplayName = test.DisplayName});
+                frameworkHandle.RecordResult(new TestResult() {Outcome = TestOutcome.Passed, DisplayName = test.DisplayName });
                 frameworkHandle.RecordEnd(test, TestOutcome.Passed);
+                frameworkHandle.SendMessage(TestMessageLevel.Informational, test.DisplayName);
             }
         }
 

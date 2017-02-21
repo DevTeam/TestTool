@@ -1,16 +1,16 @@
-﻿namespace DevTeam.TestEngine.Contracts
+﻿namespace DevTeam.TestEngine
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
+    using Contracts;
 
-    public class TestMethod : ITestElement
+    internal class TestMethod : ITestMethod
     {
         public TestMethod(
             Guid id,
             [NotNull] string fullyQualifiedName,
             [NotNull] string displayName,
-            [NotNull] IEnumerable<TestCase> cases)
+            [NotNull] IEnumerable<ITestCase> cases)
         {
             if (id == Guid.Empty) throw new ArgumentException("Value cannot be empty.", nameof(id));
             if (string.IsNullOrWhiteSpace(fullyQualifiedName)) throw new ArgumentException("Value cannot be null or whitespace.", nameof(fullyQualifiedName));
@@ -19,7 +19,7 @@
             Id = id;
             FullyQualifiedName = fullyQualifiedName;
             DisplayName = displayName;
-            Cases = cases.ToArray();
+            Cases = cases;
         }
 
         public Guid Id { get; }
@@ -28,6 +28,8 @@
 
         public string DisplayName { get; }
 
-        public IEnumerable<TestCase> Cases { [NotNull] get; }
+        public ITestClass Class { get; [NotNull] set; }
+
+        public IEnumerable<ITestCase> Cases { [NotNull] get; }
     }
 }
