@@ -3,65 +3,97 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Reflection;
     using Contracts;
+    using Contracts.Reflection;
+    using Dto;
     using TestFramework;
 
-    public class TestExplorer : ITestExplorer
+    internal class TestExplorer : ITestExplorer
     {
-        private readonly IReflection _reflection;
+        [NotNull] private readonly IReflection _reflection;
+        [NotNull] private readonly ITestElementFactory _testElementFactory;
 
-        public TestExplorer([NotNull] IReflection reflection)
+        public TestExplorer(
+            [NotNull] IReflection reflection,
+            [NotNull] ITestElementFactory testElementFactory)
         {
             if (reflection == null) throw new ArgumentNullException(nameof(reflection));
+            if (testElementFactory == null) throw new ArgumentNullException(nameof(testElementFactory));
             _reflection = reflection;
+            _testElementFactory = testElementFactory;
         }
 
-        public ITestAssembly Explore(string source)
+        public IEnumerable<ITestAssembly> ExploreSources(IEnumerable<string> sources)
         {
-            if (string.IsNullOrWhiteSpace(source)) throw new ArgumentException("Value cannot be null or whitespace.", nameof(source));
-            var assembly = _reflection.LoadAssembly(source);
-            var testAssembly = new TestAssembly(Guid.NewGuid(), assembly.FullName, assembly.GetName().Name, source, GetClasses(assembly).ToArray());
-            foreach (var testClass in testAssembly.Classes.Cast<TestClass>())
+            foreach (var source in sources)
             {
-                testClass.Assembly = testAssembly;
-                foreach (var testMethod in testClass.Methods.Cast<TestMethod>())
+                var assembly = _reflection.LoadAssembly(source);
+                var testAssembly = _testElementFactory.CreateTestAssembly(source, assembly);
+                var testClasses = ExploreTestClasses(testAssembly, assembly).ToArray();
+                if (testClasses.Length == 0)
                 {
-                    testMethod.Class = testClass;
-                    foreach (var testCase in testMethod.Cases.Cast<TestCase>())
-                    {
-                        testCase.Method = testMethod;
-                    }
+                    continue;
                 }
+
+                foreach (var testClass in testClasses)
+                {
+                    testAssembly.Add(testClass);
+                }
+
+                yield return testAssembly;
             }
-
-            return testAssembly;
         }
 
-        private IEnumerable<TestClass> GetClasses([NotNull] Assembly assembly)
+        private IEnumerable<ITestClass> ExploreTestClasses([NotNull] TestAssembly testAssembly, [NotNull] IAssemblyInfo assemblyInfo)
         {
-            if (assembly == null) throw new ArgumentNullException(nameof(assembly));
-            return
-                from type in assembly.DefinedTypes
-                select new TestClass(Guid.NewGuid(), type.FullName, type.Name, GetMethods(type).ToArray());
-        }
-
-        private IEnumerable<TestMethod> GetMethods([NotNull] TypeInfo type)
-        {
-            if (type == null) throw new ArgumentNullException(nameof(type));
-            return
-                from method in type.DeclaredMethods
-                select new TestMethod(Guid.NewGuid(), method.ToString(), method.Name, GetCases(method).ToArray());
-        }
-
-        private IEnumerable<TestCase> GetCases([NotNull] MethodInfo method)
-        {
-            if (method == null) throw new ArgumentNullException(nameof(method));
-            var testAttributes = method.GetCustomAttributes<TestAttribute>();
-            if (testAttributes.Any())
+            if (testAssembly == null) throw new ArgumentNullException(nameof(testAssembly));
+            if (assemblyInfo == null) throw new ArgumentNullException(nameof(assemblyInfo));
+            foreach (var typeInfo in assemblyInfo.DefinedTypes)
             {
-                yield return new TestCase(Guid.NewGuid(), "", "");
+                var testClass = _testElementFactory.CreateTestClass(testAssembly, typeInfo);
+                var testMethods = ExploreTestMethods(testClass, typeInfo).ToArray();
+                if (testMethods.Length == 0)
+                {
+                    continue;
+                }
+
+                foreach (var testMethod in testMethods)
+                {
+                    testClass.Add(testMethod);
+                }
+
+                yield return testClass;
             }
+        }
+
+        private IEnumerable<ITestMethod> ExploreTestMethods([NotNull] ITestClass testClass, [NotNull] ITypeInfo typeInfo)
+        {
+            foreach (var methodInfo in typeInfo.Methods)
+            {
+                if (!methodInfo.GetCustomAttributes<TestAttribute>().Any())
+                {
+                    continue;
+                }
+
+                var testMethod = _testElementFactory.CreateTestMethod(testClass, methodInfo);
+                var testCases = ExploreTestCases(testMethod, methodInfo).ToArray();
+                if (testCases.Length == 0)
+                {
+                    continue;
+                }
+
+                foreach (var testCase in testCases)
+                {
+                    testMethod.Add(testCase);
+                }
+
+                yield return testMethod;
+            }
+        }
+
+        private IEnumerable<ITestCase> ExploreTestCases([NotNull] ITestMethod testMethod, [NotNull] IMethodInfo methodInfo)
+        {
+            yield return _testElementFactory.CreateTestCase(testMethod);
         }
     }
 }

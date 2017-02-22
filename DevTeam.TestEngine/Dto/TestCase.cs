@@ -1,4 +1,4 @@
-﻿namespace DevTeam.TestEngine
+﻿namespace DevTeam.TestEngine.Dto
 {
     using System;
     using Contracts;
@@ -8,7 +8,8 @@
         public TestCase(
             Guid id,
             [NotNull] string fullyQualifiedName,
-            [NotNull] string displayName)
+            [NotNull] string displayName,
+            ITestMethod testMethod)
         {
             if (id == Guid.Empty) throw new ArgumentException("Value cannot be empty.", nameof(id));
             if (fullyQualifiedName == null) throw new ArgumentNullException(nameof(fullyQualifiedName));
@@ -25,9 +26,5 @@
         public string DisplayName { get; }
 
         public ITestMethod Method { get; [NotNull] set; }
-
-        [CanBeNull] public string CodeFilePath { get; set; }
-
-        public int LineNumber { get; set; }
     }
 }

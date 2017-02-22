@@ -1,11 +1,13 @@
 ﻿namespace DevTeam.TestEngine
 {
+    using System.Collections.Generic;
     using Contracts;
 
-    public class TestRunner
+    internal class TestRunner : ITestRunner
     {
-        public void Run(ITestAssembly testAssembly)
+        public IEnumerable<ITestCaseResult> Run(ITestClass testClass)
         {
+            yield break;
         }
     }
 }

@@ -1,6 +1,6 @@
-﻿namespace DevTeam.TestEngine.Contracts
+﻿namespace DevTeam.TestEngine
 {
-    public class Environment
+    internal class Environment
     {
         public Environment(string frameworkVersion, int platform)
         {

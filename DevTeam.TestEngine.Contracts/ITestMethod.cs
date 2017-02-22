@@ -6,6 +6,13 @@ namespace DevTeam.TestEngine.Contracts
     {
         ITestClass Class { [NotNull] get; }
 
+        IEnumerable<ITestType> Parameters { get; }
+
+        [CanBeNull]
+        string CodeFilePath { get; set; }
+
+        int LineNumber { get; set; }
+
         IEnumerable<ITestCase> Cases { [NotNull] get; }
     }
 }

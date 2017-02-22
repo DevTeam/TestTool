@@ -1,7 +1,7 @@
 {
   "version": "1.0.0-*",
-
   "buildOptions": {
+    "emitEntryPoint": true,
     "embed": {
       "includeFiles": [ "../../DevTeam.TestEngine/DevTeam.TestEngine.json" ]
     }
@@ -11,20 +11,14 @@
     "DevTeam.IoC": "1.0.71-beta",
     "DevTeam.IoC.Configurations.Json": "1.0.71-beta",
     "DevTeam.IoC.Contracts": "1.0.71-beta",
-    "Microsoft.TestPlatform.ObjectModel": "15.0.0-preview-20170217-05",
-    "NETStandard.Library": "1.6.0"
+    "Microsoft.NETCore.App": {
+      "type": "platform",
+      "version": "1.0.1"
+    }
   },
 
   "frameworks": {
-    "netstandard1.6": {
-      "dependencies": {
-        "DevTeam.TestEngine": {
-          "target": "project"
-        },
-        "DevTeam.TestEngine.Contracts": {
-          "target": "project"
-        }
-      },
+    "netcoreapp1.0": {
       "imports": "dnxcore50"
     }
   }

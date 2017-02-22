@@ -19,6 +19,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevTeam.TestEngine.Contract
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevTeam.TestEngine.Tests", "DevTeam.TestEngine.Tests\DevTeam.TestEngine.Tests.csproj", "{3A4E8961-FBCD-40E6-A031-0464D346051A}"
 EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "DevTeam.TestRunner", "dotNetCore\DevTeam.TestRunner\DevTeam.TestRunner.xproj", "{577737B3-4122-4E5A-A363-114A6DE303EE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -53,6 +55,10 @@ Global
 		{3A4E8961-FBCD-40E6-A031-0464D346051A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3A4E8961-FBCD-40E6-A031-0464D346051A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3A4E8961-FBCD-40E6-A031-0464D346051A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{577737B3-4122-4E5A-A363-114A6DE303EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{577737B3-4122-4E5A-A363-114A6DE303EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{577737B3-4122-4E5A-A363-114A6DE303EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{577737B3-4122-4E5A-A363-114A6DE303EE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -61,5 +67,6 @@ Global
 		{31F40F69-89D6-4D9F-82B5-9B8004ED0D89} = {1BE21557-750A-4026-BE2B-28BBF7739D44}
 		{E4D047B0-6EED-47DD-A244-86A07371ADDD} = {1BE21557-750A-4026-BE2B-28BBF7739D44}
 		{C79C723F-B824-4B5F-AE92-CB04C01BE45B} = {1BE21557-750A-4026-BE2B-28BBF7739D44}
+		{577737B3-4122-4E5A-A363-114A6DE303EE} = {1BE21557-750A-4026-BE2B-28BBF7739D44}
 	EndGlobalSection
 EndGlobal

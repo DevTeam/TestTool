@@ -2,12 +2,17 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.IO;
     using System.Linq;
+    using System.Reflection;
+    using IoC;
+    using IoC.Configurations.Json;
+    using IoC.Contracts;
     using Microsoft.VisualStudio.TestPlatform.ObjectModel;
     using Microsoft.VisualStudio.TestPlatform.ObjectModel.Adapter;
     using Microsoft.VisualStudio.TestPlatform.ObjectModel.Logging;
-    using TestEngine;
     using TestEngine.Contracts;
+    using TestEngine.Contracts.Reflection;
     using TestCase = Microsoft.VisualStudio.TestPlatform.ObjectModel.TestCase;
 
     [FileExtension(".dll")]
@@ -17,6 +22,17 @@
     public class TestAdapter : ITestDiscoverer, ITestExecutor
     {
         public const string ExecutorUri = "executor://devteam/TestRunner";
+        private readonly ITestExplorer _testExplorer;
+
+        public TestAdapter()
+        {
+            using (var container = new Container("root").Configure()
+                .DependsOn<JsonConfiguration>(ReadIoCConfiguration()).ToSelf()
+                .Register().Contract<IReflection>().Autowiring<Reflection>().ToSelf())
+            {
+                _testExplorer = container.Resolve().Instance<ITestExplorer>();
+            }
+        }
 
         public void DiscoverTests(
             IEnumerable<string> sources,
@@ -54,13 +70,11 @@
         {
         }
 
-        private static IEnumerable<TestCase> GetTestCases(IEnumerable<string> sources)
+        private IEnumerable<TestCase> GetTestCases(IEnumerable<string> sources)
         {
-            var testExplorer = new TestExplorer(new Reflection());
             var executorUri = new Uri(ExecutorUri);
-            return 
-                from source in sources
-                let testAssembly = testExplorer.Explore(source)
+            return
+                from testAssembly in _testExplorer.ExploreSources(sources)
                 from testClass in testAssembly.Classes
                 from testMethod in testClass.Methods
                 from testCase in testMethod.Cases
@@ -68,12 +82,20 @@
                 select new TestCase(
                     string.Join(":", testElements.Select(i => i.FullyQualifiedName).Where(i => !string.IsNullOrWhiteSpace(i))),
                     executorUri,
-                    source
+                    testAssembly.Source
                 )
                 {
                     Id = testCase.Id,
                     DisplayName = string.Join(":", testElements.Select(i => i.DisplayName).Where(i => !string.IsNullOrWhiteSpace(i)))
                 };
+        }
+
+        private string ReadIoCConfiguration()
+        {
+            using (var configReader = new StreamReader(GetType().GetTypeInfo().Assembly.GetManifestResourceStream("DevTeam.TestAdapter.DevTeam.TestEngine.json")))
+            {
+                return configReader.ReadToEnd();
+            }
         }
     }
 }

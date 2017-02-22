@@ -3,13 +3,21 @@
     using System;
     using System.Reflection;
     using Contracts;
+    using Contracts.Reflection;
 
-    public class Reflection : IReflection
+    internal class Reflection: IReflection
     {
-        public Assembly LoadAssembly(string source)
+        private readonly Func<Assembly, IAssemblyInfo> _assemblyInfoFactory;
+
+        public Reflection([NotNull] Func<Assembly, IAssemblyInfo> assemblyInfoFactory)
         {
-            if (string.IsNullOrWhiteSpace(source)) throw new ArgumentException("Value cannot be null or whitespace.", nameof(source));
-            return Assembly.LoadFile(source);
+            if (assemblyInfoFactory == null) throw new ArgumentNullException(nameof(assemblyInfoFactory));
+            _assemblyInfoFactory = assemblyInfoFactory;
+        }
+
+        public IAssemblyInfo LoadAssembly(string source)
+        {
+            return _assemblyInfoFactory(Assembly.LoadFile(source));
         }
     }
 }

@@ -36,16 +36,27 @@
   </PropertyGroup>
   <ItemGroup>
     <!-- A reference to the entire .NET Framework is automatically included -->
+    <None Include="DevTeam.TestEngine.json" />
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="EventAggergator.cs" />
+    <Compile Include="Disposable.cs" />
+    <Compile Include="Dto\TestType.cs" />
+    <Compile Include="Environment.cs" />
+    <Compile Include="ITestElementFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TestAssembly.cs" />
-    <Compile Include="TestCase.cs" />
-    <Compile Include="TestClass.cs" />
+    <Compile Include="Reflection\AssemblyInfo.cs" />
+    <Compile Include="Reflection\MethodInfo.cs" />
+    <Compile Include="Reflection\ParameterInfo.cs" />
+    <Compile Include="Reflection\TypeInfo.cs" />
+    <Compile Include="Subject.cs" />
+    <Compile Include="Dto\TestAssembly.cs" />
+    <Compile Include="Dto\TestCase.cs" />
+    <Compile Include="Dto\TestCaseResult.cs" />
+    <Compile Include="Dto\TestClass.cs" />
+    <Compile Include="TestElementFactory.cs" />
     <Compile Include="TestExplorer.cs" />
-    <Compile Include="TestMethod.cs" />
+    <Compile Include="Dto\TestMethod.cs" />
     <Compile Include="TestRunner.cs" />
   </ItemGroup>
   <ItemGroup>

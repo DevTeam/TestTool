@@ -1,0 +1,46 @@
+﻿[
+  { "reference": "DevTeam.TestEngine.Contracts" },
+  { "reference": "DevTeam.TestEngine" },
+
+  { "using": "DevTeam.TestEngine.Contracts" },
+  { "using": "DevTeam.TestEngine" },
+  { "using": "System" },
+
+  { "dependency.feature": "Default" },
+
+  { "register": [ { "contract": [ "IObservable<>" ] }, { "contract": [ "IObserver<>" ] }, { "lifetime": "Singleton" } ], "autowiring": "Subject<>" },
+  { "register": [ { "contract": [ "ITestExplorer" ] }, { "lifetime": "Singleton" } ], "autowiring": "TestExplorer" },
+  { "register": [ { "contract": [ "ITestElementFactory" ] }, { "lifetime": "Singleton" } ], "autowiring": "TestElementFactory" },
+  
+  { "using": "DevTeam.TestEngine.Contracts.Reflection" },
+  { "using": "DevTeam.TestEngine.Reflection" },
+
+  {
+    "register": [ { "contract": [ "IAssemblyInfo" ] }, { "stateType": "System.Reflection.Assembly", "index" : 0 } ], "autowiring": "AssemblyInfo",
+    "constructor": [
+      { "paramType": "System.Reflection.Assembly", "state" : { "stateType": "System.Reflection.Assembly", "index" : "0" } },
+      { "paramType": "Func<System.Reflection.TypeInfo, ITypeInfo>" }
+    ]
+  },
+  {
+    "register": [ { "contract": [ "ITypeInfo" ] }, { "stateType": "System.Reflection.TypeInfo", "index" : 0 } ], "autowiring": "TypeInfo",
+    "constructor": [
+      { "paramType": "System.Reflection.TypeInfo", "state" : { "stateType": "System.Reflection.TypeInfo", "index" : "0" } },
+      { "paramType": "Func<System.Reflection.MethodInfo, IMethodInfo>" }
+    ]
+  },
+  {
+    "register": [ { "contract": [ "IMethodInfo" ] }, { "stateType": "System.Reflection.MethodInfo", "index" : 0 } ], "autowiring": "MethodInfo",
+    "constructor": [
+      { "paramType": "System.Reflection.MethodInfo", "state" : { "stateType": "System.Reflection.MethodInfo", "index" : "0" } },
+      { "paramType": "Func<System.Reflection.ParameterInfo, IParameterInfo>" }
+    ]
+  },
+  {
+    "register": [ { "contract": [ "IParameterInfo" ] }, { "stateType": "System.Reflection.ParameterInfo", "index" : 0 } ], "autowiring": "ParameterInfo",
+    "constructor": [
+      { "paramType": "System.Reflection.ParameterInfo", "state" : { "stateType": "System.Reflection.ParameterInfo", "index" : "0" } },
+      { "paramType": "Func<System.Reflection.TypeInfo, ITypeInfo>" }
+    ]
+  }
+]

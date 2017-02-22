@@ -1,28 +1,26 @@
-﻿namespace DevTeam.TestEngine
+﻿namespace DevTeam.TestEngine.Dto
 {
     using System;
     using System.Collections.Generic;
     using Contracts;
 
-    internal class TestAssembly: ITestAssembly
+    internal class TestClass : ITestClass
     {
-        public TestAssembly(
+        private readonly IList<ITestMethod> _methods;
+
+        public TestClass(
             Guid id,
             [NotNull] string fullyQualifiedName,
             [NotNull] string displayName,
-            [NotNull] string source,
-            [NotNull] IEnumerable<ITestClass> classes)
+            ITestAssembly testAssembly)
         {
             if (id == Guid.Empty) throw new ArgumentException("Value cannot be empty.", nameof(id));
             if (string.IsNullOrWhiteSpace(fullyQualifiedName)) throw new ArgumentException("Value cannot be null or whitespace.", nameof(fullyQualifiedName));
             if (string.IsNullOrWhiteSpace(displayName)) throw new ArgumentException("Value cannot be null or whitespace.", nameof(displayName));
-            if (string.IsNullOrWhiteSpace(source)) throw new ArgumentException("Value cannot be null or whitespace.", nameof(source));
-            if (classes == null) throw new ArgumentNullException(nameof(classes));
             Id = id;
             FullyQualifiedName = fullyQualifiedName;
             DisplayName = displayName;
-            Source = source;
-            Classes = classes;
+            _methods = new List<ITestMethod>();
         }
 
         public Guid Id { get; }
@@ -31,8 +29,14 @@
 
         public string DisplayName { get; }
 
-        public string Source { get; }
+        public ITestAssembly Assembly { get; [NotNull] set; }
 
-        public IEnumerable<ITestClass> Classes { [NotNull] get; }
+        public IEnumerable<ITestMethod> Methods => _methods;
+
+        public void Add([NotNull] ITestMethod testMethod)
+        {
+            if (testMethod == null) throw new ArgumentNullException(nameof(testMethod));
+            _methods.Add(testMethod);
+        }
     }
 }
