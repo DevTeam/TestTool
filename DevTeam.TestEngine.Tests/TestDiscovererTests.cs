@@ -45,7 +45,7 @@
 
         private ITestDiscoverer CreateInstance()
         {
-            return _container.Resolve().Instance<ITestDiscoverer>();
+            return _container.Resolve().Tag("executor://devteam/DefaultTestExecutor").Instance<ITestDiscoverer>();
         }
     }
 }

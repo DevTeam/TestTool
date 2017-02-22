@@ -91,9 +91,8 @@
                 {
                     currentTestClass = testClass;
                     classes.Add(testClass, testClass);
+                    currentTestAssembly.AddClass(currentTestClass);
                 }
-
-                currentTestAssembly.AddClass(currentTestClass);
 
                 var testMethod = CreateTestMethod(currentTestClass, method);
                 ITestMethod currentTestMethod;
@@ -101,9 +100,8 @@
                 {
                     currentTestMethod = testMethod;
                     methods.Add(testMethod, currentTestMethod);
+                    currentTestClass.AddMethod(currentTestMethod);
                 }
-
-                currentTestClass.AddMethod(currentTestMethod);
 
                 var testCase = CreateTestCase(currentTestMethod, caseItem.Key);
                 currentTestMethod.AddCase(testCase);

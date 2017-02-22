@@ -8,10 +8,11 @@
 
   { "dependency.feature": "Default" },
 
+  { "register": [ { "contract": [ "ITestDiscoverer" ] }, {"tag": "executor://devteam/DefaultTestExecutor" }, { "lifetime": "Singleton" } ], "autowiring": "TestDiscoverer" },
+  { "register": [ { "contract": [ "ITestExecutor" ] }, {"tag": "executor://devteam/DefaultTestExecutor" }, { "lifetime": "Singleton" } ], "autowiring": "TestExecutor" },
+
   { "register": [ { "contract": [ "IObservable<>" ] }, { "contract": [ "IObserver<>" ] }, { "lifetime": "Singleton" } ], "autowiring": "Subject<>" },
-  { "register": [ { "contract": [ "ITestDiscoverer" ] }, { "lifetime": "Singleton" } ], "autowiring": "TestDiscoverer" },
   { "register": [ { "contract": [ "ITestElementFactory" ] }, { "lifetime": "Singleton" } ], "autowiring": "TestElementFactory" },
-  { "register": [ { "contract": [ "ITestExecutor" ] }, { "lifetime": "Singleton" } ], "autowiring": "TestExecutor" },
   { "register": [ { "contract": [ "ITestExecutionContext" ] } ], "autowiring": "TestExecutionContext" },
   { "register": [ { "contract": [ "ITestMethodSelector" ] }, { "lifetime": "Singleton" } ], "autowiring": "TestMethodSelector" },
 

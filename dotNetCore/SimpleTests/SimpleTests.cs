@@ -5,7 +5,12 @@
     public class SimpleTests
     {
         [Test]
-        public void TestSuccess()
+        public void SuccessTest()
+        {
+        }
+
+        [Test]
+        public void FailedTest()
         {
         }
     }

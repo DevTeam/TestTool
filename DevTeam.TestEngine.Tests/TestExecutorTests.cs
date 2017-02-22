@@ -47,12 +47,12 @@
 
         private ITestDiscoverer CreateTestDiscoverer()
         {
-            return _container.Resolve().Instance<ITestDiscoverer>();
+            return _container.Resolve().Tag("executor://devteam/DefaultTestExecutor").Instance<ITestDiscoverer>();
         }
 
         private ITestExecutor CreateTestExecutor()
         {
-            return _container.Resolve().Instance<ITestExecutor>();
+            return _container.Resolve().Tag("executor://devteam/DefaultTestExecutor").Instance<ITestExecutor>();
         }
     }
 }

@@ -8,5 +8,10 @@
         public void SuccessTest()
         {
         }
+
+        [Test]
+        public void FailedTest()
+        {
+        }
     }
 }
