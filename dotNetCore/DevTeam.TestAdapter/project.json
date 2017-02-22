@@ -12,7 +12,7 @@
     "DevTeam.IoC.Configurations.Json": "1.0.71-beta",
     "DevTeam.IoC.Contracts": "1.0.71-beta",
     "Microsoft.TestPlatform.ObjectModel": "15.0.0-preview-20170217-05",
-    "NETStandard.Library": "1.6.0"
+    "NETStandard.Library": "1.6.1"
   },
 
   "frameworks": {

@@ -22,16 +22,16 @@
     public class TestAdapter : ITestDiscoverer, ITestExecutor
     {
         public const string ExecutorUri = "executor://devteam/TestRunner";
+        private readonly Container _container;
         private readonly ITestExplorer _testExplorer;
 
         public TestAdapter()
         {
-            using (var container = new Container("root").Configure()
+            _container = new Container("root").Configure()
                 .DependsOn<JsonConfiguration>(ReadIoCConfiguration()).ToSelf()
-                .Register().Contract<IReflection>().Autowiring<Reflection>().ToSelf())
-            {
-                _testExplorer = container.Resolve().Instance<ITestExplorer>();
-            }
+                .Register().Contract<IReflection>().Autowiring<Reflection>().ToSelf();
+
+            _testExplorer = _container.Resolve().Instance<ITestExplorer>();
         }
 
         public void DiscoverTests(
