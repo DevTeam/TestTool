@@ -5,15 +5,14 @@
     using System.Linq;
     using Contracts;
     using Contracts.Reflection;
-    using Dto;
     using TestFramework;
 
-    internal class TestExplorer : ITestExplorer
+    internal class TestDiscoverer : ITestDiscoverer
     {
         [NotNull] private readonly IReflection _reflection;
         [NotNull] private readonly ITestElementFactory _testElementFactory;
 
-        public TestExplorer(
+        public TestDiscoverer(
             [NotNull] IReflection reflection,
             [NotNull] ITestElementFactory testElementFactory)
         {
@@ -28,7 +27,7 @@
             foreach (var source in sources)
             {
                 var assembly = _reflection.LoadAssembly(source);
-                var testAssembly = _testElementFactory.CreateTestAssembly(source, assembly);
+                var testAssembly = _testElementFactory.CreateTestAssembly(source, assembly, TestExecutor.Id);
                 var testClasses = ExploreTestClasses(testAssembly, assembly).ToArray();
                 if (testClasses.Length == 0)
                 {
@@ -37,14 +36,14 @@
 
                 foreach (var testClass in testClasses)
                 {
-                    testAssembly.Add(testClass);
+                    testAssembly.AddClass(testClass);
                 }
 
                 yield return testAssembly;
             }
         }
 
-        private IEnumerable<ITestClass> ExploreTestClasses([NotNull] TestAssembly testAssembly, [NotNull] IAssemblyInfo assemblyInfo)
+        private IEnumerable<ITestClass> ExploreTestClasses([NotNull] ITestAssembly testAssembly, [NotNull] IAssemblyInfo assemblyInfo)
         {
             if (testAssembly == null) throw new ArgumentNullException(nameof(testAssembly));
             if (assemblyInfo == null) throw new ArgumentNullException(nameof(assemblyInfo));
@@ -59,7 +58,7 @@
 
                 foreach (var testMethod in testMethods)
                 {
-                    testClass.Add(testMethod);
+                    testClass.AddMethod(testMethod);
                 }
 
                 yield return testClass;
@@ -84,7 +83,7 @@
 
                 foreach (var testCase in testCases)
                 {
-                    testMethod.Add(testCase);
+                    testMethod.AddCase(testCase);
                 }
 
                 yield return testMethod;

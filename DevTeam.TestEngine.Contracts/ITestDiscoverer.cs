@@ -2,7 +2,7 @@
 {
     using System.Collections.Generic;
 
-    public interface ITestExplorer
+    public interface ITestDiscoverer
     {
         [NotNull]
         IEnumerable<ITestAssembly> ExploreSources([NotNull] IEnumerable<string> sources);

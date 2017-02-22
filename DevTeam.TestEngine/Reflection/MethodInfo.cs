@@ -31,5 +31,12 @@
         {
             return _methodInfo.GetCustomAttributes<T>();
         }
+
+        public object Invoke(object obj, params object[] parameters)
+        {
+            if (obj == null) throw new ArgumentNullException(nameof(obj));
+            if (parameters == null) throw new ArgumentNullException(nameof(parameters));
+            return _methodInfo.Invoke(obj, parameters);
+        }
     }
 }

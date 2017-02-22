@@ -21,5 +21,7 @@
         }
 
         public ITypeInfo ParameterType => _typeInfoFactory(_parameterInfo.ParameterType.GetTypeInfo());
+
+        public string Name => _parameterInfo.Name;
     }
 }

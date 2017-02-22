@@ -13,7 +13,7 @@
     using Shouldly;
 
     [TestFixture]
-    public class TestExplorerTests
+    public class TestExecutorTests
     {
         private Container _container;
 
@@ -35,17 +35,24 @@
         public void Should()
         {
             // Given
-            var explorer = CreateInstance();
+            var testDiscoverer = CreateTestDiscoverer();
+            var testExecutor = CreateTestExecutor();
 
             // When
-            var testAssemblies = explorer.ExploreSources(Enumerable.Repeat(@"C:\Projects\DevTeam\TestTool\dotNetCore\SimpleTests\bin\Debug\SimpleTests.dll", 1)).ToList();
+            var testAssemblies = testDiscoverer.ExploreSources(Enumerable.Repeat(@"C:\Projects\DevTeam\TestTool\dotNetCore\SimpleTests\bin\Debug\SimpleTests.dll", 1)).ToList();
+            var data = testExecutor.Run(testAssemblies).ToList();
 
             // Then
         }
 
-        private ITestExplorer CreateInstance()
+        private ITestDiscoverer CreateTestDiscoverer()
         {
-            return _container.Resolve().Instance<ITestExplorer>();
+            return _container.Resolve().Instance<ITestDiscoverer>();
+        }
+
+        private ITestExecutor CreateTestExecutor()
+        {
+            return _container.Resolve().Instance<ITestExecutor>();
         }
     }
 }

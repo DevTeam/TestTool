@@ -9,9 +9,12 @@
   { "dependency.feature": "Default" },
 
   { "register": [ { "contract": [ "IObservable<>" ] }, { "contract": [ "IObserver<>" ] }, { "lifetime": "Singleton" } ], "autowiring": "Subject<>" },
-  { "register": [ { "contract": [ "ITestExplorer" ] }, { "lifetime": "Singleton" } ], "autowiring": "TestExplorer" },
+  { "register": [ { "contract": [ "ITestDiscoverer" ] }, { "lifetime": "Singleton" } ], "autowiring": "TestDiscoverer" },
   { "register": [ { "contract": [ "ITestElementFactory" ] }, { "lifetime": "Singleton" } ], "autowiring": "TestElementFactory" },
-  
+  { "register": [ { "contract": [ "ITestExecutor" ] }, { "lifetime": "Singleton" } ], "autowiring": "TestExecutor" },
+  { "register": [ { "contract": [ "ITestExecutionContext" ] } ], "autowiring": "TestExecutionContext" },
+  { "register": [ { "contract": [ "ITestMethodSelector" ] }, { "lifetime": "Singleton" } ], "autowiring": "TestMethodSelector" },
+
   { "using": "DevTeam.TestEngine.Contracts.Reflection" },
   { "using": "DevTeam.TestEngine.Reflection" },
 

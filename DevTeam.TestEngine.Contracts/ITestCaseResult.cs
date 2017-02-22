@@ -2,6 +2,5 @@
 {
     public interface ITestCaseResult
     {
-        ITestCase Case { [NotNull] get; }
     }
 }

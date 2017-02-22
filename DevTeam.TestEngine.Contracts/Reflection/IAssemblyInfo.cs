@@ -9,5 +9,7 @@
         string Name { [NotNull] get; }
 
         IEnumerable<ITypeInfo> DefinedTypes { [NotNull] get; }
+
+        ITypeInfo GetType(string fullyQualifiedTypeName);
     }
 }

@@ -1,7 +1,15 @@
 namespace DevTeam.TestEngine.Contracts
 {
-    public interface ITestCase : ITestElement
+    using System;
+
+    public interface ITestCase
     {
+        Guid Id { get; }
+
+        string FullyQualifiedCaseName { [NotNull] get; }
+
+        string DisplayName { [NotNull] get; }
+
         ITestMethod Method { [NotNull] get; }
     }
 }

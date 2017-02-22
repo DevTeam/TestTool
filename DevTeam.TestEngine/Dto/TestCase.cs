@@ -7,21 +7,22 @@
     {
         public TestCase(
             Guid id,
-            [NotNull] string fullyQualifiedName,
+            [NotNull] string fullyQualifiedCaseName,
             [NotNull] string displayName,
             ITestMethod testMethod)
         {
             if (id == Guid.Empty) throw new ArgumentException("Value cannot be empty.", nameof(id));
-            if (fullyQualifiedName == null) throw new ArgumentNullException(nameof(fullyQualifiedName));
+            if (fullyQualifiedCaseName == null) throw new ArgumentNullException(nameof(fullyQualifiedCaseName));
             if (displayName == null) throw new ArgumentNullException(nameof(displayName));
             Id = id;
-            FullyQualifiedName = fullyQualifiedName;
+            FullyQualifiedCaseName = fullyQualifiedCaseName;
             DisplayName = displayName;
+            Method = testMethod;
         }
 
         public Guid Id { get; }
 
-        public string FullyQualifiedName { get; }
+        public string FullyQualifiedCaseName { get; }
 
         public string DisplayName { get; }
 

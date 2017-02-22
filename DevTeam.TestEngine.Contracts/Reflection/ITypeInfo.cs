@@ -9,5 +9,7 @@
         string Name { [NotNull] get; }
 
         IEnumerable<IMethodInfo> Methods { [NotNull] get; }
+
+        object CreateInstance([NotNull] params object[] parameters);
     }
 }

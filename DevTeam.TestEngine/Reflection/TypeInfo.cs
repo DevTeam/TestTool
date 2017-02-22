@@ -9,7 +9,7 @@
     internal class TypeInfo : ITypeInfo
     {
         private readonly System.Reflection.TypeInfo _typeInfo;
-        [NotNull] private readonly Func<System.Reflection.MethodInfo, IMethodInfo> _methodInfoFactory;
+        private readonly Func<System.Reflection.MethodInfo, IMethodInfo> _methodInfoFactory;
 
         public TypeInfo(
             [NotNull] System.Reflection.TypeInfo typeInfo,
@@ -26,5 +26,10 @@
         public string Name => _typeInfo.Name;
 
         public IEnumerable<IMethodInfo> Methods => _typeInfo.DeclaredMethods.Select(i => _methodInfoFactory(i));
+
+        public object CreateInstance(params object[] parameters)
+        {
+            return Activator.CreateInstance(_typeInfo.AsType(), parameters);
+        }
     }
 }

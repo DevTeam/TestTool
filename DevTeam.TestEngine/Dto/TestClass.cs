@@ -9,23 +9,19 @@
         private readonly IList<ITestMethod> _methods;
 
         public TestClass(
-            Guid id,
-            [NotNull] string fullyQualifiedName,
+            [NotNull] string fullyQualifiedTypeName,
             [NotNull] string displayName,
             ITestAssembly testAssembly)
         {
-            if (id == Guid.Empty) throw new ArgumentException("Value cannot be empty.", nameof(id));
-            if (string.IsNullOrWhiteSpace(fullyQualifiedName)) throw new ArgumentException("Value cannot be null or whitespace.", nameof(fullyQualifiedName));
+            if (string.IsNullOrWhiteSpace(fullyQualifiedTypeName)) throw new ArgumentException("Value cannot be null or whitespace.", nameof(fullyQualifiedTypeName));
             if (string.IsNullOrWhiteSpace(displayName)) throw new ArgumentException("Value cannot be null or whitespace.", nameof(displayName));
-            Id = id;
-            FullyQualifiedName = fullyQualifiedName;
+            FullyQualifiedTypeName = fullyQualifiedTypeName;
             DisplayName = displayName;
+            Assembly = testAssembly;
             _methods = new List<ITestMethod>();
         }
 
-        public Guid Id { get; }
-
-        public string FullyQualifiedName { get; }
+        public string FullyQualifiedTypeName { get; }
 
         public string DisplayName { get; }
 
@@ -33,10 +29,38 @@
 
         public IEnumerable<ITestMethod> Methods => _methods;
 
-        public void Add([NotNull] ITestMethod testMethod)
+        public void AddMethod(ITestMethod testMethod)
         {
             if (testMethod == null) throw new ArgumentNullException(nameof(testMethod));
             _methods.Add(testMethod);
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            var other = obj as ITestClass;
+            return other != null && Equals(other);
+        }
+
+        public override int GetHashCode()
+        {
+            return FullyQualifiedTypeName.GetHashCode();
+        }
+
+        public static bool operator ==(TestClass left, TestClass right)
+        {
+            return Equals(left, right);
+        }
+
+        public static bool operator !=(TestClass left, TestClass right)
+        {
+            return !Equals(left, right);
+        }
+
+        private bool Equals(ITestClass other)
+        {
+            return string.Equals(FullyQualifiedTypeName, other.FullyQualifiedTypeName);
         }
     }
 }

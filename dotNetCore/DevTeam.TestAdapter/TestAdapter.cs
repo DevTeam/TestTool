@@ -13,25 +13,30 @@
     using Microsoft.VisualStudio.TestPlatform.ObjectModel.Logging;
     using TestEngine.Contracts;
     using TestEngine.Contracts.Reflection;
+    using ITestDiscoverer = TestEngine.Contracts.ITestDiscoverer;
+    using ITestExecutor = TestEngine.Contracts.ITestExecutor;
     using TestCase = Microsoft.VisualStudio.TestPlatform.ObjectModel.TestCase;
 
     [FileExtension(".dll")]
     [FileExtension(".exe")]
     [DefaultExecutorUri(ExecutorUri)]
     [ExtensionUri(ExecutorUri)]
-    public class TestAdapter : ITestDiscoverer, ITestExecutor
+    public class TestAdapter : Microsoft.VisualStudio.TestPlatform.ObjectModel.Adapter.ITestDiscoverer, Microsoft.VisualStudio.TestPlatform.ObjectModel.Adapter.ITestExecutor
     {
         public const string ExecutorUri = "executor://devteam/TestRunner";
-        private readonly Container _container;
-        private readonly ITestExplorer _testExplorer;
+        private readonly List<ITestDiscoverer> _testDiscoverer;
+        private readonly List<ITestExecutor> _testExecutor;
+        private readonly ITestElementFactory _testElementFactory;
 
         public TestAdapter()
         {
-            _container = new Container("root").Configure()
+            var container = new Container("root").Configure()
                 .DependsOn<JsonConfiguration>(ReadIoCConfiguration()).ToSelf()
                 .Register().Contract<IReflection>().Autowiring<Reflection>().ToSelf();
 
-            _testExplorer = _container.Resolve().Instance<ITestExplorer>();
+            _testDiscoverer = container.Resolve().Instance<IEnumerable<ITestDiscoverer>>().ToList();
+            _testElementFactory = container.Resolve().Instance<ITestElementFactory>();
+            _testExecutor = container.Resolve().Instance<IEnumerable<ITestExecutor>>().ToList();
         }
 
         public void DiscoverTests(
@@ -51,12 +56,31 @@
         {
             frameworkHandle.SendMessage(TestMessageLevel.Informational, "RunTests");
             frameworkHandle.SendMessage(TestMessageLevel.Informational, runContext.RunSettings.SettingsXml);
-            foreach (var test in tests)
+            var testDict = tests.ToDictionary(i => i.Id, i => i);
+            var assemblies = _testElementFactory.RestoreTestAssemblies(testDict.Values.ToDictionary(i => i.Id, i => i.FullyQualifiedName)).ToList();
+            foreach (var testExecutor in _testExecutor)
             {
-                frameworkHandle.RecordStart(test);
-                frameworkHandle.RecordResult(new TestResult() {Outcome = TestOutcome.Passed, DisplayName = test.DisplayName });
-                frameworkHandle.RecordEnd(test, TestOutcome.Passed);
-                frameworkHandle.SendMessage(TestMessageLevel.Informational, test.DisplayName);
+                foreach (var testCaseInfo in testExecutor.Run(assemblies))
+                {
+                    TestCase test;
+                    if (!testDict.TryGetValue(testCaseInfo.Case.Id, out test))
+                    {
+                        continue;
+                    }
+
+                    switch (testCaseInfo.State)
+                    {
+                        case TestCaseState.Starting:
+                            frameworkHandle.RecordStart(test);
+                            break;
+
+                        case TestCaseState.Success:
+                            frameworkHandle.RecordResult(new TestResult { Outcome = TestOutcome.Passed, DisplayName = test.DisplayName });
+                            frameworkHandle.RecordEnd(test, TestOutcome.Passed);
+                            frameworkHandle.SendMessage(TestMessageLevel.Informational, test.DisplayName);
+                            break;
+                    }
+                }
             }
         }
 
@@ -74,20 +98,20 @@
         {
             var executorUri = new Uri(ExecutorUri);
             return
-                from testAssembly in _testExplorer.ExploreSources(sources)
+                from testDiscoverer in _testDiscoverer
+                from testAssembly in testDiscoverer.ExploreSources(sources)
                 from testClass in testAssembly.Classes
                 from testMethod in testClass.Methods
                 from testCase in testMethod.Cases
-                let testElements = new ITestElement[] { testAssembly, testClass, testMethod, testCase }
                 select new TestCase(
-                    string.Join(":", testElements.Select(i => i.FullyQualifiedName).Where(i => !string.IsNullOrWhiteSpace(i))),
-                    executorUri,
-                    testAssembly.Source
-                )
-                {
-                    Id = testCase.Id,
-                    DisplayName = string.Join(":", testElements.Select(i => i.DisplayName).Where(i => !string.IsNullOrWhiteSpace(i)))
-                };
+                        testCase.FullyQualifiedCaseName,
+                        executorUri,
+                        testAssembly.Source
+                    )
+                    {
+                        Id = testCase.Id,
+                        DisplayName = testCase.DisplayName
+                    };
         }
 
         private string ReadIoCConfiguration()

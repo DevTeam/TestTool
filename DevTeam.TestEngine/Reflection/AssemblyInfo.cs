@@ -27,5 +27,11 @@
         public string Name => _assembly.GetName().Name;
 
         public IEnumerable<ITypeInfo> DefinedTypes => _assembly.DefinedTypes.Select(i => _typeInfoFactory(i));
+
+        public ITypeInfo GetType(string fullyQualifiedTypeName)
+        {
+            if (fullyQualifiedTypeName == null) throw new ArgumentNullException(nameof(fullyQualifiedTypeName));
+            return _typeInfoFactory(_assembly.GetType(fullyQualifiedTypeName).GetTypeInfo());
+        }
     }
 }

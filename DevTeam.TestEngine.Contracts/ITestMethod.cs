@@ -2,8 +2,12 @@ namespace DevTeam.TestEngine.Contracts
 {
     using System.Collections.Generic;
 
-    public interface ITestMethod : ITestElement
+    public interface ITestMethod
     {
+        string Name { [NotNull] get; }
+
+        string DisplayName { [NotNull] get; }
+
         ITestClass Class { [NotNull] get; }
 
         IEnumerable<ITestType> Parameters { get; }
@@ -14,5 +18,7 @@ namespace DevTeam.TestEngine.Contracts
         int LineNumber { get; set; }
 
         IEnumerable<ITestCase> Cases { [NotNull] get; }
+
+        void AddCase([NotNull] ITestCase testCase);
     }
 }

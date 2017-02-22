@@ -2,6 +2,6 @@
 {
     public interface ITestType
     {
-        string FullyQualifiedName { [NotNull] get; }
+        string FullyQualifiedTypeName { [NotNull] get; }
     }
 }

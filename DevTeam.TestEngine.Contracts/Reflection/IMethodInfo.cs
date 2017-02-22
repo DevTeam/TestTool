@@ -11,5 +11,8 @@
 
         [NotNull]
         IEnumerable<T> GetCustomAttributes<T>() where T : Attribute;
+
+        [CanBeNull]
+        object Invoke([NotNull] object obj, [NotNull] params object[] parameters);
     }
 }
