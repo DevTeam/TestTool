@@ -23,6 +23,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "dotNet", "dotNet", "{858EF3
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevTeam.TestRunner", "dotNet\DevTeam.TestRunner\DevTeam.TestRunner.csproj", "{1A568F71-CDD8-4697-8EF9-B40A8A380DBE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleTests", "dotNet\SimpleTests\SimpleTests.csproj", "{F7D34584-57B0-430F-ADF1-B8FE370E85B4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -61,6 +63,10 @@ Global
 		{1A568F71-CDD8-4697-8EF9-B40A8A380DBE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1A568F71-CDD8-4697-8EF9-B40A8A380DBE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1A568F71-CDD8-4697-8EF9-B40A8A380DBE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F7D34584-57B0-430F-ADF1-B8FE370E85B4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F7D34584-57B0-430F-ADF1-B8FE370E85B4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F7D34584-57B0-430F-ADF1-B8FE370E85B4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F7D34584-57B0-430F-ADF1-B8FE370E85B4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -70,5 +76,6 @@ Global
 		{C79C723F-B824-4B5F-AE92-CB04C01BE45B} = {1BE21557-750A-4026-BE2B-28BBF7739D44}
 		{577737B3-4122-4E5A-A363-114A6DE303EE} = {1BE21557-750A-4026-BE2B-28BBF7739D44}
 		{1A568F71-CDD8-4697-8EF9-B40A8A380DBE} = {858EF382-563F-4AA4-817E-B52BF65B1B06}
+		{F7D34584-57B0-430F-ADF1-B8FE370E85B4} = {858EF382-563F-4AA4-817E-B52BF65B1B06}
 	EndGlobalSection
 EndGlobal

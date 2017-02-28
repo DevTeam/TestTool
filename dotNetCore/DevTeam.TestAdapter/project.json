@@ -8,10 +8,10 @@
   },
 
   "dependencies": {
-    "DevTeam.IoC": "1.0.71-beta",
-    "DevTeam.IoC.Configurations.Json": "1.0.71-beta",
+    "DevTeam.IoC": "1.0.76-beta",
+    "DevTeam.IoC.Configurations.Json": "1.0.76-beta",
     "DevTeam.IoC.Contracts": "1.0.76-beta",
-    "Microsoft.TestPlatform.ObjectModel": "15.0.0-preview-20170217-05",
+    "Microsoft.TestPlatform.ObjectModel": "15.0.0",
     "NETStandard.Library": "1.6.1"
   },
 

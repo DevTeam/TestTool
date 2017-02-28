@@ -1,3 +1,4 @@
 rem SET VSTEST_HOST_DEBUG=1
 rem dotnet C:\Projects\vstest\artifacts\Debug\netcoreapp1.0\vstest.console.dll C:\Projects\DevTeam\TestTool\dotNetCore\SimpleTests\bin\Debug\SimpleTests.dll /Framework:FrameworkCore10 --TestAdapterPath:C:\Projects\DevTeam\TestTool\dotNetCore\DevTeam.TestAdapter\bin\Debug\netstandard1.6
-C:\Projects\vstest\artifacts\Debug\net46\win7-x64\vstest.console.exe C:\Projects\DevTeam\TestTool\dotNetCore\SimpleTests\bin\Debug\SimpleTests.dll /Framework:FrameworkCore10 --TestAdapterPath:C:\Projects\DevTeam\TestTool\dotNetCore\DevTeam.TestAdapter\bin\Debug\netstandard1.6 /settings:vstestspec.xml
+C:\Projects\vstest\artifacts\Debug\net46\win7-x64\vstest.console.exe C:\Projects\DevTeam\TestTool\dotNetCore\SimpleTests\bin\Debug\SimpleTests.dll /Framework:FrameworkCore10 --TestAdapterPath:C:\Projects\DevTeam\TestTool\dotNetCore\DevTeam.TestAdapter\bin\Debug\netstandard1.6
+rem C:\Projects\vstest\artifacts\Debug\net46\win7-x64\vstest.console.exe C:\Projects\DevTeam\TestTool\dotNet\SimpleTests\bin\Debug\SimpleTests.dll /Framework:Framework45 --TestAdapterPath:C:\Projects\DevTeam\TestTool\dotNetCore\DevTeam.TestAdapter\bin\Debug\netstandard1.6
