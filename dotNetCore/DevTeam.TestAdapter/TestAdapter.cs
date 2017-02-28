@@ -86,7 +86,6 @@
 
         public void RunTests(IEnumerable<string> sources, IRunContext runContext, IFrameworkHandle frameworkHandle)
         {
-            var runConfiguration = runContext.RunSettings.SettingsXml;
             RunTests(GetTestCases(sources), runContext, frameworkHandle);
         }
 

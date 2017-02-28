@@ -34,16 +34,16 @@
       <HintPath>..\packages\Castle.Core.3.3.3\lib\net45\Castle.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="DevTeam.IoC, Version=1.0.71.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\DevTeam.IoC.1.0.71-beta\lib\portable-net45+win8+wp8+wpa81+MonoAndroid10+xamarinios10+MonoTouch10+Xamarin.iOS+monoandroid+monotouch+netstandard1.0+netcoreapp\DevTeam.IoC.dll</HintPath>
+    <Reference Include="DevTeam.IoC, Version=1.0.76.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\DevTeam.IoC.1.0.76-beta\lib\portable-net45+win8+wp8+wpa81+MonoAndroid10+xamarinios10+MonoTouch10+Xamarin.iOS+monoandroid+monotouch+netstandard1.0+netcoreapp\DevTeam.IoC.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="DevTeam.IoC.Configurations.Json, Version=1.0.71.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\DevTeam.IoC.Configurations.Json.1.0.71-beta\lib\portable-net45+win8+wp8+wpa81+MonoAndroid10+xamarinios10+MonoTouch10+Xamarin.iOS+monoandroid+monotouch+netstandard1.0+netcoreapp\DevTeam.IoC.Configurations.Json.dll</HintPath>
+    <Reference Include="DevTeam.IoC.Configurations.Json, Version=1.0.76.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\DevTeam.IoC.Configurations.Json.1.0.76-beta\lib\portable-net45+win8+wp8+wpa81+MonoAndroid10+xamarinios10+MonoTouch10+Xamarin.iOS+monoandroid+monotouch+netstandard1.0+netcoreapp\DevTeam.IoC.Configurations.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="DevTeam.IoC.Contracts, Version=1.0.71.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\DevTeam.IoC.Contracts.1.0.71-beta\lib\portable-net45+win8+wp8+wpa81+MonoAndroid10+xamarinios10+MonoTouch10+Xamarin.iOS+monoandroid+monotouch+netstandard1.0+netcoreapp\DevTeam.IoC.Contracts.dll</HintPath>
+    <Reference Include="DevTeam.IoC.Contracts, Version=1.0.76.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\DevTeam.IoC.Contracts.1.0.76-beta\lib\portable-net45+win8+wp8+wpa81+MonoAndroid10+xamarinios10+MonoTouch10+Xamarin.iOS+monoandroid+monotouch+netstandard1.0+netcoreapp\DevTeam.IoC.Contracts.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Win32.Primitives, Version=4.0.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">

@@ -10,7 +10,7 @@
   "dependencies": {
     "DevTeam.IoC": "1.0.71-beta",
     "DevTeam.IoC.Configurations.Json": "1.0.71-beta",
-    "DevTeam.IoC.Contracts": "1.0.71-beta",
+    "DevTeam.IoC.Contracts": "1.0.76-beta",
     "Microsoft.NETCore.App": {
       "type": "platform",
       "version": "1.0.1"
@@ -19,6 +19,17 @@
 
   "frameworks": {
     "netcoreapp1.0": {
+      "dependencies": {
+        "DevTeam.TestEngine": {
+          "target": "project"
+        },
+        "DevTeam.TestEngine.Contracts": {
+          "target": "project"
+        },
+        "DevTeam.TestFramework": {
+          "target": "project"
+        }
+      },
       "imports": "dnxcore50"
     }
   }
