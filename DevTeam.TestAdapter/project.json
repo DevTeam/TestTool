@@ -1,0 +1,22 @@
+﻿{
+  "supports": {},
+  "buildOptions": {
+    "embed": {
+      "includeFiles": [
+        "../DevTeam.TestEngine/DevTeam.TestEngine.json"
+      ]
+    }
+  },
+  "dependencies": {
+    "DevTeam.IoC": "1.0.82-beta",
+    "DevTeam.IoC.Configurations.Json": "1.0.82-beta",
+    "DevTeam.IoC.Contracts": "1.0.82-beta",
+    "Microsoft.NETCore.Portable.Compatibility": "1.0.1",
+    "Microsoft.TestPlatform.CLI": "15.0.0",
+    "Microsoft.TestPlatform.ObjectModel": "15.0.0",
+    "NETStandard.Library": "1.6.1"
+  },
+  "frameworks": {
+    "netstandard1.5": {}
+  }
+}

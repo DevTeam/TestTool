@@ -1,1 +1,0 @@
-C:\Projects\vstest\artifacts\Debug\net46\win7-x64\vstest.console.exe C:\Projects\DevTeam\TestTool\Samples\dotNetCore\Tests\bin\Debug\netstandard1.6\Tests.dll /Framework:Framework45 --TestAdapterPath:C:\Projects\DevTeam\TestTool\Samples\dotNetCore\Tests\bin\Debug\netstandard1.6

@@ -5,11 +5,11 @@
     <MinimumVisualStudioVersion>14.0</MinimumVisualStudioVersion>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{1A8B343D-9F47-4732-8309-E5A33D81EA26}</ProjectGuid>
+    <ProjectGuid>{61563113-EFCE-445D-9B76-9CF95BDAFB54}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>DevTeam.TestEngine</RootNamespace>
-    <AssemblyName>DevTeam.TestEngine</AssemblyName>
+    <RootNamespace>DevTeam.TestAdapter</RootNamespace>
+    <AssemblyName>DevTeam.TestAdapter</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -36,41 +36,25 @@
   </PropertyGroup>
   <ItemGroup>
     <!-- A reference to the entire .NET Framework is automatically included -->
-    <Content Include="DevTeam.TestEngine.json">
+    <Content Include="..\DevTeam.TestEngine\DevTeam.TestEngine.json">
+      <Link>DevTeam.TestEngine.json</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Disposable.cs" />
-    <Compile Include="Dto\TestType.cs" />
-    <Compile Include="Environment.cs" />
-    <Compile Include="TestMethodSelector.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Reflection\AssemblyInfo.cs" />
-    <Compile Include="Reflection\MethodInfo.cs" />
-    <Compile Include="Reflection\ParameterInfo.cs" />
-    <Compile Include="Reflection\TypeInfo.cs" />
-    <Compile Include="Subject.cs" />
-    <Compile Include="Dto\TestAssembly.cs" />
-    <Compile Include="Dto\TestCase.cs" />
-    <Compile Include="Dto\TestCaseInfo.cs" />
-    <Compile Include="Dto\TestClass.cs" />
-    <Compile Include="Dto\TestCaseResult.cs" />
-    <Compile Include="TestElementFactory.cs" />
-    <Compile Include="TestDiscoverer.cs" />
-    <Compile Include="Dto\TestMethod.cs" />
-    <Compile Include="TestExecutionContext.cs" />
-    <Compile Include="TestExecutor.cs" />
+    <Compile Include="Reflection.cs" />
+    <Compile Include="TestAdapter.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DevTeam.TestEngine.Contracts\DevTeam.TestEngine.Contracts.csproj">
       <Project>{b43c3e41-6650-49b6-acc2-84312f9e195a}</Project>
       <Name>DevTeam.TestEngine.Contracts</Name>
     </ProjectReference>
-    <ProjectReference Include="..\DevTeam.TestFramework\DevTeam.TestFramework.csproj">
-      <Project>{4033aac8-4b00-4bb8-b58d-063414105649}</Project>
-      <Name>DevTeam.TestFramework</Name>
+    <ProjectReference Include="..\DevTeam.TestEngine\DevTeam.TestEngine.csproj">
+      <Project>{1a8b343d-9f47-4732-8309-e5a33d81ea26}</Project>
+      <Name>DevTeam.TestEngine</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />

@@ -8,9 +8,9 @@
   },
 
   "dependencies": {
-    "DevTeam.IoC": "1.0.76-beta",
-    "DevTeam.IoC.Configurations.Json": "1.0.76-beta",
-    "DevTeam.IoC.Contracts": "1.0.76-beta",
+    "DevTeam.IoC": "1.0.82-beta",
+    "DevTeam.IoC.Configurations.Json": "1.0.82-beta",
+    "DevTeam.IoC.Contracts": "1.0.82-beta",
     "Microsoft.NETCore.App": {
       "type": "platform",
       "version": "1.0.1"

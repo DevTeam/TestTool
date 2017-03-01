@@ -115,10 +115,7 @@
 
         private string ReadIoCConfiguration()
         {
-            using (var configReader = new StreamReader(GetType().GetTypeInfo().Assembly.GetManifestResourceStream("DevTeam.TestAdapter.DevTeam.TestEngine.json")))
-            {
-                return configReader.ReadToEnd();
-            }
+            return File.ReadAllText(Path.Combine(Path.GetDirectoryName(GetType().GetTypeInfo().Assembly.Location), "DevTeam.TestEngine.json"));
         }
     }
 }
