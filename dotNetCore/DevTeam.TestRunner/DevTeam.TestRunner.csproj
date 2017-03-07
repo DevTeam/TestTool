@@ -1,0 +1,28 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp1.0</TargetFramework>
+    <AssemblyName>DevTeam.TestRunner</AssemblyName>
+    <OutputType>Exe</OutputType>
+    <PackageId>DevTeam.TestRunner</PackageId>
+    <RuntimeFrameworkVersion>1.0.4</RuntimeFrameworkVersion>
+    <PackageTargetFallback>$(PackageTargetFallback);dnxcore50</PackageTargetFallback>
+    <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
+    <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
+    <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="..\..\DevTeam.TestEngine\DevTeam.TestEngine.json" />
+    <ProjectReference Include="..\..\DevTeam.TestEngine.Contracts\DevTeam.TestEngine.Contracts.csproj" />
+    <ProjectReference Include="..\..\DevTeam.TestEngine\DevTeam.TestEngine.csproj" />
+    <ProjectReference Include="..\..\DevTeam.TestFramework\DevTeam.TestFramework.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="DevTeam.IoC" Version="1.0.107-beta" />
+    <PackageReference Include="DevTeam.IoC.Configurations.Json" Version="1.0.107-beta" />
+    <PackageReference Include="DevTeam.IoC.Contracts" Version="1.0.107-beta" />
+  </ItemGroup>
+
+</Project>

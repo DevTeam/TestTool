@@ -32,17 +32,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="DevTeam.IoC, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\DevTeam.IoC.1.0.82-beta\lib\portable-net45\DevTeam.IoC.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="DevTeam.IoC, Version=1.0.107.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\DevTeam.IoC.1.0.107-beta\lib\portable-net45\DevTeam.IoC.dll</HintPath>
     </Reference>
-    <Reference Include="DevTeam.IoC.Configurations.Json, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\DevTeam.IoC.Configurations.Json.1.0.82-beta\lib\portable-net45\DevTeam.IoC.Configurations.Json.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="DevTeam.IoC.Configurations.Json, Version=1.0.107.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\DevTeam.IoC.Configurations.Json.1.0.107-beta\lib\portable-net45\DevTeam.IoC.Configurations.Json.dll</HintPath>
     </Reference>
-    <Reference Include="DevTeam.IoC.Contracts, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\DevTeam.IoC.1.0.82-beta\lib\portable-net45\DevTeam.IoC.Contracts.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="DevTeam.IoC.Contracts, Version=1.0.107.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\DevTeam.IoC.1.0.107-beta\lib\portable-net45\DevTeam.IoC.Contracts.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>

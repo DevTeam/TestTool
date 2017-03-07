@@ -1,13 +1,12 @@
-﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.26228.4
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevTeam.TestFramework", "DevTeam.TestFramework\DevTeam.TestFramework.csproj", "{4033AAC8-4B00-4BB8-B58D-063414105649}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "dotNetCore", "dotNetCore", "{1BE21557-750A-4026-BE2B-28BBF7739D44}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleTests", "dotNetCore\SimpleTests\SimpleTests.csproj", "{C79C723F-B824-4B5F-AE92-CB04C01BE45B}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "dotNet", "dotNet", "{858EF382-563F-4AA4-817E-B52BF65B1B06}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevTeam.TestFramework", "DevTeam.TestFramework\DevTeam.TestFramework.csproj", "{4033AAC8-4B00-4BB8-B58D-063414105649}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevTeam.TestEngine", "DevTeam.TestEngine\DevTeam.TestEngine.csproj", "{1A8B343D-9F47-4732-8309-E5A33D81EA26}"
 EndProject
@@ -15,15 +14,15 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevTeam.TestEngine.Contract
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevTeam.TestEngine.Tests", "DevTeam.TestEngine.Tests\DevTeam.TestEngine.Tests.csproj", "{3A4E8961-FBCD-40E6-A031-0464D346051A}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "DevTeam.TestRunner", "dotNetCore\DevTeam.TestRunner\DevTeam.TestRunner.xproj", "{577737B3-4122-4E5A-A363-114A6DE303EE}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "dotNet", "dotNet", "{858EF382-563F-4AA4-817E-B52BF65B1B06}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DevTeam.TestRunner", "dotNetCore\DevTeam.TestRunner\DevTeam.TestRunner.csproj", "{577737B3-4122-4E5A-A363-114A6DE303EE}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevTeam.TestRunner", "dotNet\DevTeam.TestRunner\DevTeam.TestRunner.csproj", "{1A568F71-CDD8-4697-8EF9-B40A8A380DBE}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleTests", "dotNet\SimpleTests\SimpleTests.csproj", "{F7D34584-57B0-430F-ADF1-B8FE370E85B4}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevTeam.TestAdapter", "DevTeam.TestAdapter\DevTeam.TestAdapter.csproj", "{61563113-EFCE-445D-9B76-9CF95BDAFB54}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleTests", "dotNetCore\SimpleTests\SimpleTests.csproj", "{47A9E9CD-9321-4242-9A74-1B300E2781E9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,10 +34,6 @@ Global
 		{4033AAC8-4B00-4BB8-B58D-063414105649}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4033AAC8-4B00-4BB8-B58D-063414105649}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4033AAC8-4B00-4BB8-B58D-063414105649}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C79C723F-B824-4B5F-AE92-CB04C01BE45B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C79C723F-B824-4B5F-AE92-CB04C01BE45B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C79C723F-B824-4B5F-AE92-CB04C01BE45B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C79C723F-B824-4B5F-AE92-CB04C01BE45B}.Release|Any CPU.Build.0 = Release|Any CPU
 		{1A8B343D-9F47-4732-8309-E5A33D81EA26}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{1A8B343D-9F47-4732-8309-E5A33D81EA26}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1A8B343D-9F47-4732-8309-E5A33D81EA26}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -67,14 +62,18 @@ Global
 		{61563113-EFCE-445D-9B76-9CF95BDAFB54}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{61563113-EFCE-445D-9B76-9CF95BDAFB54}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{61563113-EFCE-445D-9B76-9CF95BDAFB54}.Release|Any CPU.Build.0 = Release|Any CPU
+		{47A9E9CD-9321-4242-9A74-1B300E2781E9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{47A9E9CD-9321-4242-9A74-1B300E2781E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{47A9E9CD-9321-4242-9A74-1B300E2781E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{47A9E9CD-9321-4242-9A74-1B300E2781E9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{C79C723F-B824-4B5F-AE92-CB04C01BE45B} = {1BE21557-750A-4026-BE2B-28BBF7739D44}
 		{577737B3-4122-4E5A-A363-114A6DE303EE} = {1BE21557-750A-4026-BE2B-28BBF7739D44}
 		{1A568F71-CDD8-4697-8EF9-B40A8A380DBE} = {858EF382-563F-4AA4-817E-B52BF65B1B06}
 		{F7D34584-57B0-430F-ADF1-B8FE370E85B4} = {858EF382-563F-4AA4-817E-B52BF65B1B06}
+		{47A9E9CD-9321-4242-9A74-1B300E2781E9} = {1BE21557-750A-4026-BE2B-28BBF7739D44}
 	EndGlobalSection
 EndGlobal
