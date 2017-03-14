@@ -14,15 +14,12 @@
 
   <ItemGroup>
     <EmbeddedResource Include="..\..\DevTeam.TestEngine\DevTeam.TestEngine.json" />
+    <PackageReference Include="DevTeam.IoC" Version="1.0.107-beta" />
+    <PackageReference Include="DevTeam.IoC.Configurations.Json" Version="1.0.107-beta" />
+    <PackageReference Include="DevTeam.IoC.Contracts" Version="1.0.117-beta" />
     <ProjectReference Include="..\..\DevTeam.TestEngine.Contracts\DevTeam.TestEngine.Contracts.csproj" />
     <ProjectReference Include="..\..\DevTeam.TestEngine\DevTeam.TestEngine.csproj" />
     <ProjectReference Include="..\..\DevTeam.TestFramework\DevTeam.TestFramework.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="DevTeam.IoC" Version="1.0.107-beta" />
-    <PackageReference Include="DevTeam.IoC.Configurations.Json" Version="1.0.107-beta" />
-    <PackageReference Include="DevTeam.IoC.Contracts" Version="1.0.107-beta" />
   </ItemGroup>
 
 </Project>

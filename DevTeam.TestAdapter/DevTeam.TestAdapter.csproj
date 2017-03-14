@@ -23,7 +23,7 @@
   <ItemGroup>
     <PackageReference Include="DevTeam.IoC" Version="1.0.107-beta" />
     <PackageReference Include="DevTeam.IoC.Configurations.Json" Version="1.0.107-beta" />
-    <PackageReference Include="DevTeam.IoC.Contracts" Version="1.0.107-beta" />
+    <PackageReference Include="DevTeam.IoC.Contracts" Version="1.0.117-beta" />
     <PackageReference Include="Microsoft.NETCore.Portable.Compatibility" Version="1.0.1" />
     <PackageReference Include="Microsoft.TestPlatform.ObjectModel" Version="15.0.0" />
   </ItemGroup>
