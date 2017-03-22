@@ -1,0 +1,13 @@
+{
+  "profiles": {
+    "DevTeam.TestAdapter": {
+      "commandName": "Executable",
+      "executablePath": "C:\\Program Files\\dotnet\\dotnet.exe",
+      "commandLineArgs": "test dotNetCore\\SimpleTests\\SimpleTests.csproj",
+      "workingDirectory": "..",
+      "environmentVariables": {
+        "VSTEST_HOST_DEBUG": "1"
+      }
+    }
+  }
+}
