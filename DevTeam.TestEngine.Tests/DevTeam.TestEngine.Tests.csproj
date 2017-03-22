@@ -34,14 +34,14 @@
       <HintPath>..\packages\Castle.Core.4.0.0\lib\net45\Castle.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="DevTeam.IoC, Version=1.0.107.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\DevTeam.IoC.1.0.107-beta\lib\portable-net45\DevTeam.IoC.dll</HintPath>
+    <Reference Include="DevTeam.IoC, Version=1.0.147.0, Culture=neutral, PublicKeyToken=620ded7f0cf61090, processorArchitecture=MSIL">
+      <HintPath>..\packages\DevTeam.IoC.1.0.147-beta\lib\net46\DevTeam.IoC.dll</HintPath>
     </Reference>
-    <Reference Include="DevTeam.IoC.Configurations.Json, Version=1.0.107.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\DevTeam.IoC.Configurations.Json.1.0.107-beta\lib\portable-net45\DevTeam.IoC.Configurations.Json.dll</HintPath>
+    <Reference Include="DevTeam.IoC.Configurations.Json, Version=1.0.147.0, Culture=neutral, PublicKeyToken=620ded7f0cf61090, processorArchitecture=MSIL">
+      <HintPath>..\packages\DevTeam.IoC.Configurations.Json.1.0.147-beta\lib\net46\DevTeam.IoC.Configurations.Json.dll</HintPath>
     </Reference>
-    <Reference Include="DevTeam.IoC.Contracts, Version=1.0.107.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\DevTeam.IoC.1.0.107-beta\lib\portable-net45\DevTeam.IoC.Contracts.dll</HintPath>
+    <Reference Include="DevTeam.IoC.Contracts, Version=1.0.147.0, Culture=neutral, PublicKeyToken=620ded7f0cf61090, processorArchitecture=MSIL">
+      <HintPath>..\packages\DevTeam.IoC.Contracts.1.0.147-beta\lib\net46\DevTeam.IoC.Contracts.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Win32.Primitives, Version=4.0.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Win32.Primitives.4.3.0\lib\net46\Microsoft.Win32.Primitives.dll</HintPath>
@@ -99,8 +99,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Net.Http, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Net.Http.4.3.0\lib\net46\System.Net.Http.dll</HintPath>
-      <Private>True</Private>
+      <HintPath>..\packages\System.Net.Http.4.3.1\lib\net46\System.Net.Http.dll</HintPath>
     </Reference>
     <Reference Include="System.Net.Sockets, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Net.Sockets.4.3.0\lib\net46\System.Net.Sockets.dll</HintPath>
@@ -165,6 +164,9 @@
       <Project>{4033aac8-4b00-4bb8-b58d-063414105649}</Project>
       <Name>DevTeam.TestFramework</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

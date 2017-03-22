@@ -11,6 +11,7 @@
 
     using NUnit.Framework;
     using Shouldly;
+    using IReflection = Contracts.Reflection.IReflection;
 
     [TestFixture]
     public class TestExecutorTests

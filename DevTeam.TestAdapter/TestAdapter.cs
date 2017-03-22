@@ -13,6 +13,7 @@
     using Microsoft.VisualStudio.TestPlatform.ObjectModel.Logging;
     using TestEngine.Contracts;
     using TestEngine.Contracts.Reflection;
+    using IReflection = TestEngine.Contracts.Reflection.IReflection;
     using ITestDiscoverer = TestEngine.Contracts.ITestDiscoverer;
     using ITestExecutor = TestEngine.Contracts.ITestExecutor;
     using TestCase = Microsoft.VisualStudio.TestPlatform.ObjectModel.TestCase;
