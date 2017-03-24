@@ -116,7 +116,7 @@
 
         private string ReadIoCConfiguration()
         {
-            return File.ReadAllText(Path.Combine(Path.GetDirectoryName(GetType().GetTypeInfo().Assembly.Location), "DevTeam.TestEngine.json"));
+            return File.ReadAllText(Path.Combine(Path.GetDirectoryName(GetType().GetTypeInfo().Assembly.Location), "DevTeam.TestEngine.ioc"));
         }
     }
 }

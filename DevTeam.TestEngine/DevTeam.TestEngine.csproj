@@ -17,11 +17,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="DevTeam.TestEngine.json" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Include="DevTeam.TestEngine.json">
+    <Content Include="DevTeam.TestEngine.ioc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

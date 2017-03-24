@@ -15,14 +15,16 @@
     <GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>
   </PropertyGroup>
 
-  <!--ItemGroup>
-    <EmbeddedResource Include="..\DevTeam.TestEngine\DevTeam.TestEngine.json" />
-  </ItemGroup-->
+  <ItemGroup>
+    <Content Include="..\DevTeam.TestEngine\DevTeam.TestEngine.ioc" Link="DevTeam.TestEngine.ioc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="DevTeam.IoC" Version="1.0.147-beta" />
-    <PackageReference Include="DevTeam.IoC.Configurations.Json" Version="1.0.147-beta" />
-    <PackageReference Include="DevTeam.IoC.Contracts" Version="1.0.147-beta" />
+    <PackageReference Include="DevTeam.IoC" Version="1.0.158-beta" />
+    <PackageReference Include="DevTeam.IoC.Configurations.Json" Version="1.0.158-beta" />
+    <PackageReference Include="DevTeam.IoC.Contracts" Version="1.0.158-beta" />
     <PackageReference Include="Microsoft.NETCore.Portable.Compatibility" Version="1.0.1" />
     <PackageReference Include="Microsoft.TestPlatform.ObjectModel" Version="15.0.0" />
   </ItemGroup>

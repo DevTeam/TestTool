@@ -23,10 +23,7 @@
 
         private static string ReadIoCConfiguration()
         {
-            using (var configReader = new StreamReader(typeof(Program).GetTypeInfo().Assembly.GetManifestResourceStream("DevTeam.TestRunner.DevTeam.TestEngine.json")))
-            {
-                return configReader.ReadToEnd();
-            }
+            return File.ReadAllText(Path.Combine(Path.GetDirectoryName(typeof(Program).GetTypeInfo().Assembly.Location), "DevTeam.TestEngine.ioc"));
         }
     }
 }

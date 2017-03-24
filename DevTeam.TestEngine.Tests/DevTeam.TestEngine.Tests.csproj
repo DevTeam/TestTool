@@ -34,14 +34,14 @@
       <HintPath>..\packages\Castle.Core.4.0.0\lib\net45\Castle.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="DevTeam.IoC, Version=1.0.147.0, Culture=neutral, PublicKeyToken=620ded7f0cf61090, processorArchitecture=MSIL">
-      <HintPath>..\packages\DevTeam.IoC.1.0.147-beta\lib\net46\DevTeam.IoC.dll</HintPath>
+    <Reference Include="DevTeam.IoC, Version=1.0.158.0, Culture=neutral, PublicKeyToken=620ded7f0cf61090, processorArchitecture=MSIL">
+      <HintPath>..\packages\DevTeam.IoC.1.0.158-beta\lib\net46\DevTeam.IoC.dll</HintPath>
     </Reference>
-    <Reference Include="DevTeam.IoC.Configurations.Json, Version=1.0.147.0, Culture=neutral, PublicKeyToken=620ded7f0cf61090, processorArchitecture=MSIL">
-      <HintPath>..\packages\DevTeam.IoC.Configurations.Json.1.0.147-beta\lib\net46\DevTeam.IoC.Configurations.Json.dll</HintPath>
+    <Reference Include="DevTeam.IoC.Configurations.Json, Version=1.0.158.0, Culture=neutral, PublicKeyToken=620ded7f0cf61090, processorArchitecture=MSIL">
+      <HintPath>..\packages\DevTeam.IoC.Configurations.Json.1.0.158-beta\lib\net46\DevTeam.IoC.Configurations.Json.dll</HintPath>
     </Reference>
-    <Reference Include="DevTeam.IoC.Contracts, Version=1.0.147.0, Culture=neutral, PublicKeyToken=620ded7f0cf61090, processorArchitecture=MSIL">
-      <HintPath>..\packages\DevTeam.IoC.Contracts.1.0.147-beta\lib\net46\DevTeam.IoC.Contracts.dll</HintPath>
+    <Reference Include="DevTeam.IoC.Contracts, Version=1.0.158.0, Culture=neutral, PublicKeyToken=620ded7f0cf61090, processorArchitecture=MSIL">
+      <HintPath>..\packages\DevTeam.IoC.Contracts.1.0.158-beta\lib\net46\DevTeam.IoC.Contracts.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Win32.Primitives, Version=4.0.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Win32.Primitives.4.3.0\lib\net46\Microsoft.Win32.Primitives.dll</HintPath>
@@ -50,9 +50,8 @@
     <Reference Include="Moq, Version=4.7.1.0, Culture=neutral, PublicKeyToken=69f491c39445e920, processorArchitecture=MSIL">
       <HintPath>..\packages\Moq.4.7.1\lib\net45\Moq.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.10.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="nunit.framework, Version=3.6.1.0, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL">
       <HintPath>..\packages\NUnit.3.6.1\lib\net45\nunit.framework.dll</HintPath>
@@ -144,8 +143,8 @@
     <Compile Include="TestDiscovererTests.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="..\DevTeam.TestEngine\DevTeam.TestEngine.json">
-      <Link>DevTeam.TestEngine.json</Link>
+    <Content Include="..\DevTeam.TestEngine\DevTeam.TestEngine.ioc">
+      <Link>DevTeam.TestEngine.ioc</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <None Include="app.config" />
