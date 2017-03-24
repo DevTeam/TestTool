@@ -87,7 +87,7 @@
                 from testCase in _session.Discover(source)
                 select new TestCase(testCase.ToString(), ExecutorUri, testCase.Source)
                 {
-                    DisplayName = $"{testCase.TypeName}{GetParametersString(testCase.TypeParameters)}.{testCase.MethodName}{GetParametersString(testCase.MethodParaeters)}",
+                    DisplayName = $"{testCase.TypeName}{GetTypesString(testCase.TypeGenericArgs)}{GetParametersString(testCase.TypeParameters)}.{testCase.MethodName}{GetParametersString(testCase.MethodParaeters)}",
                     CodeFilePath = testCase.CodeFilePath
                 };
         }
@@ -100,6 +100,17 @@
             }
 
             return $"({string.Join(", ", parameters)})";
+        }
+
+        private static string GetTypesString(string[] types)
+        {
+            if (types == null) throw new ArgumentNullException(nameof(types));
+            if (types.Length == 0)
+            {
+                return string.Empty;
+            }
+
+            return $"<{string.Join(", ", types)}>";
         }
 
         private string ReadIoCConfiguration()

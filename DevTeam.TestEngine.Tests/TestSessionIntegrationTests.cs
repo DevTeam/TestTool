@@ -57,6 +57,20 @@
             results.Length.ShouldBe(8);
         }
 
+        [Test]
+        public void ShouldRunTestsWhenGenericsAndParams()
+        {
+            // Given
+            var session = CreateSession();
+
+            // When
+            var cases = session.Discover(Integration.GetSource()).Filter(typeof(GenericParamsTest<,>)).ToArray();
+            var results = session.RunAll(cases);
+
+            // Then
+            results.Length.ShouldBe(16);
+        }
+
         private static ISession CreateSession()
         {
             var container = Integration.CreateContainer();

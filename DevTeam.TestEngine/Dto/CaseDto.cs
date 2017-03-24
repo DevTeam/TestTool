@@ -11,6 +11,7 @@
             [NotNull] string source,
             [NotNull] string fullTypeName,
             [NotNull] string typeName,
+            [NotNull] string[] typeGenericArgs,
             [NotNull] string[] typeParameters,
             [NotNull] string methodName,
             [NotNull] string[] methodParaeters,
@@ -20,6 +21,7 @@
             if (source == null) throw new ArgumentNullException(nameof(source));
             if (fullTypeName == null) throw new ArgumentNullException(nameof(fullTypeName));
             if (typeName == null) throw new ArgumentNullException(nameof(typeName));
+            if (typeGenericArgs == null) throw new ArgumentNullException(nameof(typeGenericArgs));
             if (typeParameters == null) throw new ArgumentNullException(nameof(typeParameters));
             if (methodName == null) throw new ArgumentNullException(nameof(methodName));
             if (methodParaeters == null) throw new ArgumentNullException(nameof(methodParaeters));
@@ -29,6 +31,7 @@
             LineNumber = lineNumber;
             FullTypeName = fullTypeName;
             TypeName = typeName;
+            TypeGenericArgs = typeGenericArgs;
             TypeParameters = typeParameters;
             MethodName = methodName;
             MethodParaeters = methodParaeters;
@@ -46,6 +49,8 @@
 
         public string TypeName { get; }
 
+        public string[] TypeGenericArgs { get; }
+
         public string[] TypeParameters { get; }
 
         public string MethodName { get; }
@@ -55,7 +60,7 @@
         [NotNull]
         public override string ToString()
         {
-            return $"{Path.GetFileName(Source)}: {FullTypeName}{GetParametersString(TypeParameters)}.{MethodName}{GetParametersString(MethodParaeters)}";
+            return $"{Path.GetFileName(Source)}: {FullTypeName}{GetTypesString(TypeGenericArgs)}{GetParametersString(TypeParameters)}.{MethodName}{GetParametersString(MethodParaeters)}";
         }
 
         [NotNull]
@@ -68,6 +73,18 @@
             }
 
             return $"({string.Join(", ", parameters)})";
+        }
+
+        [NotNull]
+        private static string GetTypesString([NotNull] string[] types)
+        {
+            if (types == null) throw new ArgumentNullException(nameof(types));
+            if (types.Length == 0)
+            {
+                return string.Empty;
+            }
+
+            return $"<{string.Join(", ", types)}>";
         }
     }
 }

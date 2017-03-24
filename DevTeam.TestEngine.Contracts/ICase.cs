@@ -12,6 +12,8 @@ namespace DevTeam.TestEngine.Contracts
 
         string TypeName { [NotNull] get; }
 
+        string[] TypeGenericArgs { [NotNull] get; }
+
         string[] TypeParameters { [NotNull] get; }
 
         string MethodName { [NotNull] get; }

@@ -4,9 +4,11 @@
 
     [Test.Case("a", 10)]
     [Test.Case("b", 20)]
-    public class ParamsTest
+    [Test.GenericArgs(typeof(string), typeof(int))]
+    [Test.GenericArgs(typeof(double), typeof(object))]
+    public class GenericParamsTest<T1, T2>
     {
-        public ParamsTest(string str, int num)
+        public GenericParamsTest(string str, int num)
         {
         }
 

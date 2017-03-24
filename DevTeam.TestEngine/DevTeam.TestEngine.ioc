@@ -32,7 +32,8 @@
     "class": "MethodInfo: IMethodInfo", "configure": [ { "stateType": "System.Reflection.MethodInfo", "index" : 0 } ],
     "constructor": [
       { "paramType": "System.Reflection.MethodInfo", "state" : { "stateType": "System.Reflection.MethodInfo", "index" : "0" } },
-      { "paramType": "Func<System.Reflection.ParameterInfo, IParameterInfo>" }
+      { "paramType": "Func<System.Reflection.ParameterInfo, IParameterInfo>" },
+      { "paramType": "Func<System.Reflection.TypeInfo, ITypeInfo>" }
     ]
   },
   {

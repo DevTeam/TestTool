@@ -4,12 +4,12 @@
 
     public class SimpleTests
     {
-        [Case]
+        [Test.Case]
         public void SuccessTest()
         {
         }
 
-        [Case]
+        [Test.Case]
         public void FailedTest()
         {
         }

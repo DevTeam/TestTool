@@ -9,6 +9,13 @@
 
         IEnumerable<IParameterInfo> Parameters { [NotNull] get; }
 
+        bool IsGenericMethodDefinition { get; }
+
+        ITypeInfo[] GetGenericArguments { get; }
+
+        [NotNull]
+        IMethodInfo MakeGenericMethod([NotNull] params Type[] typeArguments);
+
         [NotNull]
         IEnumerable<T> GetCustomAttributes<T>() where T : Attribute;
 

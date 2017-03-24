@@ -26,7 +26,17 @@
 
         public string Name => _typeInfo.Name;
 
+        public bool IsGenericTypeDefinition => _typeInfo.IsGenericTypeDefinition;
+
+        public ITypeInfo[] GenericTypeParameters => _typeInfo.GenericTypeParameters.Select(type => (ITypeInfo)new TypeInfo(type.GetTypeInfo(), _methodInfoFactory)).ToArray();
+
         public IEnumerable<IMethodInfo> Methods => _typeInfo.DeclaredMethods.Select(i => _methodInfoFactory(i));
+
+        public ITypeInfo MakeGenericType(params Type[] typeArguments)
+        {
+            if (typeArguments == null) throw new ArgumentNullException(nameof(typeArguments));
+            return new TypeInfo(_typeInfo.MakeGenericType(typeArguments).GetTypeInfo(), _methodInfoFactory);
+        }
 
         public IEnumerable<T> GetCustomAttributes<T>() where T : Attribute
         {

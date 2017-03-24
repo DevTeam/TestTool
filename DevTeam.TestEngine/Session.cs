@@ -11,7 +11,7 @@
     internal class Session: ISession
     {
         [NotNull] private readonly IReflection _reflection;
-        [NotNull] private readonly Dictionary<Guid, CaseInfo> _cases = new Dictionary<Guid, CaseInfo>();
+        [NotNull] private readonly Dictionary<Guid, TestInfo> _cases = new Dictionary<Guid, TestInfo>();
 
         public Session([NotNull] IReflection reflection)
         {
@@ -26,16 +26,17 @@
             var assembly = _reflection.LoadAssembly(source);
             return
                 from type in assembly.DefinedTypes
-                from typeAttribute in type.GetCustomAttributes<CaseAttribute>().DefaultIfEmpty(CaseAttribute.Empty)
+                from typeGenericArgsAttribute in type.GetCustomAttributes<Test.GenericArgsAttribute>().DefaultIfEmpty(Test.GenericArgsAttribute.Empty)
+                from typeCaseAttribute in type.GetCustomAttributes<Test.CaseAttribute>().DefaultIfEmpty(Test.CaseAttribute.Empty)
                 from method in type.Methods
-                from methodAttribute in method.GetCustomAttributes<CaseAttribute>()
-                from testCase in CreateCase(source, assembly, type, typeAttribute, method, methodAttribute)
+                from methodCaseAttribute in method.GetCustomAttributes<Test.CaseAttribute>()
+                from testCase in CreateCase(source, assembly, type, typeGenericArgsAttribute, typeCaseAttribute, method, methodCaseAttribute)
                 select testCase;
         }
 
         public IResult Run(Guid testId)
         {
-            if (!_cases.TryGetValue(testId, out CaseInfo testInfo))
+            if (!_cases.TryGetValue(testId, out TestInfo testInfo))
             {
                 return new ResultDto(TestState.NotFound);
             }
@@ -44,7 +45,16 @@
             object testInstance;
             try
             {
-                testInstance = testInfo.Type.CreateInstance(testInfo.TypeAttribute.Parameters);
+                var instanceType = testInfo.Type;
+                if (testInfo.Type.IsGenericTypeDefinition)
+                {
+                    if (testInfo.TypeGenericArgsAttribute.Types.Length == instanceType.GenericTypeParameters.Length)
+                    {
+                        instanceType = instanceType.MakeGenericType(testInfo.TypeGenericArgsAttribute.Types);
+                    }
+                }
+
+                testInstance = instanceType.CreateInstance(testInfo.TypeCaseAttribute.Parameters);
             }
             catch (Exception exception)
             {
@@ -54,7 +64,8 @@
 
             try
             {
-                testInfo.Method.Invoke(testInstance, testInfo.MethodAttribute.Parameters);
+                var method = testInfo.Method;
+                method.Invoke(testInstance, testInfo.MethodCaseAttribute.Parameters);
             }
             catch (Exception exception)
             {
@@ -84,26 +95,29 @@
             [NotNull] string source,
             [NotNull] IAssemblyInfo assembly,
             [NotNull] ITypeInfo type,
-            [NotNull] CaseAttribute typeAttribute,
+            [NotNull] Test.GenericArgsAttribute typeGenericArgAttribute,
+            [NotNull] Test.CaseAttribute typeCaseAttribute,
             [NotNull] IMethodInfo method,
-            [NotNull] CaseAttribute methodAttribute)
+            [NotNull] Test.CaseAttribute methodCaseAttribute)
         {
             if (source == null) throw new ArgumentNullException(nameof(source));
             if (assembly == null) throw new ArgumentNullException(nameof(assembly));
             if (type == null) throw new ArgumentNullException(nameof(type));
-            if (typeAttribute == null) throw new ArgumentNullException(nameof(typeAttribute));
+            if (typeGenericArgAttribute == null) throw new ArgumentNullException(nameof(typeGenericArgAttribute));
+            if (typeCaseAttribute == null) throw new ArgumentNullException(nameof(typeCaseAttribute));
             if (method == null) throw new ArgumentNullException(nameof(method));
-            if (methodAttribute == null) throw new ArgumentNullException(nameof(methodAttribute));
+            if (methodCaseAttribute == null) throw new ArgumentNullException(nameof(methodCaseAttribute));
             var testCase = new CaseDto(
                 Guid.NewGuid(),
                 source,
                 type.FullName,
                 type.Name,
-                typeAttribute.Parameters.Select(i => i.ToString()).ToArray(),
+                typeGenericArgAttribute.Types.Select(i => i.Name).ToArray(),
+                typeCaseAttribute.Parameters.Select(i => i.ToString()).ToArray(),
                 method.Name,
-                methodAttribute.Parameters.Select(i => i.ToString()).ToArray());
+                methodCaseAttribute.Parameters.Select(i => i.ToString()).ToArray());
 
-            _cases[testCase.Id] = new CaseInfo(assembly, type, typeAttribute, method, methodAttribute);
+            _cases[testCase.Id] = new TestInfo(assembly, type, typeGenericArgAttribute, typeCaseAttribute, method, methodCaseAttribute);
             yield return testCase;
         }
     }

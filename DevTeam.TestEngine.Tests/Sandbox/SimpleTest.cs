@@ -1,21 +1,16 @@
 ﻿namespace DevTeam.TestEngine.Tests.Sandbox
 {
-    using System;
     using TestFramework;
 
-    public class DisposableTest: IDisposable
+    public class SimpleTest
     {
-        [Case]
+        [Test.Case]
         public void SuccessTest()
         {
         }
 
-        [Case]
+        [Test.Case]
         public void FailedTest()
-        {
-        }
-
-        public void Dispose()
         {
         }
     }
