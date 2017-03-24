@@ -9,7 +9,7 @@
     using Sandbox;
 
     [TestFixture]
-    public class TestSessionIntegrationTests
+    public class TestEngineIntegrationTests
     {
         [SetUp]
         public void SetUp()
@@ -69,6 +69,20 @@
 
             // Then
             results.Length.ShouldBe(16);
+        }
+
+        [Test]
+        public void ShouldRunTestsWhenCaseSource()
+        {
+            // Given
+            var session = CreateSession();
+
+            // When
+            var cases = session.Discover(Integration.GetSource()).Filter(typeof(CaseSourceTest)).ToArray();
+            var results = session.RunAll(cases);
+
+            // Then
+            results.Length.ShouldBe(4);
         }
 
         private static ISession CreateSession()

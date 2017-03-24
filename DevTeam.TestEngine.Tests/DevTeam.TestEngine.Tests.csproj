@@ -9,8 +9,9 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>DevTeam.TestEngine.Tests</RootNamespace>
     <AssemblyName>DevTeam.TestEngine.Tests</AssemblyName>
-    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -34,14 +35,14 @@
       <HintPath>..\packages\Castle.Core.4.0.0\lib\net45\Castle.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="DevTeam.IoC, Version=1.0.158.0, Culture=neutral, PublicKeyToken=620ded7f0cf61090, processorArchitecture=MSIL">
-      <HintPath>..\packages\DevTeam.IoC.1.0.158-beta\lib\net46\DevTeam.IoC.dll</HintPath>
+    <Reference Include="DevTeam.IoC, Version=1.0.161.0, Culture=neutral, PublicKeyToken=620ded7f0cf61090, processorArchitecture=MSIL">
+      <HintPath>..\packages\DevTeam.IoC.1.0.161-beta\lib\net45\DevTeam.IoC.dll</HintPath>
     </Reference>
-    <Reference Include="DevTeam.IoC.Configurations.Json, Version=1.0.158.0, Culture=neutral, PublicKeyToken=620ded7f0cf61090, processorArchitecture=MSIL">
-      <HintPath>..\packages\DevTeam.IoC.Configurations.Json.1.0.158-beta\lib\net46\DevTeam.IoC.Configurations.Json.dll</HintPath>
+    <Reference Include="DevTeam.IoC.Configurations.Json, Version=1.0.161.0, Culture=neutral, PublicKeyToken=620ded7f0cf61090, processorArchitecture=MSIL">
+      <HintPath>..\packages\DevTeam.IoC.Configurations.Json.1.0.161-beta\lib\net45\DevTeam.IoC.Configurations.Json.dll</HintPath>
     </Reference>
-    <Reference Include="DevTeam.IoC.Contracts, Version=1.0.158.0, Culture=neutral, PublicKeyToken=620ded7f0cf61090, processorArchitecture=MSIL">
-      <HintPath>..\packages\DevTeam.IoC.Contracts.1.0.158-beta\lib\net46\DevTeam.IoC.Contracts.dll</HintPath>
+    <Reference Include="DevTeam.IoC.Contracts, Version=1.0.161.0, Culture=neutral, PublicKeyToken=620ded7f0cf61090, processorArchitecture=MSIL">
+      <HintPath>..\packages\DevTeam.IoC.Contracts.1.0.161-beta\lib\net45\DevTeam.IoC.Contracts.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Win32.Primitives, Version=4.0.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Win32.Primitives.4.3.0\lib\net46\Microsoft.Win32.Primitives.dll</HintPath>
@@ -58,8 +59,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Shouldly, Version=2.8.2.0, Culture=neutral, PublicKeyToken=6042cbcb05cbc941, processorArchitecture=MSIL">
-      <HintPath>..\packages\Shouldly.2.8.2\lib\net451\Shouldly.dll</HintPath>
-      <Private>True</Private>
+      <HintPath>..\packages\Shouldly.2.8.2\lib\net40\Shouldly.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.AppContext, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
@@ -138,19 +138,18 @@
   <ItemGroup>
     <Compile Include="Integration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Reflection.cs" />
+    <Compile Include="Sandbox\CaseSourceTest.cs" />
     <Compile Include="Sandbox\GenericParamsTest.cs" />
     <Compile Include="Sandbox\ParamsTest.cs" />
     <Compile Include="Sandbox\DisposableTest.cs" />
     <Compile Include="Sandbox\SimpleTest.cs" />
-    <Compile Include="TestSessionIntegrationTests.cs" />
+    <Compile Include="TestEngineIntegrationTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="..\DevTeam.TestEngine\DevTeam.TestEngine.ioc">
       <Link>DevTeam.TestEngine.ioc</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

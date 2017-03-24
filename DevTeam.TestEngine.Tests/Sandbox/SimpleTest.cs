@@ -9,7 +9,7 @@
         {
         }
 
-        [Test.Case]
+        [Test]
         public void FailedTest()
         {
         }

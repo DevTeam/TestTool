@@ -2,45 +2,19 @@
   { "reference": "DevTeam.TestEngine.Contracts" },
   { "reference": "DevTeam.TestEngine" },
 
-  { "using": "DevTeam.TestEngine.Contracts" },
-  { "using": "DevTeam.TestEngine" },
-  { "using": "System" },
-
   { "dependency.feature": "Default" },
 
-  { "class": "Session: ISession" },
-  { "class": "Subject<>: IObservable<>,IObserver<>", "configure": [ { "lifetime": "Singleton" } ] },
-  
+  { "using": "DevTeam.TestEngine.Contracts" },
   { "using": "DevTeam.TestEngine.Contracts.Reflection" },
+  { "using": "DevTeam.TestEngine" },
   { "using": "DevTeam.TestEngine.Reflection" },
+  { "using": "System" },
 
-  {
-    "class": "AssemblyInfo: IAssemblyInfo", "configure": [ { "stateType": "System.Reflection.Assembly", "index" : 0 } ],
-    "constructor": [
-      { "paramType": "System.Reflection.Assembly", "state" : { "stateType": "System.Reflection.Assembly", "index" : "0" } },
-      { "paramType": "Func<System.Reflection.TypeInfo, ITypeInfo>" }
-    ]
-  },
-  {
-    "class": "TypeInfo: ITypeInfo", "configure": [ { "stateType": "System.Reflection.TypeInfo", "index" : 0 } ],
-    "constructor": [
-      { "paramType": "System.Reflection.TypeInfo", "state" : { "stateType": "System.Reflection.TypeInfo", "index" : "0" } },
-      { "paramType": "Func<System.Reflection.MethodInfo, IMethodInfo>" }
-    ]
-  },
-  {
-    "class": "MethodInfo: IMethodInfo", "configure": [ { "stateType": "System.Reflection.MethodInfo", "index" : 0 } ],
-    "constructor": [
-      { "paramType": "System.Reflection.MethodInfo", "state" : { "stateType": "System.Reflection.MethodInfo", "index" : "0" } },
-      { "paramType": "Func<System.Reflection.ParameterInfo, IParameterInfo>" },
-      { "paramType": "Func<System.Reflection.TypeInfo, ITypeInfo>" }
-    ]
-  },
-  {
-    "class": "ParameterInfo: IParameterInfo", "configure": [ { "stateType": "System.Reflection.ParameterInfo", "index" : 0 } ],
-    "constructor": [
-      { "paramType": "System.Reflection.ParameterInfo", "state" : { "stateType": "System.Reflection.ParameterInfo", "index" : "0" } },
-      { "paramType": "Func<System.Reflection.TypeInfo, ITypeInfo>" }
-    ]
-  }
+  { "class": "Session: ISession" },
+  { "class": "Discoverer: IDiscoverer", "configure": [ { "lifetime": "Singleton" } ] },
+  { "class": "Runner: IRunner", "configure": [ { "lifetime": "Singleton" } ] },
+  { "class": "GenericArgsProvider: IGenericArgsProvider", "configure": [ { "lifetime": "Singleton" } ] },
+  { "class": "ParametersProvider: IParametersProvider", "configure": [ { "lifetime": "Singleton" } ] },
+  { "class": "Reflection: IReflection", "configure": [ { "lifetime": "Singleton" } ] },
+  { "class": "Subject<>: IObservable<>,IObserver<>", "configure": [ { "lifetime": "Singleton" } ] }
 ]

@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿#if !NETSTANDARD1_5 && !NETCOREAPP1_0
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
@@ -17,3 +18,4 @@ using System.Runtime.InteropServices;
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
 [assembly: Guid("577737b3-4122-4e5a-a363-114a6de303ee")]
+#endif

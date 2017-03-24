@@ -1,6 +1,6 @@
 ﻿namespace DevTeam.TestEngine.Contracts
 {
-    public enum TestState
+    public enum State
     {
         Passed,
 

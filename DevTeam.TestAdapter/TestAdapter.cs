@@ -29,8 +29,7 @@
         public TestAdapter()
         {
             var container = new Container("root").Configure()
-                .DependsOn<JsonConfiguration>(ReadIoCConfiguration()).ToSelf()
-                .Register().Autowiring<IReflection, Reflection>().ToSelf();
+                .DependsOn<JsonConfiguration>(ReadIoCConfiguration()).ToSelf();
 
             _session = container.Resolve().Instance<ISession>();
         }

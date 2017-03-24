@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "DevTeam.TestRunner": {
+      "commandName": "Project",
+      "commandLineArgs": "C:\\Projects\\DevTeam\\TestTool\\SampleTests\\bin\\Debug\\net35\\SampleTests.dll"
+    }
+  }
+}

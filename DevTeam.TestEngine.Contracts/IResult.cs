@@ -2,7 +2,7 @@
 {
     public interface IResult
     {
-        TestState State { get; }
+        State State { get; }
 
         IMessage[] Messages { [NotNull] get; }
     }

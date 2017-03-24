@@ -2,6 +2,11 @@
 
 namespace DevTeam.TestFramework
 {
+    [AttributeUsage(AttributeTargets.Method | AttributeTargets.Class, AllowMultiple = true)]
+    public class TestAttribute : Attribute
+    {
+    }
+
     public class Test
     {
         [AttributeUsage(AttributeTargets.Method | AttributeTargets.Class, AllowMultiple = true)]
@@ -18,11 +23,21 @@ namespace DevTeam.TestFramework
             public object[] Parameters { get; }
         }
 
+        [AttributeUsage(AttributeTargets.Method | AttributeTargets.Class, AllowMultiple = true)]
+        public class CaseSourceAttribute : Attribute
+        {
+            public CaseSourceAttribute(params Type[] caseSourceTypes)
+            {
+                if (caseSourceTypes == null) throw new ArgumentNullException(nameof(caseSourceTypes));
+                CaseSourceTypes = caseSourceTypes;
+            }
+
+            public Type[] CaseSourceTypes { get; }
+        }
+
         [AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
         public class GenericArgsAttribute : Attribute
         {
-            public static readonly GenericArgsAttribute Empty = new GenericArgsAttribute();
-
             public GenericArgsAttribute(params Type[] types)
             {
                 if (types == null) throw new ArgumentNullException(nameof(types));
@@ -30,6 +45,18 @@ namespace DevTeam.TestFramework
             }
 
             public Type[] Types { get; }
+        }
+
+        [AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
+        public class GenericArgsSourceAttribute : Attribute
+        {
+            public GenericArgsSourceAttribute(params Type[] genericArgsSourceTypes)
+            {
+                if (genericArgsSourceTypes == null) throw new ArgumentNullException(nameof(genericArgsSourceTypes));
+                GenericArgsSourceTypes = genericArgsSourceTypes;
+            }
+
+            public Type[] GenericArgsSourceTypes { get; }
         }
 
         [AttributeUsage(AttributeTargets.Method | AttributeTargets.Class, AllowMultiple = true)]

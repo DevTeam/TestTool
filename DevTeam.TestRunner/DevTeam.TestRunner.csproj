@@ -1,18 +1,15 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard1.5</TargetFramework>
-    <AssemblyName>DevTeam.TestAdapter</AssemblyName>
-    <PackageId>DevTeam.TestAdapter</PackageId>
-    <GenerateAssemblyTitleAttribute>false</GenerateAssemblyTitleAttribute>
-    <GenerateAssemblyDescriptionAttribute>false</GenerateAssemblyDescriptionAttribute>
+	<TargetFrameworks>net35;net45;netcoreapp1.0</TargetFrameworks>
+    <AssemblyName>DevTeam.TestRunner</AssemblyName>
+    <OutputType>Exe</OutputType>
+    <PackageId>DevTeam.TestRunner</PackageId>
+    <PackageTargetFallback>$(PackageTargetFallback);dnxcore50</PackageTargetFallback>
     <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
     <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
     <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
-    <GenerateAssemblyCopyrightAttribute>false</GenerateAssemblyCopyrightAttribute>
-    <GenerateNeutralResourcesLanguageAttribute>false</GenerateNeutralResourcesLanguageAttribute>
-    <GenerateAssemblyVersionAttribute>false</GenerateAssemblyVersionAttribute>
-    <GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>
+	<RuntimeFrameworkVersion>1.0.4</RuntimeFrameworkVersion>
   </PropertyGroup>
 
   <ItemGroup>
@@ -25,12 +22,12 @@
     <PackageReference Include="DevTeam.IoC" Version="1.0.161-beta" />
     <PackageReference Include="DevTeam.IoC.Configurations.Json" Version="1.0.161-beta" />
     <PackageReference Include="DevTeam.IoC.Contracts" Version="1.0.161-beta" />
-    <PackageReference Include="Microsoft.TestPlatform.ObjectModel" Version="15.0.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\DevTeam.TestEngine.Contracts\DevTeam.TestEngine.Contracts.csproj" />
     <ProjectReference Include="..\DevTeam.TestEngine\DevTeam.TestEngine.csproj" />
+    <ProjectReference Include="..\DevTeam.TestFramework\DevTeam.TestFramework.csproj" />
   </ItemGroup>
 
 </Project>

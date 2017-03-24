@@ -14,8 +14,7 @@
         public static IContainer CreateContainer()
         {
             return new Container("root").Configure()
-                .DependsOn<JsonConfiguration>(ReadIoCConfiguration()).ToSelf()
-                .Register().Autowiring<Contracts.Reflection.IReflection, Reflection>().ToSelf();
+                .DependsOn<JsonConfiguration>(ReadIoCConfiguration()).ToSelf();
         }
 
         public static string GetSource()

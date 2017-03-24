@@ -9,12 +9,12 @@
     {
         private readonly List<IMessage> _messages = new List<IMessage>();
 
-        public ResultDto(TestState state)
+        public ResultDto(State state)
         {
             State = state;
         }
 
-        public TestState State { get; }
+        public State State { get; }
 
         public IMessage[] Messages => _messages.ToArray();
 
