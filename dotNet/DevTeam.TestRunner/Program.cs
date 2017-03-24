@@ -12,7 +12,7 @@
         {
             using (var container = new Container("root")
                 .Configure().DependsOn<JsonConfiguration>(ReadIoCConfiguration()).ToSelf()
-                .Register().Contract<Program>().Autowiring(typeof(Program)).ToSelf())
+                .Register().Autowiring<Program, Program>().ToSelf())
             {
             }
         }

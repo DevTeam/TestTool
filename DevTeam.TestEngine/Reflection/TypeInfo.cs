@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Reflection;
     using Contracts;
     using Contracts.Reflection;
 
@@ -26,6 +27,11 @@
         public string Name => _typeInfo.Name;
 
         public IEnumerable<IMethodInfo> Methods => _typeInfo.DeclaredMethods.Select(i => _methodInfoFactory(i));
+
+        public IEnumerable<T> GetCustomAttributes<T>() where T : Attribute
+        {
+            return _typeInfo.GetCustomAttributes<T>();
+        }
 
         public object CreateInstance(params object[] parameters)
         {

@@ -6,10 +6,20 @@ namespace DevTeam.TestEngine.Contracts
     {
         Guid Id { get; }
 
-        string FullyQualifiedCaseName { [NotNull] get; }
+        string Source { [NotNull] get; }
 
-        string DisplayName { [NotNull] get; }
+        string FullTypeName { [NotNull] get; }
 
-        ITestMethod Method { [NotNull] get; }
+        string TypeName { [NotNull] get; }
+
+        string[] TypeParameters { [NotNull] get; }
+
+        string MethodName { [NotNull] get; }
+
+        string[] MethodParaeters { [NotNull] get; }
+
+        string CodeFilePath { [CanBeNull] get; }
+
+        int? LineNumber { [CanBeNull] get; }
     }
 }

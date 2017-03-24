@@ -12,32 +12,27 @@
     using Microsoft.VisualStudio.TestPlatform.ObjectModel.Adapter;
     using Microsoft.VisualStudio.TestPlatform.ObjectModel.Logging;
     using TestEngine.Contracts;
-    using TestEngine.Contracts.Reflection;
     using IReflection = TestEngine.Contracts.Reflection.IReflection;
-    using ITestDiscoverer = TestEngine.Contracts.ITestDiscoverer;
-    using ITestExecutor = TestEngine.Contracts.ITestExecutor;
     using TestCase = Microsoft.VisualStudio.TestPlatform.ObjectModel.TestCase;
 
     [FileExtension(".dll")]
     [FileExtension(".exe")]
-    [DefaultExecutorUri(ExecutorUri)]
-    [ExtensionUri(ExecutorUri)]
-    public class TestAdapter : Microsoft.VisualStudio.TestPlatform.ObjectModel.Adapter.ITestDiscoverer, Microsoft.VisualStudio.TestPlatform.ObjectModel.Adapter.ITestExecutor
+    [DefaultExecutorUri(ExecutorId)]
+    [ExtensionUri(ExecutorId)]
+    public class TestAdapter : ITestDiscoverer, ITestExecutor
     {
-        public const string ExecutorUri = "executor://devteam/TestRunner";
-        private readonly List<ITestDiscoverer> _testDiscoverer;
-        private readonly List<ITestExecutor> _testExecutor;
-        private readonly ITestElementFactory _testElementFactory;
+        public const string ExecutorId = "executor://devteam/TestRunner";
+        private static readonly Uri ExecutorUri = new Uri(ExecutorId);
+        private readonly ITestSession _testSession;
+        private bool _canceled;
 
         public TestAdapter()
         {
             var container = new Container("root").Configure()
                 .DependsOn<JsonConfiguration>(ReadIoCConfiguration()).ToSelf()
-                .Register().Contract<IReflection>().Autowiring<Reflection>().ToSelf();
+                .Register().Autowiring<IReflection, Reflection>().ToSelf();
 
-            _testDiscoverer = container.Resolve().Instance<IEnumerable<ITestDiscoverer>>().ToList();
-            _testElementFactory = container.Resolve().Instance<ITestElementFactory>();
-            _testExecutor = container.Resolve().Instance<IEnumerable<ITestExecutor>>().ToList();
+            _testSession = container.Resolve().Instance<ITestSession>();
         }
 
         public void DiscoverTests(
@@ -46,8 +41,7 @@
             IMessageLogger logger,
             ITestCaseDiscoverySink discoverySink)
         {
-            logger.SendMessage(TestMessageLevel.Informational, "DiscoverTests");
-            foreach (var testCase in GetTestCases(sources))
+            foreach (var testCase in Discover(sources))
             {
                 discoverySink.SendTestCase(testCase);
             }
@@ -57,61 +51,55 @@
         {
             frameworkHandle.SendMessage(TestMessageLevel.Informational, "RunTests");
             frameworkHandle.SendMessage(TestMessageLevel.Informational, runContext.RunSettings.SettingsXml);
-            var testDict = tests.ToDictionary(i => i.Id, i => i);
-            var assemblies = _testElementFactory.RestoreTestAssemblies(testDict.Values.ToDictionary(i => i.Id, i => i.FullyQualifiedName)).ToList();
-            foreach (var testExecutor in _testExecutor)
+
+            foreach (var testCase in tests)
             {
-                foreach (var testCaseInfo in testExecutor.Run(assemblies))
+                frameworkHandle.RecordStart(testCase);
+                var result = _testSession.Run(testCase.Id);
+                frameworkHandle.RecordResult(new TestResult { Outcome = TestOutcome.Passed, DisplayName = testCase.DisplayName });
+                frameworkHandle.RecordEnd(testCase, TestOutcome.Passed);
+                if (_canceled)
                 {
-                    TestCase test;
-                    if (!testDict.TryGetValue(testCaseInfo.Case.Id, out test))
-                    {
-                        continue;
-                    }
-
-                    switch (testCaseInfo.State)
-                    {
-                        case TestCaseState.Starting:
-                            frameworkHandle.RecordStart(test);
-                            break;
-
-                        case TestCaseState.Success:
-                            frameworkHandle.RecordResult(new TestResult { Outcome = TestOutcome.Passed, DisplayName = test.DisplayName });
-                            frameworkHandle.RecordEnd(test, TestOutcome.Passed);
-                            frameworkHandle.SendMessage(TestMessageLevel.Informational, test.DisplayName);
-                            break;
-                    }
+                    _canceled = false;
+                    break;
                 }
             }
         }
 
-        public void RunTests(IEnumerable<string> sources, IRunContext runContext, IFrameworkHandle frameworkHandle)
+        public void RunTests([IoC.Contracts.NotNull] IEnumerable<string> sources, [IoC.Contracts.NotNull] IRunContext runContext, [IoC.Contracts.NotNull] IFrameworkHandle frameworkHandle)
         {
-            RunTests(GetTestCases(sources), runContext, frameworkHandle);
+            if (sources == null) throw new ArgumentNullException(nameof(sources));
+            if (runContext == null) throw new ArgumentNullException(nameof(runContext));
+            if (frameworkHandle == null) throw new ArgumentNullException(nameof(frameworkHandle));
+            RunTests(Discover(sources), runContext, frameworkHandle);
         }
 
         public void Cancel()
         {
+            _canceled = true;
         }
 
-        private IEnumerable<TestCase> GetTestCases(IEnumerable<string> sources)
+        private IEnumerable<TestCase> Discover([IoC.Contracts.NotNull] IEnumerable<string> sources)
         {
-            var executorUri = new Uri(ExecutorUri);
+            if (sources == null) throw new ArgumentNullException(nameof(sources));
             return
-                from testDiscoverer in _testDiscoverer
-                from testAssembly in testDiscoverer.ExploreSources(sources)
-                from testClass in testAssembly.Classes
-                from testMethod in testClass.Methods
-                from testCase in testMethod.Cases
-                select new TestCase(
-                        testCase.FullyQualifiedCaseName,
-                        executorUri,
-                        testAssembly.Source
-                    )
-                    {
-                        Id = testCase.Id,
-                        DisplayName = testCase.DisplayName
-                    };
+                from source in sources
+                from testCase in _testSession.Discover(source)
+                select new TestCase(testCase.ToString(), ExecutorUri, testCase.Source)
+                {
+                    DisplayName = $"{testCase.TypeName}{GetParametersString(testCase.TypeParameters)}.{testCase.MethodName}{GetParametersString(testCase.MethodParaeters)}",
+                    CodeFilePath = testCase.CodeFilePath
+                };
+        }
+
+        private string GetParametersString(string[] parameters)
+        {
+            if (parameters.Length == 0)
+            {
+                return string.Empty;
+            }
+
+            return $"({string.Join(", ", parameters)})";
         }
 
         private string ReadIoCConfiguration()

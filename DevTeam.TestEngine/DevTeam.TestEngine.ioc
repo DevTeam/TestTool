@@ -8,14 +8,9 @@
 
   { "dependency.feature": "Default" },
 
-  { "class": "TestDiscoverer: ITestDiscoverer", "configure": [ {"tag": "executor://devteam/DefaultTestExecutor" }, { "lifetime": "Singleton" } ] },
-  { "class": "TestExecutor: ITestExecutor", "configure": [ {"tag": "executor://devteam/DefaultTestExecutor" }, { "lifetime": "Singleton" } ] },
-
-  { "class": "Subject<>: IObservable<>", "configure": [ { "contract": [ "IObserver<>" ] }, { "lifetime": "Singleton" } ] },
-  { "class": "TestElementFactory: ITestElementFactory", "configure": [ { "lifetime": "Singleton" } ] },
-  { "class": "TestExecutionContext: ITestExecutionContext" },
-  { "class": "TestMethodSelector: ITestMethodSelector", "configure": [ { "lifetime": "Singleton" } ] },
-
+  { "class": "TestSession: ITestSession" },
+  { "class": "Subject<>: IObservable<>,IObserver<>", "configure": [ { "lifetime": "Singleton" } ] },
+  
   { "using": "DevTeam.TestEngine.Contracts.Reflection" },
   { "using": "DevTeam.TestEngine.Reflection" },
 

@@ -1,4 +1,4 @@
-﻿namespace DevTeam.TestEngine.Tests
+﻿namespace DevTeam.TestEngine.Tests.Sandbox
 {
     using TestFramework;
 
