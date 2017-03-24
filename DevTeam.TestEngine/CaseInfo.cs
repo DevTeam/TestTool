@@ -5,14 +5,14 @@
     using Contracts.Reflection;
     using TestFramework;
 
-    internal class TestCaseInfo
+    internal class CaseInfo
     {
-        public TestCaseInfo(
+        public CaseInfo(
             [NotNull] IAssemblyInfo assembly,
             [NotNull] ITypeInfo type,
-            [NotNull] TestAttribute typeAttribute,
+            [NotNull] CaseAttribute typeAttribute,
             [NotNull] IMethodInfo method,
-            [NotNull] TestAttribute methodAttribute)
+            [NotNull] CaseAttribute methodAttribute)
         {
             if (assembly == null) throw new ArgumentNullException(nameof(assembly));
             if (type == null) throw new ArgumentNullException(nameof(type));
@@ -30,10 +30,10 @@
 
         public ITypeInfo Type { [NotNull] get; }
 
-        public TestAttribute TypeAttribute { [NotNull] get; }
+        public CaseAttribute TypeAttribute { [NotNull] get; }
 
         public IMethodInfo Method { [NotNull] get; }
 
-        public TestAttribute MethodAttribute { [NotNull] get; }
+        public CaseAttribute MethodAttribute { [NotNull] get; }
     }
 }

@@ -3,12 +3,12 @@
     using System;
     using System.Collections.Generic;
 
-    public interface ITestSession
+    public interface ISession
     {
         [NotNull]
-        IEnumerable<ITestCase> Discover([NotNull] string source);
+        IEnumerable<ICase> Discover([NotNull] string source);
 
         [NotNull]
-        ITestResult Run(Guid testId);
+        IResult Run(Guid testId);
     }
 }

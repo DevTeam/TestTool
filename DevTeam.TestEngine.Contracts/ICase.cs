@@ -2,7 +2,7 @@ namespace DevTeam.TestEngine.Contracts
 {
     using System;
 
-    public interface ITestCase
+    public interface ICase
     {
         Guid Id { get; }
 

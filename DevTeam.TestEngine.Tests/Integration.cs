@@ -23,7 +23,7 @@
             return Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "DevTeam.TestEngine.Tests.dll");
         }
 
-        public static IEnumerable<ITestCase> Filter([IoC.Contracts.NotNull] this IEnumerable<ITestCase> testCases, [IoC.Contracts.NotNull] params Type[] testTypes)
+        public static IEnumerable<ICase> Filter([IoC.Contracts.NotNull] this IEnumerable<ICase> testCases, [IoC.Contracts.NotNull] params Type[] testTypes)
         {
             if (testCases == null) throw new ArgumentNullException(nameof(testCases));
             if (testTypes == null) throw new ArgumentNullException(nameof(testTypes));
@@ -31,7 +31,7 @@
             return testCases.Where(i => i.FullTypeName.Contains(".Sandbox.") && (!testTypes.Any() || typeNames.Contains(i.TypeName)));
         }
 
-        public static ITestResult[] RunAll([IoC.Contracts.NotNull] this ITestSession session, [IoC.Contracts.NotNull] IEnumerable<ITestCase> testCases)
+        public static IResult[] RunAll([IoC.Contracts.NotNull] this ISession session, [IoC.Contracts.NotNull] IEnumerable<ICase> testCases)
         {
             if (session == null) throw new ArgumentNullException(nameof(session));
             if (testCases == null) throw new ArgumentNullException(nameof(testCases));

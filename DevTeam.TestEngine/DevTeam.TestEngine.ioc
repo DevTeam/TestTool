@@ -8,7 +8,7 @@
 
   { "dependency.feature": "Default" },
 
-  { "class": "TestSession: ITestSession" },
+  { "class": "Session: ISession" },
   { "class": "Subject<>: IObservable<>,IObserver<>", "configure": [ { "lifetime": "Singleton" } ] },
   
   { "using": "DevTeam.TestEngine.Contracts.Reflection" },

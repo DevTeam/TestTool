@@ -3,11 +3,11 @@
 namespace DevTeam.TestFramework
 {
     [AttributeUsage(AttributeTargets.Method | AttributeTargets.Class, AllowMultiple = true)]
-    public class TestAttribute : Attribute
+    public class CaseAttribute : Attribute
     {
-        public static readonly TestAttribute Empty = new TestAttribute();
+        public static readonly CaseAttribute Empty = new CaseAttribute();
 
-        public TestAttribute(params object[] parameters)
+        public CaseAttribute(params object[] parameters)
         {
             if (parameters == null) throw new ArgumentNullException(nameof(parameters));
             Parameters = parameters;

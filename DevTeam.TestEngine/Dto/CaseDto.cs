@@ -4,9 +4,9 @@
     using System.IO;
     using Contracts;
 
-    internal class TestCase: ITestCase
+    internal class CaseDto: ICase
     {
-        public TestCase(
+        public CaseDto(
             Guid id,
             [NotNull] string source,
             [NotNull] string fullTypeName,

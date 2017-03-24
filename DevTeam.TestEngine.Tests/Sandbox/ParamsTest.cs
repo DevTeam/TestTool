@@ -2,22 +2,22 @@
 {
     using TestFramework;
 
-    [Test("a", 10)]
-    [Test("b", 20)]
+    [Case("a", 10)]
+    [Case("b", 20)]
     public class ParamsTest
     {
         public ParamsTest(string str, int num)
         {
         }
 
-        [Test(33, "abc")]
-        [Test(44, "xyz")]
+        [Case(33, "abc")]
+        [Case(44, "xyz")]
         public void SuccessTest(int num, string str)
         {
         }
 
-        [Test(true)]
-        [Test(false)]
+        [Case(true)]
+        [Case(false)]
         public void FailedTest(bool flag)
         {
         }

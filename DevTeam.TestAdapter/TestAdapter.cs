@@ -23,7 +23,7 @@
     {
         public const string ExecutorId = "executor://devteam/TestRunner";
         private static readonly Uri ExecutorUri = new Uri(ExecutorId);
-        private readonly ITestSession _testSession;
+        private readonly ISession _session;
         private bool _canceled;
 
         public TestAdapter()
@@ -32,7 +32,7 @@
                 .DependsOn<JsonConfiguration>(ReadIoCConfiguration()).ToSelf()
                 .Register().Autowiring<IReflection, Reflection>().ToSelf();
 
-            _testSession = container.Resolve().Instance<ITestSession>();
+            _session = container.Resolve().Instance<ISession>();
         }
 
         public void DiscoverTests(
@@ -55,7 +55,7 @@
             foreach (var testCase in tests)
             {
                 frameworkHandle.RecordStart(testCase);
-                var result = _testSession.Run(testCase.Id);
+                var result = _session.Run(testCase.Id);
                 frameworkHandle.RecordResult(new TestResult { Outcome = TestOutcome.Passed, DisplayName = testCase.DisplayName });
                 frameworkHandle.RecordEnd(testCase, TestOutcome.Passed);
                 if (_canceled)
@@ -84,7 +84,7 @@
             if (sources == null) throw new ArgumentNullException(nameof(sources));
             return
                 from source in sources
-                from testCase in _testSession.Discover(source)
+                from testCase in _session.Discover(source)
                 select new TestCase(testCase.ToString(), ExecutorUri, testCase.Source)
                 {
                     DisplayName = $"{testCase.TypeName}{GetParametersString(testCase.TypeParameters)}.{testCase.MethodName}{GetParametersString(testCase.MethodParaeters)}",

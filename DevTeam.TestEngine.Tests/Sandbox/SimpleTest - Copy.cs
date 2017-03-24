@@ -1,8 +1,8 @@
-﻿namespace SimpleTests
+﻿namespace DevTeam.TestEngine.Tests.Sandbox
 {
-    using DevTeam.TestFramework;
+    using TestFramework;
 
-    public class SimpleTests
+    public class SimpleTest
     {
         [Case]
         public void SuccessTest()
