@@ -58,13 +58,13 @@
         }
 
         [Test]
-        public void ShouldRunTestsWhenGenericsAndParams()
+        public void ShouldRunTestsWhenGenericArgsTest()
         {
             // Given
             var session = CreateSession();
 
             // When
-            var cases = session.Discover(Integration.GetSource()).Filter(typeof(GenericParamsTest<,>)).ToArray();
+            var cases = session.Discover(Integration.GetSource()).Filter(typeof(GenericArgsTest<,>)).ToArray();
             var results = session.RunAll(cases);
 
             // Then
@@ -83,6 +83,48 @@
 
             // Then
             results.Length.ShouldBe(4);
+        }
+
+        [Test]
+        public void ShouldRunTestsWhenCaseSingleItemSource()
+        {
+            // Given
+            var session = CreateSession();
+
+            // When
+            var cases = session.Discover(Integration.GetSource()).Filter(typeof(CaseSingleItemSourceTest)).ToArray();
+            var results = session.RunAll(cases);
+
+            // Then
+            results.Length.ShouldBe(4);
+        }
+
+        [Test]
+        public void ShouldRunTestsWhenGenericArgsSource()
+        {
+            // Given
+            var session = CreateSession();
+
+            // When
+            var cases = session.Discover(Integration.GetSource()).Filter(typeof(GenericArgsSourceTest<,>)).ToArray();
+            var results = session.RunAll(cases);
+
+            // Then
+            results.Length.ShouldBe(2);
+        }
+
+        [Test]
+        public void ShouldRunTestsWhenGenericArgsSingleItemSource()
+        {
+            // Given
+            var session = CreateSession();
+
+            // When
+            var cases = session.Discover(Integration.GetSource()).Filter(typeof(GenericArgsSingleItemSourceTest<>)).ToArray();
+            var results = session.RunAll(cases);
+
+            // Then
+            results.Length.ShouldBe(2);
         }
 
         private static ISession CreateSession()

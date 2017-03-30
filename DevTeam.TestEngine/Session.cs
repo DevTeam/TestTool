@@ -30,7 +30,6 @@
                 _cases[testInfo.TestCase.Id] = testInfo;
                 yield return testInfo.TestCase;
             }
-            
         }
 
         public IResult Run(Guid testId)

@@ -1,18 +1,17 @@
 ﻿namespace DevTeam.TestEngine.Tests.Sandbox
 {
     using System.Collections;
-    using System.Collections.Generic;
     using TestFramework;
 
     [Test.CaseSource(typeof(CaseSourceTestCases))]
-    public class CaseSourceTest
+    public class CaseSingleItemSourceTest
     {
-        public CaseSourceTest(int num)
+        public CaseSingleItemSourceTest(int num)
         {
         }
 
         [Test.CaseSource(typeof(SuccessTestCases))]
-        public void SuccessTest(int num, string str)
+        public void SuccessTest(int num)
         {
         }
 
@@ -21,7 +20,7 @@
             public IEnumerator GetEnumerator()
             {
                 yield return new object[] { 10 };
-                yield return new List<object> { 20 };
+                yield return 20;
             }
         }
 
@@ -30,7 +29,7 @@
             public IEnumerator GetEnumerator()
             {
                 yield return new object[] { 33, "abc"};
-                yield return new List<object> { 44, "xyz" };
+                yield return 44;
             }
         }
     }

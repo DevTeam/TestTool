@@ -6,9 +6,9 @@
     [Test.Case("b", 20)]
     [Test.GenericArgs(typeof(string), typeof(int))]
     [Test.GenericArgs(typeof(double), typeof(object))]
-    public class GenericParamsTest<T1, T2>
+    public class GenericArgsTest<T1, T2>
     {
-        public GenericParamsTest(string str, int num)
+        public GenericArgsTest(string str, int num)
         {
         }
 

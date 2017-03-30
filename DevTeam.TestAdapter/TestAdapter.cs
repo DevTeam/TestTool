@@ -12,7 +12,6 @@
     using Microsoft.VisualStudio.TestPlatform.ObjectModel.Adapter;
     using Microsoft.VisualStudio.TestPlatform.ObjectModel.Logging;
     using TestEngine.Contracts;
-    using IReflection = TestEngine.Contracts.Reflection.IReflection;
     using TestCase = Microsoft.VisualStudio.TestPlatform.ObjectModel.TestCase;
 
     [FileExtension(".dll")]

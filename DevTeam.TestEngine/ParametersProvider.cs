@@ -39,14 +39,25 @@
                 from caseSourceAttribute in caseSources
                 from caseSourceType in caseSourceAttribute.CaseSourceTypes
                 let caseSourceInstance = _reflection.CreateType(caseSourceType).CreateInstance() as IEnumerable
-                from parametersEnum in caseSourceInstance.OfType<IEnumerable>()
-                select parametersEnum.OfType<object>().ToArray();
+                from paramsItem in GetParams(caseSourceInstance)
+                select paramsItem;
 
             var parameters =
                 from caseAttribute in cases
                 select caseAttribute.Parameters;
 
             return genericArgsFromSources.Concat(parameters);
+        }
+
+        private static IEnumerable<object[]> GetParams([NotNull] IEnumerable source)
+        {
+            if (source == null) throw new ArgumentNullException(nameof(source));
+            return
+                from genericArgsSource in source.OfType<object>()
+                let fromEnum = (genericArgsSource as IEnumerable)?.OfType<object>()
+                let value = genericArgsSource
+                let fromValue = value != null ? Enumerable.Repeat(value, 1) : Enumerable.Empty<object>()
+                select (fromEnum ?? fromValue).ToArray();
         }
     }
 }

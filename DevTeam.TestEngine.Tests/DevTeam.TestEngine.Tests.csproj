@@ -138,8 +138,11 @@
   <ItemGroup>
     <Compile Include="Integration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Sandbox\CaseSingleItemSourceTest.cs" />
     <Compile Include="Sandbox\CaseSourceTest.cs" />
-    <Compile Include="Sandbox\GenericParamsTest.cs" />
+    <Compile Include="Sandbox\GenericArgsSingleItemSourceTest.cs" />
+    <Compile Include="Sandbox\GenericArgsSourceTest.cs" />
+    <Compile Include="Sandbox\GenericArgsTest.cs" />
     <Compile Include="Sandbox\ParamsTest.cs" />
     <Compile Include="Sandbox\DisposableTest.cs" />
     <Compile Include="Sandbox\SimpleTest.cs" />

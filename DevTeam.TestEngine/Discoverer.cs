@@ -64,7 +64,17 @@
                 method.Name,
                 methodParameters.Select(i => i.ToString()).ToArray());
 
-            yield return (ITestInfo)new TestInfo(testCase, assembly, type, genericArgs, typeParameters, method, methodParameters);
+            // var testAttr = type.GetCustomAttributes<TestAttribute>().SingleOrDefault();
+            // var methodTestAttr = method.GetCustomAttributes<TestAttribute>().SingleOrDefault();
+
+            yield return new TestInfo(
+                testCase,
+                assembly,
+                type,
+                genericArgs,
+                typeParameters,
+                method,
+                methodParameters);
         }
     }
 }

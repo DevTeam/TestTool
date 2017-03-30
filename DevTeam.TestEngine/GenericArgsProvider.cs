@@ -24,14 +24,25 @@
                 from genericArgsSourceAttribute in type.GetCustomAttributes<TestFramework.Test.GenericArgsSourceAttribute>()
                 from genericArgsSourceType in genericArgsSourceAttribute.GenericArgsSourceTypes
                 let genericArgsSourceInstance = _reflection.CreateType(genericArgsSourceType).CreateInstance() as IEnumerable
-                from genericArgsEnum in genericArgsSourceInstance.OfType<IEnumerable>()
-                select genericArgsEnum.OfType<Type>().ToArray();
+                from genericArgsItem in GetGenericArgs(genericArgsSourceInstance)
+                select genericArgsItem;
 
             var genericArgs =
                 from genericArgsAtr in type.GetCustomAttributes<TestFramework.Test.GenericArgsAttribute>()
                 select genericArgsAtr.Types;
 
             return genericArgsFromSources.Concat(genericArgs);
+        }
+
+        private static IEnumerable<Type[]> GetGenericArgs([NotNull] IEnumerable source)
+        {
+            if (source == null) throw new ArgumentNullException(nameof(source));
+            return
+                from genericArgsSource in source.OfType<object>()
+                let fromEnum = (genericArgsSource as IEnumerable)?.OfType<Type>()
+                let type = genericArgsSource as Type
+                let fromType = type != null ? Enumerable.Repeat(type, 1) : Enumerable.Empty<Type>()
+                select (fromEnum ?? fromType).ToArray();
         }
     }
 }

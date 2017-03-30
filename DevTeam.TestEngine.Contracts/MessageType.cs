@@ -6,6 +6,8 @@
 
         StdError,
 
-        Exception
+        Exception,
+
+        Trace
     }
 }

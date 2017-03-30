@@ -7,57 +7,44 @@
 
     internal class Runner : IRunner
     {
-        public IResult Run([NotNull] ITestInfo testInfo)
+        [NotNull] private readonly IInstanceFactory _instanceFactory;
+        [NotNull] private readonly IMethodRunner _methodRunner;
+        [NotNull] private readonly IInstanceDisposer _instanceDisposer;
+
+        public Runner(
+            [NotNull] IInstanceFactory instanceFactory,
+            [NotNull] IMethodRunner methodRunner,
+            [NotNull] IInstanceDisposer instanceDisposer)
+        {
+            if (instanceFactory == null) throw new ArgumentNullException(nameof(instanceFactory));
+            if (methodRunner == null) throw new ArgumentNullException(nameof(methodRunner));
+            if (instanceDisposer == null) throw new ArgumentNullException(nameof(instanceDisposer));
+            _instanceFactory = instanceFactory;
+            _methodRunner = methodRunner;
+            _instanceDisposer = instanceDisposer;
+        }
+
+        public IResult Run(ITestInfo testInfo)
         {
             if (testInfo == null) throw new ArgumentNullException(nameof(testInfo));
             var messages = new List<IMessage>();
-            object testInstance;
-            try
-            {
-                var instanceType = testInfo.Type;
-                if (testInfo.Type.IsGenericTypeDefinition)
-                {
-                    if (testInfo.GenericArgs.Length == instanceType.GenericTypeParameters.Length)
-                    {
-                        instanceType = instanceType.MakeGenericType(testInfo.GenericArgs);
-                    }
-                }
 
-                testInstance = instanceType.CreateInstance(testInfo.TypeParameters);
-            }
-            catch (Exception exception)
+            if (!_instanceFactory.TryCreateInstance(testInfo, messages, out object testInstance))
             {
-                messages.Add(CreateMessageForException(exception, Stage.Construction));
                 return new ResultDto(State.Failed).WithMessages(messages);
             }
 
-            try
+            if (!_methodRunner.TryRun(testInfo, testInstance, messages))
             {
-                var method = testInfo.Method;
-                method.Invoke(testInstance, testInfo.MethodParameters);
-            }
-            catch (Exception exception)
-            {
-                messages.Add(CreateMessageForException(exception, Stage.Test));
                 return new ResultDto(State.Failed).WithMessages(messages);
             }
 
-            try
+            if (!_instanceDisposer.TryDispose(testInstance, messages))
             {
-                (testInstance as IDisposable)?.Dispose();
-            }
-            catch (Exception exception)
-            {
-                messages.Add(CreateMessageForException(exception, Stage.Dispose));
                 return new ResultDto(State.Failed).WithMessages(messages);
             }
 
             return new ResultDto(State.Passed).WithMessages(messages);
-        }
-
-        private static IMessage CreateMessageForException(Exception exception, Stage stage)
-        {
-            return new MessageDto(MessageType.Exception, stage, exception.Message, exception.StackTrace);
         }
     }
 }
