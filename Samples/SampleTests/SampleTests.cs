@@ -5,7 +5,7 @@
     public class SampleTests
     {
         [Test]
-        public void Test1()
+        public void Test3()
         {
         }
     }

@@ -39,7 +39,7 @@
 
         private static string ReadIoCConfiguration()
         {
-            return File.ReadAllText(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "DevTeam.TestEngine.ioc"));
+            return File.ReadAllText(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "DevTeam.TestEngine.dll.ioc"));
         }
     }
 }

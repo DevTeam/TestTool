@@ -38,7 +38,7 @@
         public IEnumerable<T> GetCustomAttributes<T>()
              where T : Attribute
         {
-#if NET35 || NET40
+#if NET35
             return _methodInfo.GetCustomAttributes(typeof(T), true).Cast<T>();
 #else
             return _methodInfo.GetCustomAttributes<T>(true);

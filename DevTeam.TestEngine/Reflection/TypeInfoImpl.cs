@@ -32,7 +32,7 @@
 
         public string Name => _type.Name;
 
-#if NET35 || NET40
+#if NET35
         public bool IsGenericTypeDefinition => _type.IsGenericTypeDefinition;
 
         public ITypeInfo[] GenericTypeParameters => _type.GetGenericArguments().Select(type => _reflection.CreateType(type)).ToArray();

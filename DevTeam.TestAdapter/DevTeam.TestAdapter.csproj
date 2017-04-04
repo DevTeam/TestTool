@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard1.5</TargetFramework>
+    <TargetFrameworks>net462;net35</TargetFrameworks>
     <AssemblyName>DevTeam.TestAdapter</AssemblyName>
     <PackageId>DevTeam.TestAdapter</PackageId>
     <GenerateAssemblyTitleAttribute>false</GenerateAssemblyTitleAttribute>
@@ -13,19 +13,27 @@
     <GenerateNeutralResourcesLanguageAttribute>false</GenerateNeutralResourcesLanguageAttribute>
     <GenerateAssemblyVersionAttribute>false</GenerateAssemblyVersionAttribute>
     <GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>
+    <SignAssembly>False</SignAssembly>
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Include="..\DevTeam.TestEngine\DevTeam.TestEngine.ioc" Link="DevTeam.TestEngine.ioc">
+    <Content Include="..\DevTeam.TestEngine\DevTeam.TestEngine.dll.ioc" Link="DevTeam.TestEngine.ioc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="DevTeam.IoC" Version="1.0.161-beta" />
-    <PackageReference Include="DevTeam.IoC.Configurations.Json" Version="1.0.161-beta" />
-    <PackageReference Include="DevTeam.IoC.Contracts" Version="1.0.161-beta" />
+    <PackageReference Include="DevTeam.IoC" Version="1.0.168-beta" />
+    <PackageReference Include="DevTeam.IoC.Configurations.Json" Version="1.0.168-beta" />
+    <PackageReference Include="DevTeam.IoC.Contracts" Version="1.0.168-beta" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)' == 'net462' or '$(TargetFramework)' == 'netcoreapp1.0'">
     <PackageReference Include="Microsoft.TestPlatform.ObjectModel" Version="15.0.0" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)' == 'net35' or '$(TargetFramework)' == 'net45'">
+    <PackageReference Include="Microsoft.VisualStudio.TestPlatform.ObjectModel" Version="14.0.0" />
   </ItemGroup>
 
   <ItemGroup>

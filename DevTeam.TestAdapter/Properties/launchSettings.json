@@ -3,7 +3,7 @@
     "DevTeam.TestAdapter": {
       "commandName": "Executable",
       "executablePath": "C:\\Program Files\\dotnet\\dotnet.exe",
-      "commandLineArgs": "test dotNetCore\\SimpleTests\\SimpleTests.csproj",
+      "commandLineArgs": "test C:\\Projects\\DevTeam\\TestTool\\DevTeam.TestEngine.Tests\\DevTeam.TestEngine.Tests.csproj",
       "workingDirectory": "..",
       "environmentVariables": {
         "VSTEST_HOST_DEBUG": "1"

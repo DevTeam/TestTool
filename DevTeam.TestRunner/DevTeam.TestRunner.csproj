@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-	<TargetFrameworks>net35;net45;netcoreapp1.0</TargetFrameworks>
+	<TargetFrameworks>net35;net45;net462;netcoreapp1.0</TargetFrameworks>
     <AssemblyName>DevTeam.TestRunner</AssemblyName>
     <OutputType>Exe</OutputType>
     <PackageId>DevTeam.TestRunner</PackageId>
@@ -10,18 +10,20 @@
     <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
     <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
 	<RuntimeFrameworkVersion>1.0.4</RuntimeFrameworkVersion>
+	<SignAssembly>True</SignAssembly>
+	<AssemblyOriginatorKeyFile>DevTeam.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Include="..\DevTeam.TestEngine\DevTeam.TestEngine.ioc" Link="DevTeam.TestEngine.ioc">
+    <Content Include="..\DevTeam.TestEngine\DevTeam.TestEngine.dll.ioc" Link="DevTeam.TestEngine.ioc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="DevTeam.IoC" Version="1.0.161-beta" />
-    <PackageReference Include="DevTeam.IoC.Configurations.Json" Version="1.0.161-beta" />
-    <PackageReference Include="DevTeam.IoC.Contracts" Version="1.0.161-beta" />
+    <PackageReference Include="DevTeam.IoC" Version="1.0.168-beta" />
+    <PackageReference Include="DevTeam.IoC.Configurations.Json" Version="1.0.168-beta" />
+    <PackageReference Include="DevTeam.IoC.Contracts" Version="1.0.168-beta" />
   </ItemGroup>
 
   <ItemGroup>

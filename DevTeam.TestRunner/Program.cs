@@ -49,12 +49,12 @@
 
         private static string ReadIoCConfiguration()
         {
-            return File.ReadAllText(Path.Combine(GetBinDirectory(), "DevTeam.TestEngine.ioc"));
+            return File.ReadAllText(Path.Combine(GetBinDirectory(), "DevTeam.TestEngine.dll.ioc"));
         }
 
         private static string GetBinDirectory()
         {
-#if NET35 || NET40
+#if NET35
             return AppDomain.CurrentDomain.BaseDirectory;
 #else
             return Path.GetDirectoryName(typeof(Program).GetTypeInfo().Assembly.Location);

@@ -1,4 +1,4 @@
-﻿#if !NETSTANDARD1_5 && !NETCOREAPP1_0
+#if !NETSTANDARD1_5 && !NETCOREAPP1_0
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;

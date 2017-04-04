@@ -26,7 +26,7 @@
 
         public string Name => _assembly.GetName().Name;
 
-#if NET35 || NET40
+#if NET35
         public IEnumerable<ITypeInfo> DefinedTypes => _assembly.GetTypes().Select(i => _reflection.CreateType(i));
 #else
         public IEnumerable<ITypeInfo> DefinedTypes => _assembly.DefinedTypes.Select(i => _reflection.CreateType(i.AsType()));

@@ -21,9 +21,31 @@
 		<TestAssembly Include="DevTeam.IoC.Tests"/>
 
 		<Package Include="DevTeam.TestAdapter">
+			<CustomPack>true</CustomPack>
 			<AssemblyVersion>$(ContractAssemblyVersion)</AssemblyVersion>
 			<Version>$(ContractVersion)</Version>
 			<AssemblyInfoFile>DevTeam.TestAdapter\Properties\AssemblyInfo.cs</AssemblyInfoFile>
+		</Package>
+		<Package Include="DevTeam.TestEngine.Contracts">
+			<AssemblyVersion>$(ContractAssemblyVersion)</AssemblyVersion>
+			<Version>$(ContractVersion)</Version>
+			<AssemblyInfoFile>DevTeam.TestEngine.Contracts\Properties\AssemblyInfo.cs</AssemblyInfoFile>
+		</Package>
+		<Package Include="DevTeam.TestFramework">
+			<AssemblyVersion>$(ContractAssemblyVersion)</AssemblyVersion>
+			<Version>$(ContractVersion)</Version>
+			<AssemblyInfoFile>DevTeam.TestFramework\Properties\AssemblyInfo.cs</AssemblyInfoFile>
+		</Package>
+		<Package Include="DevTeam.TestEngine">
+			<AssemblyVersion>$(ContractAssemblyVersion)</AssemblyVersion>
+			<Version>$(ContractVersion)</Version>
+			<AssemblyInfoFile>DevTeam.TestEngine\Properties\AssemblyInfo.cs</AssemblyInfoFile>
+		</Package>
+		<Package Include="DevTeam.TestRunner">
+			<CustomPack>true</CustomPack>
+			<AssemblyVersion>$(ContractAssemblyVersion)</AssemblyVersion>
+			<Version>$(ContractVersion)</Version>
+			<AssemblyInfoFile>DevTeam.TestRunner\Properties\AssemblyInfo.cs</AssemblyInfoFile>
 		</Package>
 	</ItemGroup>
 
@@ -36,6 +58,17 @@
 	<Target Name="Clear">
 	    <RemoveDir Directories="%(Package.Identity)\bin\$(Configuration)" /> 
 	</Target>
+	
+	<Target Name="CopyDependencies">
+		<ItemGroup>
+			<Dependency Include="$(SolutionDir)packages\DevTeam.IoC*\lib\netstandard1.0\*.*"/>
+			<Dependency Include="$(SolutionDir)packages\Newtonsoft.Json.*\lib\netstandard1.0\*.*"/>
+			<TestOutputDirectory Include="."><Path>$(SolutionDir)DevTeam.TestAdapter\bin\$(Configuration)\netstandard1.5</Path></TestOutputDirectory> 
+		</ItemGroup>
+
+		<MakeDir Directories="$(TestOutputDirectory)"/>  
+		<Copy SourceFiles="@(Dependency)" DestinationFolder="%(TestOutputDirectory.Path)"/> 
+    </Target>	
 
 	<Target Name="Build">
 		<Message Text="Contract Assembly Version: $(ContractAssemblyVersion)"/>
@@ -46,16 +79,16 @@
 	    	FilePath='%(Package.AssemblyInfoFile)'
 			Pattern='(\[assembly:\s(AssemblyVersion|AssemblyFileVersion)\()"(\d+\.\d+\.\d+)"(\)\])'
 			Replacement='$1"$(AssemblyVersion)"$4'/>
-		<MSBuild Projects="DevTeam.TestTool.sln" Targets="Restore;Build" BuildInParallel="true" Properties="Configuration=$(Configuration);TargetFrameworks10=$(TargetFrameworks10);TargetFrameworks15=$(TargetFrameworks15)"/>
+		<MSBuild Projects="DevTeam.TestTool.sln" Targets="Restore;Build" BuildInParallel="true" Properties="Configuration=$(Configuration)"/>
 	</Target>	
 
 	<Target Name="Test">
 		<Exec Command="dotnet test DevTeam.TestEngine.Tests\DevTeam.TestEngine.Tests.csproj"/>
 	</Target>
 
-	<Target Name="CreatePackages" DependsOnTargets="Clear;GetNuGet;Build;Test">
-		<Exec Command="packages\nuget.exe pack %(Package.Identity)\package.nuspec -Version %(Package.Version) -OutputDirectory $(PackagesDirectory)"/>
-		<Message Text="##teamcity[publishArtifacts '$(PackagesDirectory)\%(Package.FileName)%(Package.Extension).%(Package.Version).nupkg=>$(PackagesDirectory)']" />
+	<Target Name="CreatePackages" DependsOnTargets="Clear;GetNuGet;Build;Test;CopyDependencies">
+		<Exec Command="packages\nuget.exe pack %(Package.Identity)\package.nuspec -Version %(Package.Version) -OutputDirectory $(PackagesDirectory)" Condition=" '%(Package.CustomPack)' == 'true' "/>
+		<Message Text="##teamcity[publishArtifacts '$(PackagesDirectory)\%(Package.FileName)%(Package.Extension).%(Package.Version).nupkg=>$(PackagesDirectory)']" Condition=" '%(Package.CustomPack)' == 'true' "/>
 	</Target>
 
 	<Target Name="PushPackagesToNuGet" DependsOnTargets="GetNuGet">

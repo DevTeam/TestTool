@@ -3,7 +3,7 @@
     using System;
     using System.Reflection;
     using Contracts.Reflection;
-#if NETCOREAPP1_0 || NETCOREAPP1_1 || NETSTANDARD1_5 || NETSTANDARD1_6
+#if NETCOREAPP1_0 || NETSTANDARD1_5
     using System.Runtime.Loader;
 #endif
 
@@ -11,7 +11,7 @@
     {
         public IAssemblyInfo LoadAssembly(string source)
         {
-#if NETCOREAPP1_0 || NETCOREAPP1_1 || NETSTANDARD1_5 || NETSTANDARD1_6
+#if NETCOREAPP1_0 || NETSTANDARD1_5
             return new AssemblyInfoImpl(this, AssemblyLoadContext.Default.LoadFromAssemblyPath(source));
 #else
             return new AssemblyInfoImpl(this, Assembly.LoadFile(source));

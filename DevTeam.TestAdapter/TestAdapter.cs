@@ -4,7 +4,6 @@
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
-    using System.Reflection;
     using IoC;
     using IoC.Configurations.Json;
     using IoC.Contracts;
@@ -13,6 +12,8 @@
     using Microsoft.VisualStudio.TestPlatform.ObjectModel.Logging;
     using TestEngine.Contracts;
     using TestCase = Microsoft.VisualStudio.TestPlatform.ObjectModel.TestCase;
+    using System.Reflection;
+    using System.Text;
 
     [FileExtension(".dll")]
     [FileExtension(".exe")]
@@ -24,6 +25,23 @@
         private static readonly Uri ExecutorUri = new Uri(ExecutorId);
         private readonly ISession _session;
         private bool _canceled;
+
+        static TestAdapter()
+        {
+            var bin = GetBinDirectory();
+            AppDomain.CurrentDomain.AssemblyResolve += (sender, args) =>
+            {
+                var assemblyName = new AssemblyName(args.Name);
+                var privateBin = Path.Combine(bin, "DevTeam.TestAdapter");
+                var assemblyPath = Path.Combine(privateBin, assemblyName.Name + ".dll");
+                if (File.Exists(assemblyPath))
+                {
+                    return Assembly.LoadFile(assemblyPath);
+                }
+
+                return null;
+            };
+        }
 
         public TestAdapter()
         {
@@ -47,17 +65,86 @@
 
         public void RunTests(IEnumerable<TestCase> tests, IRunContext runContext, IFrameworkHandle frameworkHandle)
         {
-            frameworkHandle.SendMessage(TestMessageLevel.Informational, "RunTests");
-            frameworkHandle.SendMessage(TestMessageLevel.Informational, runContext.RunSettings.SettingsXml);
-
             foreach (var testCase in tests)
             {
                 frameworkHandle.RecordStart(testCase);
+                var startTime = DateTimeOffset.Now;
                 var result = _session.Run(testCase.Id);
-                frameworkHandle.RecordResult(new TestResult { Outcome = TestOutcome.Passed, DisplayName = testCase.DisplayName });
-                frameworkHandle.RecordEnd(testCase, TestOutcome.Passed);
+                var endTime = DateTimeOffset.Now;
+                var testResult = new TestResult(testCase)
+                {
+                    DisplayName = testCase.DisplayName,
+                    StartTime = startTime,
+                    Duration = endTime - startTime,
+                    EndTime = endTime,
+                    ComputerName = Environment.MachineName
+                };
+
+                var stackTrace = new StringBuilder();
+                var errorMessage = new StringBuilder();
+                foreach (var message in result.Messages)
+                {
+                    if (message.StackTrace != null)
+                    {
+                        stackTrace.AppendLine(message.StackTrace);
+                    }
+
+                    switch (message.Type)
+                    {
+                        case MessageType.StdOutput:
+                            testResult.Messages.Add(new TestResultMessage(TestResultMessage.StandardOutCategory, message.Message));
+                            break;
+
+                        case MessageType.StdError:
+                            testResult.Messages.Add(new TestResultMessage(TestResultMessage.StandardErrorCategory, message.Message));
+                            break;
+
+                        case MessageType.Exception:
+                            errorMessage.AppendLine(message.Message);
+                            break;
+
+                        case MessageType.Trace:
+                            testResult.Messages.Add(new TestResultMessage(TestResultMessage.DebugTraceCategory, message.Message));
+                            break;
+
+                        default:
+                            testResult.Messages.Add(new TestResultMessage(TestResultMessage.AdditionalInfoCategory, message.Message));
+                            break;
+                    }
+                }
+
+                testResult.ErrorStackTrace = stackTrace.ToString();
+                testResult.ErrorMessage = errorMessage.ToString();
+
+                switch (result.State)
+                {
+                    case State.Passed:
+                        testResult.Outcome = TestOutcome.Passed;
+                        break;
+
+                    case State.Failed:
+                        testResult.Outcome = TestOutcome.Failed;
+                        break;
+
+                    case State.Skiped:
+                        testResult.Outcome = TestOutcome.Skipped;
+                        break;
+
+                    case State.NotFound:
+                        testResult.Outcome = TestOutcome.NotFound;
+                        break;
+
+                    default:
+                        testResult.Outcome = TestOutcome.None;
+                        break;
+                }
+
+                frameworkHandle.RecordResult(testResult);
+                frameworkHandle.RecordEnd(testCase, testResult.Outcome);
+                frameworkHandle.SendMessage(TestMessageLevel.Informational, $"{testCase} - {testResult.Outcome}");
                 if (_canceled)
                 {
+                    frameworkHandle.SendMessage(TestMessageLevel.Informational, "Canceled");
                     _canceled = false;
                     break;
                 }
@@ -83,37 +170,29 @@
             return
                 from source in sources
                 from testCase in _session.Discover(source)
+                let testName = testCase.ToString()
                 select new TestCase(testCase.ToString(), ExecutorUri, testCase.Source)
                 {
-                    DisplayName = $"{testCase.TypeName}{GetTypesString(testCase.TypeGenericArgs)}{GetParametersString(testCase.TypeParameters)}.{testCase.MethodName}{GetParametersString(testCase.MethodParaeters)}",
-                    CodeFilePath = testCase.CodeFilePath
+                    Id = testCase.Id,
+                    DisplayName = testName,
+                    CodeFilePath = testCase.CodeFilePath,
+                    FullyQualifiedName = testName,
+                    LineNumber = testCase.LineNumber ?? 0,
                 };
         }
 
-        private string GetParametersString(string[] parameters)
+        private static string ReadIoCConfiguration()
         {
-            if (parameters.Length == 0)
-            {
-                return string.Empty;
-            }
-
-            return $"({string.Join(", ", parameters)})";
+            return File.ReadAllText(Path.Combine(Path.Combine(GetBinDirectory(), "DevTeam.TestAdapter"), "DevTeam.TestEngine.dll.ioc"));
         }
 
-        private static string GetTypesString(string[] types)
+        private static string GetBinDirectory()
         {
-            if (types == null) throw new ArgumentNullException(nameof(types));
-            if (types.Length == 0)
-            {
-                return string.Empty;
-            }
-
-            return $"<{string.Join(", ", types)}>";
-        }
-
-        private string ReadIoCConfiguration()
-        {
-            return File.ReadAllText(Path.Combine(Path.GetDirectoryName(GetType().GetTypeInfo().Assembly.Location), "DevTeam.TestEngine.ioc"));
+#if NET35
+            return AppDomain.CurrentDomain.BaseDirectory;
+#else
+            return Path.GetDirectoryName(typeof(TestAdapter).GetTypeInfo().Assembly.Location);
+#endif
         }
     }
 }

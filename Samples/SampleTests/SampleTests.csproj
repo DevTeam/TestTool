@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>net45;net462</TargetFrameworks>
+  </PropertyGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)' == 'netcoreapp1.0' or '$(TargetFramework)' == 'netstandard1.5' or '$(TargetFramework)' == 'netstandard1.6'">
+	<PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="DevTeam.TestAdapter\**" />
+    <EmbeddedResource Remove="DevTeam.TestAdapter\**" />
+    <None Remove="DevTeam.TestAdapter\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+	<PackageReference Include="DevTeam.TestFramework" Version="1.0.0-beta" />
+    <PackageReference Include="DevTeam.TestAdapter" Version="1.0.0-beta" />
+  </ItemGroup>
+
+</Project>

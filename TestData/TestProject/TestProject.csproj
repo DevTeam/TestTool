@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>    
+    <TargetFrameworks>net462</TargetFrameworks>    
+    <PostBuildEvent>md $(TargetDir)DevTeam.TestAdapter
+move $(TargetDir)DevTeam.IoC* $(TargetDir)DevTeam.TestAdapter\
+move $(TargetDir)DevTeam.TestEngine* $(TargetDir)DevTeam.TestAdapter\
+move $(TargetDir)Newtonsoft.Json* $(TargetDir)DevTeam.TestAdapter\</PostBuildEvent>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\DevTeam.TestAdapter\DevTeam.TestAdapter.csproj" />
+    <ProjectReference Include="..\..\DevTeam.TestEngine.Contracts\DevTeam.TestEngine.Contracts.csproj" />
+    <ProjectReference Include="..\..\DevTeam.TestEngine\DevTeam.TestEngine.csproj" />
+    <ProjectReference Include="..\..\DevTeam.TestFramework\DevTeam.TestFramework.csproj" />
+  </ItemGroup>
+
+</Project>
