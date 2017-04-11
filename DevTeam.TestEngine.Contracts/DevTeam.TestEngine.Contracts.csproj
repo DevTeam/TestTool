@@ -25,9 +25,8 @@
     <RepositoryUrl>https://github.com/DevTeam/TestTool.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageTags>DevTeam test framework</PackageTags>
-	<ContractVersion Condition=" '$(ContractVersion)' == '' ">1.0.0</ContractVersion>
-	<ContractPackageVersion Condition=" '$(ContractPackageVersion)' == '' ">1.0.0</ContractPackageVersion>
-    <Version>$(ContractPackageVersion)</Version>
+	<ContractsPackageVersion Condition=" '$(ContractsPackageVersion)' == '' ">1.0.0</ContractsPackageVersion>
+    <Version>$(ContractsPackageVersion)</Version>
 	<GeneratePackageOnBuild Condition=" '$(Configuration)' == 'Release' ">True</GeneratePackageOnBuild>
   </PropertyGroup>
 

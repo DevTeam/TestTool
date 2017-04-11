@@ -1,42 +1,47 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Content Include="$(MSBuildThisFileDirectory)..\_common\net35\DevTeam.TestAdapter.dll">
+    <Content Include="$(MSBuildThisFileDirectory)DevTeam.TestAdapter.dll">
       <Link>DevTeam.TestAdapter.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <Visible>False</Visible>
     </Content>
-	<Content Include="$(MSBuildThisFileDirectory)..\_common\net35\DevTeam.TestEngine.dll.ioc">
+	<Content Include="$(MSBuildThisFileDirectory)DevTeam.TestAdapter\DevTeam.TestPlatformAdapter.dll">
+      <Link>DevTeam.TestAdapter\DevTeam.TestPlatformAdapter.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Visible>False</Visible>
+    </Content>
+	<Content Include="$(MSBuildThisFileDirectory)DevTeam.TestAdapter\DevTeam.TestEngine.dll.ioc">
       <Link>DevTeam.TestAdapter\DevTeam.TestEngine.dll.ioc</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <Visible>False</Visible>
     </Content>
-	<Content Include="$(MSBuildThisFileDirectory)..\_common\net35\DevTeam.IoC.dll">
+	<Content Include="$(MSBuildThisFileDirectory)DevTeam.TestAdapter\DevTeam.IoC.dll">
       <Link>DevTeam.TestAdapter\DevTeam.IoC.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <Visible>False</Visible>
     </Content>
-	<Content Include="$(MSBuildThisFileDirectory)..\_common\net35\DevTeam.IoC.Contracts.dll">
+	<Content Include="$(MSBuildThisFileDirectory)DevTeam.TestAdapter\DevTeam.IoC.Contracts.dll">
       <Link>DevTeam.TestAdapter\DevTeam.IoC.Contracts.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <Visible>False</Visible>
     </Content>
-	<Content Include="$(MSBuildThisFileDirectory)..\_common\net35\DevTeam.IoC.Configurations.Json.dll">
+	<Content Include="$(MSBuildThisFileDirectory)DevTeam.TestAdapter\DevTeam.IoC.Configurations.Json.dll">
       <Link>DevTeam.TestAdapter\DevTeam.IoC.Configurations.Json.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <Visible>False</Visible>
     </Content>
-	<Content Include="$(MSBuildThisFileDirectory)..\_common\net35\DevTeam.TestEngine.dll">
+	<Content Include="$(MSBuildThisFileDirectory)DevTeam.TestAdapter\DevTeam.TestEngine.dll">
       <Link>DevTeam.TestAdapter\DevTeam.TestEngine.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <Visible>False</Visible>
     </Content>
-	<Content Include="$(MSBuildThisFileDirectory)..\_common\net35\DevTeam.TestEngine.Contracts.dll">
+	<Content Include="$(MSBuildThisFileDirectory)DevTeam.TestAdapter\DevTeam.TestEngine.Contracts.dll">
       <Link>DevTeam.TestAdapter\DevTeam.TestEngine.Contracts.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <Visible>False</Visible>
     </Content>
-	<Content Include="$(MSBuildThisFileDirectory)..\_common\net35\Newtonsoft.Json.dll">
+	<Content Include="$(MSBuildThisFileDirectory)DevTeam.TestAdapter\Newtonsoft.Json.dll">
       <Link>DevTeam.TestAdapter\Newtonsoft.Json.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <Visible>False</Visible>

@@ -5,7 +5,6 @@
     using System.Diagnostics;
     using System.IO;
     using System.Linq;
-    using System.Reflection;
     using System.Text;
     using Contracts;
 
@@ -33,7 +32,7 @@
 
         public bool TryExecute(out CommandLineResult result)
         {
-            var baseDir = Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "../../../"));
+            var baseDir = Path.GetFullPath(Path.Combine(TestsExtensions.GetBinDirectory(), "../../../../"));
             var process = new Process
             {
                 StartInfo = new ProcessStartInfo
@@ -52,11 +51,19 @@
             {
                 if (envVar.Value == null)
                 {
+#if NETCOREAPP1_0
+                    process.StartInfo.Environment.Remove(envVar.Key);
+#else
                     process.StartInfo.EnvironmentVariables.Remove(envVar.Key);
+#endif
                 }
                 else
                 {
+#if NETCOREAPP1_0
+                    process.StartInfo.Environment[envVar.Key] = envVar.Value;
+#else
                     process.StartInfo.EnvironmentVariables[envVar.Key] = envVar.Value;
+#endif
                 }
             }
 

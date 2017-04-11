@@ -1,24 +1,31 @@
 ﻿namespace DevTeam.TestEngine.Tests
 {
     using Helpers;
-    using NUnit.Framework;
     using Shouldly;
+    using Xunit;
 
-    [TestFixture]
     public class TestAdapterIntegrationTests
     {
-        [Test]
-        [TestCase(@"TestData\TestProject\TestProject.csproj")]
+        [Theory]
+        [InlineData(@"TestData\TestProject\TestProject.csproj")]
         public void ShouldDiscoverTests(string projectName)
         {
             // Given
             var testCommandLine = new CommandLine(
                 @"dotnet",
                 "test",
-                projectName
+                projectName,
+#if DEBUG
+                "-c:Debug"
+#else
+                "-c:Release"
+#endif
             );
 
+            
+
             // testCommandLine.AddEnvitonmentVariable("VSTEST_HOST_DEBUG", "1");
+            // testCommandLine.AddEnvitonmentVariable("VSTEST_RUNNER_DEBUG", "1");
 
             // When
             testCommandLine.TryExecute(out CommandLineResult result).ShouldBe(true);

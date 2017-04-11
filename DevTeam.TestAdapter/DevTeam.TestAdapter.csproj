@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net462;net35</TargetFrameworks>
+    <TargetFrameworks>net45;net462;net35;netcoreapp1.0</TargetFrameworks>
     <AssemblyName>DevTeam.TestAdapter</AssemblyName>
     <PackageId>DevTeam.TestAdapter</PackageId>
     <GenerateAssemblyTitleAttribute>false</GenerateAssemblyTitleAttribute>
@@ -14,18 +14,24 @@
     <GenerateAssemblyVersionAttribute>false</GenerateAssemblyVersionAttribute>
     <GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>
     <SignAssembly>False</SignAssembly>
+	<PostBuildEvent>
+		xcopy /C /Q /Y DevTeam.TestAdapter.dll ..\pack\$(TargetFramework)\
+		xcopy /C /Q /Y DevTeam.TestAdapter.props ..\pack\$(TargetFramework)\
+		xcopy /C /Q /Y DevTeam.IoC*.dll ..\pack\$(TargetFramework)\DevTeam.TestAdapter\
+		xcopy /C /Q /Y Newtonsoft.Json.dll ..\pack\$(TargetFramework)\DevTeam.TestAdapter\
+		xcopy /C /Q /Y DevTeam.TestEngine*.dll ..\pack\$(TargetFramework)\DevTeam.TestAdapter\
+		xcopy /C /Q /Y DevTeam.TestPlatformAdapter.dll ..\pack\$(TargetFramework)\DevTeam.TestAdapter\
+		xcopy /C /Q /Y *.ioc ..\pack\$(TargetFramework)\DevTeam.TestAdapter\
+	</PostBuildEvent>
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Include="..\DevTeam.TestEngine\DevTeam.TestEngine.dll.ioc" Link="DevTeam.TestEngine.ioc">
+    <Content Include="..\DevTeam.TestEngine\DevTeam.TestEngine.dll.ioc" Link="DevTeam.TestEngine.dll.ioc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="DevTeam.IoC" Version="1.0.168-beta" />
-    <PackageReference Include="DevTeam.IoC.Configurations.Json" Version="1.0.168-beta" />
-    <PackageReference Include="DevTeam.IoC.Contracts" Version="1.0.168-beta" />
+	<Content Include="DevTeam.TestAdapter.props" Link="DevTeam.TestAdapter.props">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'net462' or '$(TargetFramework)' == 'netcoreapp1.0'">
@@ -34,11 +40,16 @@
 
   <ItemGroup Condition="'$(TargetFramework)' == 'net35' or '$(TargetFramework)' == 'net45'">
     <PackageReference Include="Microsoft.VisualStudio.TestPlatform.ObjectModel" Version="14.0.0" />
-  </ItemGroup>
+  </ItemGroup>  
+
+  <ItemGroup Condition="'$(TargetFramework)' == 'netcoreapp1.0'">
+    <PackageReference Include="System.Runtime.Loader">
+      <Version>4.3.0</Version>
+    </PackageReference>
+  </ItemGroup>  
 
   <ItemGroup>
-    <ProjectReference Include="..\DevTeam.TestEngine.Contracts\DevTeam.TestEngine.Contracts.csproj" />
-    <ProjectReference Include="..\DevTeam.TestEngine\DevTeam.TestEngine.csproj" />
+    <ProjectReference Include="..\DevTeam.TestPlatformAdapter\DevTeam.TestPlatformAdapter.csproj" />
   </ItemGroup>
 
 </Project>

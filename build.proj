@@ -7,14 +7,17 @@
 		<BuildNumber Condition=" '$(BuildNumber)' == '' ">0</BuildNumber>
 		<BuildType Condition=" '$(BuildType)' == '' ">-beta</BuildType>		
 
-		<ContractAssemblyVersion>1.0.$(BuildNumber)</ContractAssemblyVersion>		
-		<AssemblyVersion>1.0.$(BuildNumber)</AssemblyVersion>		
-		<ContractDependencyVersion>(,$(ContractAssemblyVersion)]</ContractDependencyVersion>
+		<FrameworkAssemblyVersion>1.0.$(BuildNumber)</FrameworkAssemblyVersion>
+		<FrameworkPackageVersion>1.0.$(BuildNumber)-beta</FrameworkPackageVersion>
+		<AdapterAssemblyVersion>1.0.$(BuildNumber)</AdapterAssemblyVersion>
+		<AdapterPackageVersion>1.0.$(BuildNumber)-beta</AdapterPackageVersion>
+		<ContractsAssemblyVersion>1.0.$(BuildNumber)</ContractsAssemblyVersion>
+		<ContractsPackageVersion>1.0.$(BuildNumber)-beta</ContractsPackageVersion>
+		<AssemblyVersion>1.0.$(BuildNumber)</AssemblyVersion>
+		<PackageVersion>1.0.$(BuildNumber)-beta</PackageVersion>
 
-		<ContractVersion>$(ContractAssemblyVersion)$(BuildType)</ContractVersion>
-		<Version>$(AssemblyVersion)$(BuildType)</Version>
 		<Configuration Condition=" '$(Configuration)' == '' ">Release</Configuration>
-		<PackagesDirectory>packages</PackagesDirectory>	
+		<PackagesDirectory>$(SolutionDir)packages</PackagesDirectory>	
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -22,29 +25,29 @@
 
 		<Package Include="DevTeam.TestAdapter">
 			<CustomPack>true</CustomPack>
-			<AssemblyVersion>$(ContractAssemblyVersion)</AssemblyVersion>
-			<Version>$(ContractVersion)</Version>
+			<AssemblyVersion>$(FrameworkAssemblyVersion)</AssemblyVersion>
+			<PackageVersion>$(FrameworkPackageVersion)</PackageVersion>
 			<AssemblyInfoFile>DevTeam.TestAdapter\Properties\AssemblyInfo.cs</AssemblyInfoFile>
 		</Package>
 		<Package Include="DevTeam.TestEngine.Contracts">
-			<AssemblyVersion>$(ContractAssemblyVersion)</AssemblyVersion>
-			<Version>$(ContractVersion)</Version>
+			<AssemblyVersion>$(ContractsAssemblyVersion)</AssemblyVersion>
+			<PackageVersion>$(ContractsPackageVersion)</PackageVersion>
 			<AssemblyInfoFile>DevTeam.TestEngine.Contracts\Properties\AssemblyInfo.cs</AssemblyInfoFile>
 		</Package>
 		<Package Include="DevTeam.TestFramework">
-			<AssemblyVersion>$(ContractAssemblyVersion)</AssemblyVersion>
-			<Version>$(ContractVersion)</Version>
+			<AssemblyVersion>$(FrameworkAssemblyVersion)</AssemblyVersion>
+			<PackageVersion>$(FrameworkPackageVersion)</PackageVersion>
 			<AssemblyInfoFile>DevTeam.TestFramework\Properties\AssemblyInfo.cs</AssemblyInfoFile>
 		</Package>
 		<Package Include="DevTeam.TestEngine">
-			<AssemblyVersion>$(ContractAssemblyVersion)</AssemblyVersion>
-			<Version>$(ContractVersion)</Version>
+			<AssemblyVersion>$(AssemblyVersion)</AssemblyVersion>
+			<PackageVersion>$(PackageVersion)</PackageVersion>
 			<AssemblyInfoFile>DevTeam.TestEngine\Properties\AssemblyInfo.cs</AssemblyInfoFile>
 		</Package>
 		<Package Include="DevTeam.TestRunner">
 			<CustomPack>true</CustomPack>
-			<AssemblyVersion>$(ContractAssemblyVersion)</AssemblyVersion>
-			<Version>$(ContractVersion)</Version>
+			<AssemblyVersion>$(AssemblyVersion)</AssemblyVersion>
+			<PackageVersion>$(PackageVersion)</PackageVersion>
 			<AssemblyInfoFile>DevTeam.TestRunner\Properties\AssemblyInfo.cs</AssemblyInfoFile>
 		</Package>
 	</ItemGroup>
@@ -52,51 +55,54 @@
 	<Target Name="GetNuGet">
 		<DownloadFile
 	    	Url="https://dist.nuget.org/win-x86-commandline/v4.0.0/NuGet.exe"
-	    	LocalFilePath="packages\nuget.exe"/>
+	    	LocalFilePath="$(PackagesDirectory)\nuget.exe"/>
 	</Target>
 
 	<Target Name="Clear">
 	    <RemoveDir Directories="%(Package.Identity)\bin\$(Configuration)" /> 
 	</Target>
-	
-	<Target Name="CopyDependencies">
+
+	<Target Name="CopyDependencies" DependsOnTargets="Clear;GetNuGet">
+		<Exec Command="$(PackagesDirectory)\nuget.exe install DevTeam.IoC.Contracts -pre -o $(PackagesDirectory)"/>
+		<Exec Command="$(PackagesDirectory)\nuget.exe install DevTeam.IoC -pre -o $(PackagesDirectory)"/>
+		<Exec Command="$(PackagesDirectory)\nuget.exe install DevTeam.IoC.Configurations.Json -pre -o $(PackagesDirectory)"/>
+		<Exec Command="$(PackagesDirectory)\nuget.exe install Newtonsoft.Json -version 9.0.1 -o $(PackagesDirectory)"/>
 		<ItemGroup>
-			<Dependency Include="$(SolutionDir)packages\DevTeam.IoC*\lib\netstandard1.0\*.*"/>
-			<Dependency Include="$(SolutionDir)packages\Newtonsoft.Json.*\lib\netstandard1.0\*.*"/>
-			<TestOutputDirectory Include="."><Path>$(SolutionDir)DevTeam.TestAdapter\bin\$(Configuration)\netstandard1.5</Path></TestOutputDirectory> 
-		</ItemGroup>
-
-		<MakeDir Directories="$(TestOutputDirectory)"/>  
-		<Copy SourceFiles="@(Dependency)" DestinationFolder="%(TestOutputDirectory.Path)"/> 
-    </Target>	
-
-	<Target Name="Build">
-		<Message Text="Contract Assembly Version: $(ContractAssemblyVersion)"/>
-		<Message Text="Contract Version: $(ContractVersion)"/>
-		<Message Text="Assembly Version: $(AssemblyVersion)"/>
-		<Message Text="Version: $(Version)"/>
+			<Dependency Include="$(PackagesDirectory)\DevTeam.IoC*\lib\netcoreapp1.0\*.dll"/>
+			<Dependency Include="$(PackagesDirectory)\Newtonsoft.Json*\lib\netstandard1.0\*.dll"/>
+			<OutputDirectory Include="."><Path>$(SolutionDir)DevTeam.TestAdapter\bin\$(Configuration)\pack\netcoreapp1.0\DevTeam.TestAdapter</Path></OutputDirectory> 
+		</ItemGroup>		        
+		<Copy SourceFiles="@(Dependency)" DestinationFolder="%(OutputDirectory.Path)"/> 
+	</Target>	
+	
+	<Target Name="Build" DependsOnTargets="GetNuGet;CopyDependencies">
+		<Message Text="Framework Package Version: $(FrameworkPackageVersion)"/>
+		<Message Text="Adapter Package Version: $(AdapterPackageVersion)"/>
+		<Message Text="Contracts Package Version: $(ContractsPackageVersion)"/>
+		<Message Text="Package Version: $(PackageVersion)"/>
 		<Replace
 	    	FilePath='%(Package.AssemblyInfoFile)'
 			Pattern='(\[assembly:\s(AssemblyVersion|AssemblyFileVersion)\()"(\d+\.\d+\.\d+)"(\)\])'
 			Replacement='$1"$(AssemblyVersion)"$4'/>
-		<MSBuild Projects="DevTeam.TestTool.sln" Targets="Restore;Build" BuildInParallel="true" Properties="Configuration=$(Configuration)"/>
+		<MSBuild Projects="DevTeam.TestTool.sln" Targets="Restore;Build" BuildInParallel="true" Properties="Configuration=$(Configuration);FrameworkPackageVersion=$(FrameworkPackageVersion);ContractsPackageVersion=$(ContractsPackageVersion);PackageVersion=$(PackageVersion)"/>
 	</Target>	
 
-	<Target Name="Test">
-		<Exec Command="dotnet test DevTeam.TestEngine.Tests\DevTeam.TestEngine.Tests.csproj"/>
+	<Target Name="Test" DependsOnTargets="CopyDependencies">
+		<Exec Command="dotnet test DevTeam.TestEngine.Tests\DevTeam.TestEngine.Tests.csproj -c:$(Configuration)"/>
 	</Target>
 
-	<Target Name="CreatePackages" DependsOnTargets="Clear;GetNuGet;Build;Test;CopyDependencies">
-		<Exec Command="packages\nuget.exe pack %(Package.Identity)\package.nuspec -Version %(Package.Version) -OutputDirectory $(PackagesDirectory)" Condition=" '%(Package.CustomPack)' == 'true' "/>
-		<Message Text="##teamcity[publishArtifacts '$(PackagesDirectory)\%(Package.FileName)%(Package.Extension).%(Package.Version).nupkg=>$(PackagesDirectory)']" Condition=" '%(Package.CustomPack)' == 'true' "/>
+	<Target Name="CreatePackages">
+		<Exec Command="$(PackagesDirectory)\nuget.exe pack %(Package.Identity)\package.nuspec -Version %(Package.PackageVersion) -OutputDirectory $(PackagesDirectory)" Condition=" '%(Package.CustomPack)' == 'true' "/>
+		<Message Text="##teamcity[publishArtifacts '$(PackagesDirectory)\%(Package.FileName)%(Package.Extension).%(Package.PackageVersion).nupkg=>$(PackagesDirectory)']" Condition=" '%(Package.CustomPack)' == 'true' "/>
+		<Message Text="##teamcity[publishArtifacts '%(Package.Identity)\bin\$(Configuration)\%(Package.FileName)%(Package.Extension).%(Package.PackageVersion).nupkg=>$(PackagesDirectory)']" Condition=" '%(Package.CustomPack)' == '' "/>
 	</Target>
 
 	<Target Name="PushPackagesToNuGet" DependsOnTargets="GetNuGet">
-		<Exec Command="packages\nuget.exe push $(PackagesDirectory)\%(Package.FileName)%(Package.Extension).%(Package.Version).nupkg -ApiKey $(NuGetApiKey) -Source https://nuget.org/"/>
+		<Exec Command="$(PackagesDirectory)\nuget.exe push $(PackagesDirectory)\%(Package.FileName)%(Package.Extension).%(Package.PackageVersion).nupkg -ApiKey $(NuGetApiKey) -Source https://nuget.org/"/>
 	</Target>
 
 	<Target Name="PushPackagesToMyGet" DependsOnTargets="GetNuGet">
-		<Exec Command="packages\nuget.exe push $(PackagesDirectory)\%(Package.FileName)%(Package.Extension).%(Package.Version).nupkg -ApiKey $(MyGetApiKey) -Source https://www.myget.org/F/dev_team/api/v2/package"/>
+		<Exec Command="$(PackagesDirectory)\nuget.exe push $(PackagesDirectory)\%(Package.FileName)%(Package.Extension).%(Package.PackageVersion).nupkg -ApiKey $(MyGetApiKey) -Source https://www.myget.org/F/dev_team/api/v2/package"/>
 	</Target>
 
 </Project>

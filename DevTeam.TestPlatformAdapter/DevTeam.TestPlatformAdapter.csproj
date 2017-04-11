@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>net45;net462;net35;netcoreapp1.0</TargetFrameworks>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="DevTeam.IoC" Version="1.0.177-beta" />
+    <PackageReference Include="DevTeam.IoC.Configurations.Json" Version="1.0.177-beta" />
+    <PackageReference Include="DevTeam.IoC.Contracts" Version="1.0.177-beta" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)' == 'net462' or '$(TargetFramework)' == 'netcoreapp1.0'">
+    <PackageReference Include="Microsoft.TestPlatform.ObjectModel" Version="15.0.0" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)' == 'net35' or '$(TargetFramework)' == 'net45'">
+    <PackageReference Include="Microsoft.VisualStudio.TestPlatform.ObjectModel" Version="14.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DevTeam.TestEngine.Contracts\DevTeam.TestEngine.Contracts.csproj" />
+    <ProjectReference Include="..\DevTeam.TestEngine\DevTeam.TestEngine.csproj" />
+  </ItemGroup>
+
+</Project>

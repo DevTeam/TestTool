@@ -2,21 +2,14 @@
 {
     using System.Linq;
     using Contracts;
-    using NUnit.Framework;
-
     using Shouldly;
     using IoC.Contracts;
     using Sandbox;
+    using Xunit;
 
-    [TestFixture]
     public class TestEngineIntegrationTests
     {
-        [SetUp]
-        public void SetUp()
-        {
-        }
-
-        [Test]
+        [Fact]
         public void ShouldDiscoverTests()
         {
             // Given
@@ -29,7 +22,7 @@
             cases.Length.ShouldBe(2);
         }
 
-        [Test]
+        [Fact]
         public void ShouldRunTests()
         {
             // Given
@@ -43,7 +36,7 @@
             results.Length.ShouldBe(2);
         }
 
-        [Test]
+        [Fact]
         public void ShouldRunTestsWhenParams()
         {
             // Given
@@ -57,7 +50,7 @@
             results.Length.ShouldBe(8);
         }
 
-        [Test]
+        [Fact]
         public void ShouldRunTestsWhenGenericArgsTest()
         {
             // Given
@@ -71,7 +64,7 @@
             results.Length.ShouldBe(16);
         }
 
-        [Test]
+        [Fact]
         public void ShouldRunTestsWhenCaseSource()
         {
             // Given
@@ -85,7 +78,7 @@
             results.Length.ShouldBe(4);
         }
 
-        [Test]
+        [Fact]
         public void ShouldRunTestsWhenCaseSingleItemSource()
         {
             // Given
@@ -99,7 +92,7 @@
             results.Length.ShouldBe(4);
         }
 
-        [Test]
+        [Fact]
         public void ShouldRunTestsWhenGenericArgsSource()
         {
             // Given
@@ -113,7 +106,7 @@
             results.Length.ShouldBe(2);
         }
 
-        [Test]
+        [Fact]
         public void ShouldRunTestsWhenGenericArgsSingleItemSource()
         {
             // Given

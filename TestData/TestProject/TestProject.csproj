@@ -1,11 +1,13 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>    
-    <TargetFrameworks>net462</TargetFrameworks>    
-    <PostBuildEvent>md $(TargetDir)DevTeam.TestAdapter
-move $(TargetDir)DevTeam.IoC* $(TargetDir)DevTeam.TestAdapter\
-move $(TargetDir)DevTeam.TestEngine* $(TargetDir)DevTeam.TestAdapter\
-move $(TargetDir)Newtonsoft.Json* $(TargetDir)DevTeam.TestAdapter\</PostBuildEvent>
+    <TargetFrameworks>net462;netcoreapp1.0</TargetFrameworks>    
+
+	<BinDir>$(MSBuildProjectDirectory)\..\..\DevTeam.TestAdapter\bin\$(Configuration)\pack\$(TargetFramework)</BinDir>
+    <PostBuildEvent>
+		xcopy /C /Q /Y /E $(BinDir)\*
+	</PostBuildEvent>
+
   </PropertyGroup>
 
   <ItemGroup>
@@ -13,9 +15,6 @@ move $(TargetDir)Newtonsoft.Json* $(TargetDir)DevTeam.TestAdapter\</PostBuildEve
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\DevTeam.TestAdapter\DevTeam.TestAdapter.csproj" />
-    <ProjectReference Include="..\..\DevTeam.TestEngine.Contracts\DevTeam.TestEngine.Contracts.csproj" />
-    <ProjectReference Include="..\..\DevTeam.TestEngine\DevTeam.TestEngine.csproj" />
     <ProjectReference Include="..\..\DevTeam.TestFramework\DevTeam.TestFramework.csproj" />
   </ItemGroup>
 

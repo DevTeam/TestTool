@@ -3,7 +3,7 @@
 <package>
   <metadata>
 		<id>DevTeam.TestAdapter</id>
-		<title>DevTeam IoC</title>
+		<title>DevTeam Test Adapter</title>
 		<language>en-us</language>
 		<version>$version$</version>
 		<authors>NikolayP</authors>
@@ -21,11 +21,7 @@ Supported platforms:
     <tags>DevTeam test adapter VSTest</tags>
   </metadata>
   <files>
-	<file src="bin\Release\net35\DevTeam.IoC*.dll;bin\Release\net35\DevTeam.Test*.dll;bin\Release\net35\DevTeam.TestEngine.dll.ioc;bin\Release\net35\Newtonsoft.Json.dll" target="build\_common\net35" />
-	<file src="bin\Release\net462\DevTeam.IoC*.dll;bin\Release\net462\DevTeam.Test*.dll;bin\Release\net462\DevTeam.TestEngine.dll.ioc;bin\Release\net462\Newtonsoft.Json.dll" target="build\_common\net462" />
-	<file src="DevTeam.net35.TestAdapter.props" target="build\net35\DevTeam.TestAdapter.props" />
-	<file src="DevTeam.net462.TestAdapter.props" target="build\net45\DevTeam.TestAdapter.props" />
-	<file src="DevTeam.net462.TestAdapter.props" target="build\netcoreapp1.0\DevTeam.TestAdapter.props" />
-    <file src="..\LICENSE" target="LICENSE" />
+	<file src="bin\Release\pack\**" target="build\" />	
+	<file src="..\LICENSE" target="LICENSE" />
   </files>
 </package>

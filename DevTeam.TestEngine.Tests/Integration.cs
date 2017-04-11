@@ -19,7 +19,7 @@
 
         public static string GetSource()
         {
-            return Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "DevTeam.TestEngine.Tests.dll");
+            return Path.Combine(TestsExtensions.GetBinDirectory(), "DevTeam.TestEngine.Tests.dll");
         }
 
         public static IEnumerable<ICase> Filter([IoC.Contracts.NotNull] this IEnumerable<ICase> testCases, [IoC.Contracts.NotNull] params Type[] testTypes)
@@ -39,7 +39,7 @@
 
         private static string ReadIoCConfiguration()
         {
-            return File.ReadAllText(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "DevTeam.TestEngine.dll.ioc"));
+            return File.ReadAllText(Path.Combine(TestsExtensions.GetBinDirectory(), "DevTeam.TestEngine.dll.ioc"));
         }
     }
 }
