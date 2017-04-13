@@ -72,22 +72,27 @@
                     {
                         case MessageType.StdOutput:
                             testResult.Messages.Add(new TestResultMessage(TestResultMessage.StandardOutCategory, message.Message));
+                            // frameworkHandle.SendMessage(TestMessageLevel.Informational, message.Message);
                             break;
 
                         case MessageType.StdError:
                             testResult.Messages.Add(new TestResultMessage(TestResultMessage.StandardErrorCategory, message.Message));
+                            // frameworkHandle.SendMessage(TestMessageLevel.Error, message.Message);
                             break;
 
                         case MessageType.Exception:
                             errorMessage.AppendLine(message.Message);
+                            // frameworkHandle.SendMessage(TestMessageLevel.Error, message.Message);
                             break;
 
                         case MessageType.Trace:
                             testResult.Messages.Add(new TestResultMessage(TestResultMessage.DebugTraceCategory, message.Message));
+                            // frameworkHandle.SendMessage(TestMessageLevel.Informational, message.Message);
                             break;
 
                         default:
                             testResult.Messages.Add(new TestResultMessage(TestResultMessage.AdditionalInfoCategory, message.Message));
+                            // frameworkHandle.SendMessage(TestMessageLevel.Informational, message.Message);
                             break;
                     }
                 }
@@ -123,7 +128,6 @@
                 frameworkHandle.SendMessage(TestMessageLevel.Informational, $"{testCase} - {testResult.Outcome}");
                 if (_canceled)
                 {
-                    frameworkHandle.SendMessage(TestMessageLevel.Informational, "Canceled");
                     _canceled = false;
                     break;
                 }

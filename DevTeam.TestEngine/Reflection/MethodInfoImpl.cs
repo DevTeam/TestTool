@@ -22,17 +22,18 @@
             _methodInfo = methodInfo;
         }
 
-        string IMethodInfo.Name => _methodInfo.Name;
+        public string Name => _methodInfo.Name;
 
         public IEnumerable<IParameterInfo> Parameters => _methodInfo.GetParameters().Select(i => _reflection.CreateParameter(i));
 
         public bool IsGenericMethodDefinition => _methodInfo.IsGenericMethodDefinition;
 
-        public ITypeInfo[] GetGenericArguments => _methodInfo.GetGenericArguments().Select(type => _reflection.CreateType(type)).ToArray();
+        public IEnumerable<ITypeInfo> GetGenericArguments => _methodInfo.GetGenericArguments().Select(type => _reflection.CreateType(type));
 
-        public IMethodInfo MakeGenericMethod(params Type[] typeArguments)
+        public IMethodInfo MakeGenericMethod(IEnumerable<Type> typeArguments)
         {
-            return _reflection.CreateMethod(_methodInfo.MakeGenericMethod(typeArguments));
+            if (typeArguments == null) throw new ArgumentNullException(nameof(typeArguments));
+            return _reflection.CreateMethod(_methodInfo.MakeGenericMethod(typeArguments.ToArray()));
         }
 
         public IEnumerable<T> GetCustomAttributes<T>()
@@ -45,11 +46,16 @@
 #endif
         }
 
-        public object Invoke(object obj, params object[] parameters)
+        public object Invoke(object obj, IEnumerable<object> parameters)
         {
             if (obj == null) throw new ArgumentNullException(nameof(obj));
             if (parameters == null) throw new ArgumentNullException(nameof(parameters));
-            return _methodInfo.Invoke(obj, parameters);
+            return _methodInfo.Invoke(obj, parameters.ToArray());
+        }
+
+        public override string ToString()
+        {
+            return Name;
         }
     }
 }

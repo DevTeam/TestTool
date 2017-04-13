@@ -1,6 +1,7 @@
 namespace DevTeam.TestEngine.Contracts
 {
     using System;
+    using System.Collections.Generic;
 
     public interface ICase
     {
@@ -12,13 +13,13 @@ namespace DevTeam.TestEngine.Contracts
 
         string TypeName { [NotNull] get; }
 
-        string[] TypeGenericArgs { [NotNull] get; }
+        IEnumerable<string> TypeGenericArgs { [NotNull] get; }
 
-        string[] TypeParameters { [NotNull] get; }
+        IEnumerable<string> TypeParameters { [NotNull] get; }
 
         string MethodName { [NotNull] get; }
 
-        string[] MethodParaeters { [NotNull] get; }
+        IEnumerable<string> MethodParaeters { [NotNull] get; }
 
         string CodeFilePath { [CanBeNull] get; }
 

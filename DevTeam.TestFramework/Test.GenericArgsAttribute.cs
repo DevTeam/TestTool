@@ -1,6 +1,7 @@
 ﻿namespace DevTeam.TestFramework
 {
     using System;
+    using System.Collections.Generic;
 
     public partial class Test
     {
@@ -13,7 +14,7 @@
                 Types = types;
             }
 
-            public Type[] Types { get; }
+            public IEnumerable<Type> Types { get; }
         }
     }
 }

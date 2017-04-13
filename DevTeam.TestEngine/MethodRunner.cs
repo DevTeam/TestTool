@@ -12,10 +12,10 @@
             if (testInfo == null) throw new ArgumentNullException(nameof(testInfo));
             try
             {
-                messages.Add(new MessageDto(MessageType.Trace, Stage.Construction, $"Run method for instance #{instance.GetHashCode()}"));
                 var method = testInfo.Method;
+                messages.Add(new MessageDto(MessageType.Trace, Stage.Construction, $"Run method {method.Name} for instance #{instance.GetHashCode()}"));
                 method.Invoke(instance, testInfo.MethodParameters);
-                messages.Add(new MessageDto(MessageType.Trace, Stage.Construction, $"Method for instance #{instance.GetHashCode()} was finished"));
+                messages.Add(new MessageDto(MessageType.Trace, Stage.Construction, $"Method {method.Name} for instance #{instance.GetHashCode()} was finished"));
             }
             catch (Exception exception)
             {

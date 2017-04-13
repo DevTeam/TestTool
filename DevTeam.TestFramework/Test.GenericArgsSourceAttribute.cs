@@ -1,6 +1,7 @@
 ﻿namespace DevTeam.TestFramework
 {
     using System;
+    using System.Collections.Generic;
 
     public partial class Test
     {
@@ -10,10 +11,10 @@
             public GenericArgsSourceAttribute(params Type[] genericArgsSourceTypes)
             {
                 if (genericArgsSourceTypes == null) throw new ArgumentNullException(nameof(genericArgsSourceTypes));
-                GenericArgsSourceTypes = genericArgsSourceTypes;
+                Types = genericArgsSourceTypes;
             }
 
-            public Type[] GenericArgsSourceTypes { get; }
+            public IEnumerable<Type> Types { get; }
         }
     }
 }

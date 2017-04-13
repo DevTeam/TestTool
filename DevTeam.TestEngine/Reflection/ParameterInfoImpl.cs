@@ -23,5 +23,10 @@
         public ITypeInfo ParameterType => _reflection.CreateType(_parameterInfo.ParameterType);
 
         public string Name => _parameterInfo.Name;
+
+        public override string ToString()
+        {
+            return Name;
+        }
     }
 }

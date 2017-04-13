@@ -1,7 +1,9 @@
 ﻿namespace DevTeam.TestEngine.Dto
 {
     using System;
+    using System.Collections.Generic;
     using System.IO;
+    using System.Linq;
     using Contracts;
 
     internal class CaseDto: ICase
@@ -49,13 +51,13 @@
 
         public string TypeName { get; }
 
-        public string[] TypeGenericArgs { get; }
+        public IEnumerable<string> TypeGenericArgs { get; }
 
-        public string[] TypeParameters { get; }
+        public IEnumerable<string> TypeParameters { get; }
 
         public string MethodName { get; }
 
-        public string[] MethodParaeters { get; }
+        public IEnumerable<string> MethodParaeters { get; }
 
         [NotNull]
         public override string ToString()
@@ -64,27 +66,19 @@
         }
 
         [NotNull]
-        private static string GetParametersString([NotNull] string[] parameters)
+        private static string GetParametersString([NotNull] IEnumerable<string> parameters)
         {
             if (parameters == null) throw new ArgumentNullException(nameof(parameters));
-            if (parameters.Length == 0)
-            {
-                return string.Empty;
-            }
-
-            return $"({string.Join(", ", parameters)})";
+            var str = string.Join(", ", parameters.ToArray());
+            return string.IsNullOrEmpty(str) ? string.Empty : $"({str})";
         }
 
         [NotNull]
-        private static string GetTypesString([NotNull] string[] types)
+        private static string GetTypesString([NotNull] IEnumerable<string> types)
         {
             if (types == null) throw new ArgumentNullException(nameof(types));
-            if (types.Length == 0)
-            {
-                return string.Empty;
-            }
-
-            return $"<{string.Join(", ", types)}>";
+            var str = string.Join(", ", types.ToArray());
+            return string.IsNullOrEmpty(str) ? string.Empty : $"<{str}>";
         }
     }
 }

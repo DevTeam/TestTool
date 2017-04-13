@@ -1,6 +1,7 @@
 ﻿namespace DevTeam.TestFramework
 {
     using System;
+    using System.Collections.Generic;
 
     public partial class Test
     {
@@ -15,7 +16,7 @@
                 Parameters = parameters;
             }
 
-            public object[] Parameters { get; }
+            public IEnumerable<object> Parameters { get; }
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿namespace DevTeam.TestEngine
 {
     using System;
+    using System.Collections.Generic;
     using Contracts;
     using Contracts.Reflection;
 
@@ -10,10 +11,10 @@
             [NotNull] ICase testCase,
             [NotNull] IAssemblyInfo assembly,
             [NotNull] ITypeInfo type,
-            [NotNull] Type[] genericArgs,
-            [NotNull] object[] typeParameters,
+            [NotNull] IEnumerable<Type> genericArgs,
+            [NotNull] IEnumerable<object> typeParameters,
             [NotNull] IMethodInfo method,
-            [NotNull] object[] methodParameters)
+            [NotNull] IEnumerable<object> methodParameters)
         {
             if (testCase == null) throw new ArgumentNullException(nameof(testCase));
             if (assembly == null) throw new ArgumentNullException(nameof(assembly));
@@ -37,12 +38,12 @@
 
         public ITypeInfo Type { [NotNull] get; }
 
-        public Type[] GenericArgs { [NotNull] get; }
+        public IEnumerable<Type> GenericArgs { [NotNull] get; }
 
-        public object[] TypeParameters { [NotNull] get; }
+        public IEnumerable<object> TypeParameters { [NotNull] get; }
 
         public IMethodInfo Method { [NotNull] get; }
 
-        public object[] MethodParameters { [NotNull] get; }
+        public IEnumerable<object> MethodParameters { [NotNull] get; }
     }
 }

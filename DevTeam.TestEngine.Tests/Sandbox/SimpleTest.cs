@@ -4,13 +4,13 @@
 
     public class SimpleTest
     {
-        [Test.Case]
-        public void SuccessTest()
+        [Test]
+        public void FailedTest()
         {
         }
 
-        [Test]
-        public void FailedTest()
+        [Test.Case]
+        public void SuccessTest()
         {
         }
     }

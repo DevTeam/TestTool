@@ -37,5 +37,10 @@
             if (fullyQualifiedTypeName == null) throw new ArgumentNullException(nameof(fullyQualifiedTypeName));
             return _reflection.CreateType(_assembly.GetType(fullyQualifiedTypeName));
         }
+
+        public override string ToString()
+        {
+            return Name;
+        }
     }
 }

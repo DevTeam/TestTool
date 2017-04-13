@@ -11,15 +11,15 @@
 
         bool IsGenericMethodDefinition { get; }
 
-        ITypeInfo[] GetGenericArguments { get; }
+        IEnumerable<ITypeInfo> GetGenericArguments { get; }
 
         [NotNull]
-        IMethodInfo MakeGenericMethod([NotNull] params Type[] typeArguments);
+        IMethodInfo MakeGenericMethod([NotNull] IEnumerable<Type> typeArguments);
 
         [NotNull]
         IEnumerable<T> GetCustomAttributes<T>() where T : Attribute;
 
         [CanBeNull]
-        object Invoke([NotNull] object obj, [NotNull] params object[] parameters);
+        object Invoke([NotNull] object obj, [NotNull] IEnumerable<object> parameters);
     }
 }

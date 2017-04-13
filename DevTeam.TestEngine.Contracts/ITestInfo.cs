@@ -1,6 +1,7 @@
 ﻿namespace DevTeam.TestEngine.Contracts
 {
     using System;
+    using System.Collections.Generic;
     using Reflection;
 
     public interface ITestInfo
@@ -9,13 +10,13 @@
 
         ITypeInfo Type { [NotNull] get; }
 
-        Type[] GenericArgs { [NotNull] get; }
+        IEnumerable<Type> GenericArgs { [NotNull] get; }
 
-        object[] TypeParameters { [NotNull] get; }
+        IEnumerable<object> TypeParameters { [NotNull] get; }
 
         IMethodInfo Method { [NotNull] get; }
 
-        object[] MethodParameters { [NotNull] get; }
+        IEnumerable<object> MethodParameters { [NotNull] get; }
 
         ICase TestCase { [NotNull] get; }
     }

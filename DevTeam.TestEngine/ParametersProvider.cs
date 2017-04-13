@@ -10,46 +10,55 @@
     internal class ParametersProvider: IParametersProvider
     {
         private readonly IReflection _reflection;
+        [NotNull] private readonly IAttributeMap _attributeMap;
+        private readonly IAttributeAccessor _attributeAccessor;
 
-        public ParametersProvider([NotNull] IReflection reflection)
+        public ParametersProvider(
+            [NotNull] IReflection reflection,
+            [NotNull] IAttributeMap attributeMap,
+            [NotNull] IAttributeAccessor attributeAccessor)
         {
             if (reflection == null) throw new ArgumentNullException(nameof(reflection));
+            if (attributeMap == null) throw new ArgumentNullException(nameof(attributeMap));
+            if (attributeAccessor == null) throw new ArgumentNullException(nameof(attributeAccessor));
             _reflection = reflection;
+            _attributeMap = attributeMap;
+            _attributeAccessor = attributeAccessor;
         }
 
-        public IEnumerable<object[]> GetTypeParameters(ITypeInfo type)
+        public IEnumerable<IEnumerable<object>> GetTypeParameters(ITypeInfo type)
         {
             if (type == null) throw new ArgumentNullException(nameof(type));
-            return GetParameters(type.GetCustomAttributes<TestFramework.Test.CaseSourceAttribute>(), type.GetCustomAttributes<TestFramework.Test.CaseAttribute>());
+            return GetParameters(_attributeAccessor.GetAttributes(type, _attributeMap.GetDescriptor(Wellknown.Attributes.CaseSource)), _attributeAccessor.GetAttributes(type, _attributeMap.GetDescriptor(Wellknown.Attributes.Case)));
         }
 
-        public IEnumerable<object[]> GetMethodParameters(IMethodInfo method)
+        public IEnumerable<IEnumerable<object>> GetMethodParameters(IMethodInfo method)
         {
             if (method == null) throw new ArgumentNullException(nameof(method));
-            return GetParameters(method.GetCustomAttributes<TestFramework.Test.CaseSourceAttribute>(), method.GetCustomAttributes<TestFramework.Test.CaseAttribute>());
+            return GetParameters(_attributeAccessor.GetAttributes(method, _attributeMap.GetDescriptor(Wellknown.Attributes.CaseSource)), _attributeAccessor.GetAttributes(method, _attributeMap.GetDescriptor(Wellknown.Attributes.Case)));
         }
 
-        private IEnumerable<object[]> GetParameters(
-            [NotNull] IEnumerable<TestFramework.Test.CaseSourceAttribute> caseSources,
-            [NotNull] IEnumerable<TestFramework.Test.CaseAttribute> cases)
+        private IEnumerable<IEnumerable<object>> GetParameters(
+            [NotNull] IEnumerable<IAttribute> caseSources,
+            [NotNull] IEnumerable<IAttribute> cases)
         {
             if (caseSources == null) throw new ArgumentNullException(nameof(caseSources));
             if (cases == null) throw new ArgumentNullException(nameof(cases));
             var genericArgsFromSources =
                 from caseSourceAttribute in caseSources
-                from caseSourceType in caseSourceAttribute.CaseSourceTypes
-                let caseSourceInstance = _reflection.CreateType(caseSourceType).CreateInstance() as IEnumerable
+                from caseSourceType in caseSourceAttribute.GetValue<IEnumerable<Type>>(_attributeMap.GetDescriptor(Wellknown.Properties.Types))
+                let caseSourceInstance = _reflection.CreateType(caseSourceType).CreateInstance(Enumerable.Empty<object>()) as IEnumerable
                 from paramsItem in GetParams(caseSourceInstance)
                 select paramsItem;
 
             var parameters =
                 from caseAttribute in cases
-                select caseAttribute.Parameters;
+                select caseAttribute.GetValue<IEnumerable<object>>(_attributeMap.GetDescriptor(Wellknown.Properties.Parameters));
 
             return genericArgsFromSources.Concat(parameters);
         }
 
-        private static IEnumerable<object[]> GetParams([NotNull] IEnumerable source)
+        private static IEnumerable<IEnumerable<object>> GetParams([NotNull] IEnumerable source)
         {
             if (source == null) throw new ArgumentNullException(nameof(source));
             return
@@ -57,7 +66,7 @@
                 let fromEnum = (genericArgsSource as IEnumerable)?.OfType<object>()
                 let value = genericArgsSource
                 let fromValue = value != null ? Enumerable.Repeat(value, 1) : Enumerable.Empty<object>()
-                select (fromEnum ?? fromValue).ToArray();
+                select fromEnum ?? fromValue;
         }
     }
 }

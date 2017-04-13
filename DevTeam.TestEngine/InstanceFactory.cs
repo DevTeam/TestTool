@@ -17,15 +17,18 @@
                 var instanceType = testInfo.Type;
                 if (testInfo.Type.IsGenericTypeDefinition)
                 {
-                    if (testInfo.GenericArgs.Length == instanceType.GenericTypeParameters.Length)
+                    var genericArgs = testInfo.GenericArgs.ToArray();
+                    if (genericArgs.Length == instanceType.GenericTypeParameters.Count())
                     {
-                        messages.Add(new MessageDto(MessageType.Trace, Stage.Construction, $"Make generic type {instanceType.FullName} with generic arguments {string.Join(", ", testInfo.GenericArgs.Select(i => i.FullName).ToArray())}"));
-                        instanceType = instanceType.MakeGenericType(testInfo.GenericArgs);
+                        messages.Add(new MessageDto(MessageType.Trace, Stage.Construction, $"Make generic type {instanceType.FullName} with generic arguments [{string.Join(", ", genericArgs.Select(i => i.FullName).ToArray())}]"));
+                        instanceType = instanceType.MakeGenericType(genericArgs);
                     }
                 }
 
-                messages.Add(new MessageDto(MessageType.Trace, Stage.Construction, $"Create instance of type {instanceType.FullName}"));
-                instance = instanceType.CreateInstance(testInfo.TypeParameters);
+                var typeParameters = testInfo.TypeParameters.ToArray();
+                var typeParametersStr = string.Join(", ", typeParameters.Select(i => i?.ToString() ?? "null").DefaultIfEmpty("empty").ToArray());
+                messages.Add(new MessageDto(MessageType.Trace, Stage.Construction, $"Create instance of type {instanceType.FullName} with parameters [{typeParametersStr}]"));
+                instance = instanceType.CreateInstance(typeParameters);
                 messages.Add(new MessageDto(MessageType.Trace, Stage.Construction, $"Instance #{instance.GetHashCode()} of type {instanceType.FullName} was created"));
                 return true;
             }

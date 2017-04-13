@@ -5,8 +5,8 @@
 
     public interface IParametersProvider
     {
-        [NotNull] IEnumerable<object[]> GetTypeParameters([NotNull] ITypeInfo type);
+        [NotNull] IEnumerable<IEnumerable<object>> GetTypeParameters([NotNull] ITypeInfo type);
 
-        [NotNull] IEnumerable<object[]> GetMethodParameters([NotNull] IMethodInfo method);
+        [NotNull] IEnumerable<IEnumerable<object>> GetMethodParameters([NotNull] IMethodInfo method);
     }
 }

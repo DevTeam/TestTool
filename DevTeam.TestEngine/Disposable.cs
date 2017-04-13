@@ -1,12 +1,13 @@
 ﻿namespace DevTeam.TestEngine
 {
     using System;
+    using Contracts;
 
     internal class Disposable : IDisposable
     {
         private readonly Action _disposableAction;
 
-        public Disposable(Action disposableAction)
+        public Disposable([NotNull] Action disposableAction)
         {
             if (disposableAction == null) throw new ArgumentNullException(nameof(disposableAction));
             _disposableAction = disposableAction;

@@ -4,7 +4,7 @@
 
     public partial class Test
     {
-        [AttributeUsage(AttributeTargets.Method | AttributeTargets.Class, AllowMultiple = true)]
+        [AttributeUsage(AttributeTargets.Method | AttributeTargets.Class)]
         public class IgnoreAttribute : Attribute
         {
             public IgnoreAttribute(string reason = "")

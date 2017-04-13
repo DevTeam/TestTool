@@ -26,10 +26,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="DevTeam.TestAdapter.props" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Include="..\DevTeam.TestEngine\DevTeam.TestEngine.dll.ioc" Link="DevTeam.TestEngine.dll.ioc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-	<Content Include="DevTeam.TestAdapter.props" Link="DevTeam.TestAdapter.props">
+    <Content Include="DevTeam.TestAdapter.props">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
@@ -39,7 +43,7 @@
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'net35' or '$(TargetFramework)' == 'net45'">
-    <PackageReference Include="Microsoft.VisualStudio.TestPlatform.ObjectModel" Version="14.0.0" />
+    <PackageReference Include="Microsoft.TestPlatform.ObjectModel" Version="11.0.0" />
   </ItemGroup>  
 
   <ItemGroup Condition="'$(TargetFramework)' == 'netcoreapp1.0'">

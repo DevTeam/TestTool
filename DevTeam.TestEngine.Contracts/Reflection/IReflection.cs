@@ -5,14 +5,16 @@
 
     public interface IReflection
     {
-        [NotNull] IAssemblyInfo LoadAssembly([NotNull] string source);
+        [NotNull] IAssemblyInfo LoadAssembly([NotNull] string assemblyFile);
 
-        IAssemblyInfo CreateAssembly([NotNull] Assembly assembly);
+        [NotNull] IAssemblyInfo CreateAssembly([NotNull] Assembly assembly);
 
-        ITypeInfo CreateType([NotNull] Type type);
+        [NotNull] ITypeInfo CreateType([NotNull] Type type);
 
-        IMethodInfo CreateMethod([NotNull] MethodInfo method);
+        [NotNull] IMethodInfo CreateMethod([NotNull] MethodInfo method);
 
-        IParameterInfo CreateParameter([NotNull] ParameterInfo parameterInfo);
+        [NotNull] IPropertyInfo CreateProperty([NotNull] PropertyInfo property);
+
+        [NotNull] IParameterInfo CreateParameter([NotNull] ParameterInfo parameterInfo);
     }
 }

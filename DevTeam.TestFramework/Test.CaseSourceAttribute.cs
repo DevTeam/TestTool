@@ -1,6 +1,7 @@
 ﻿namespace DevTeam.TestFramework
 {
     using System;
+    using System.Collections.Generic;
 
     public partial class Test
     {
@@ -10,10 +11,10 @@
             public CaseSourceAttribute(params Type[] caseSourceTypes)
             {
                 if (caseSourceTypes == null) throw new ArgumentNullException(nameof(caseSourceTypes));
-                CaseSourceTypes = caseSourceTypes;
+                Types = caseSourceTypes;
             }
 
-            public Type[] CaseSourceTypes { get; }
+            public IEnumerable<Type> Types { get; }
         }
     }
 }

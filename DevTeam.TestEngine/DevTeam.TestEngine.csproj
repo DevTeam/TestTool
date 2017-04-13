@@ -38,7 +38,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\DevTeam.TestEngine.Contracts\DevTeam.TestEngine.Contracts.csproj" />
-    <ProjectReference Include="..\DevTeam.TestFramework\DevTeam.TestFramework.csproj" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'netcoreapp1.0' or '$(TargetFramework)' == 'netstandard1.5'">
