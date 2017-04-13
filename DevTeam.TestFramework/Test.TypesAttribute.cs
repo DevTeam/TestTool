@@ -3,12 +3,12 @@
     using System;
     using System.Collections.Generic;
 
-    public partial class Test
+    public static partial class Test
     {
-        [AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
-        public class GenericArgsAttribute : Attribute
+        [AttributeUsage(AttributeTargets.Method | AttributeTargets.Class, AllowMultiple = true)]
+        public class TypesAttribute : TestAttribute
         {
-            public GenericArgsAttribute(params Type[] types)
+            public TypesAttribute(params Type[] types)
             {
                 if (types == null) throw new ArgumentNullException(nameof(types));
                 Types = types;

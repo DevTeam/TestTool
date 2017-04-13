@@ -9,17 +9,21 @@ namespace DevTeam.TestEngine.Contracts
 
         string Source { [NotNull] get; }
 
+        string DysplayName { [NotNull] get; }
+
         string FullTypeName { [NotNull] get; }
 
         string TypeName { [NotNull] get; }
 
         IEnumerable<string> TypeGenericArgs { [NotNull] get; }
 
-        IEnumerable<string> TypeParameters { [NotNull] get; }
+        IEnumerable<string> TypeArgs { [NotNull] get; }
 
         string MethodName { [NotNull] get; }
 
-        IEnumerable<string> MethodParaeters { [NotNull] get; }
+        IEnumerable<string> MethodGenericArgs { get; }
+
+        IEnumerable<string> MethodArgs { [NotNull] get; }
 
         string CodeFilePath { [CanBeNull] get; }
 

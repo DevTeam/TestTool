@@ -21,18 +21,28 @@
             _attributeFactory = attributeFactory;
         }
 
-        public IEnumerable<IAttribute> GetAttributes(ITypeInfo type, IAttributeDescriptor descriptor)
+        public IEnumerable<IAttribute> GetAttributes(IMemberInfo memberInfo, IAttributeDescriptor descriptor)
         {
-            if (type == null) throw new ArgumentNullException(nameof(type));
+            if (memberInfo == null) throw new ArgumentNullException(nameof(memberInfo));
             if (descriptor == null) throw new ArgumentNullException(nameof(descriptor));
-            return type.GetCustomAttributes<Attribute>().Where(attribute => attribute.GetType().FullName == descriptor.FullTypeName).Select(attribute => _attributeFactory(descriptor, attribute)).Where(attribute => MatchAttribute(attribute, descriptor));
+            return memberInfo.GetCustomAttributes<Attribute>().Where(attribute => MatchTypeName(attribute.GetType(), descriptor.FullTypeName)).Select(attribute => _attributeFactory(descriptor, attribute)).Where(attribute => MatchAttribute(attribute, descriptor));
         }
 
-        public IEnumerable<IAttribute> GetAttributes(IMethodInfo method, IAttributeDescriptor descriptor)
+        private bool MatchTypeName(Type type, string fullTypeName)
         {
-            if (method == null) throw new ArgumentNullException(nameof(method));
-            if (descriptor == null) throw new ArgumentNullException(nameof(descriptor));
-            return method.GetCustomAttributes<Attribute>().Where(attribute => attribute.GetType().FullName == descriptor.FullTypeName).Select(attribute => _attributeFactory(descriptor, attribute)).Where(attribute => MatchAttribute(attribute, attribute.Descriptor));
+            var curType = _reflection.CreateType(type);
+            do
+            {
+                if (fullTypeName.Equals(curType.FullName, StringComparison.OrdinalIgnoreCase))
+                {
+                    return true;
+                }
+
+                curType = curType.BaseType;
+            }
+            while (curType.Type != typeof(Attribute));
+
+            return false;
         }
 
         private bool MatchAttribute([NotNull] IAttribute attribute, [NotNull] IAttributeDescriptor descriptor)

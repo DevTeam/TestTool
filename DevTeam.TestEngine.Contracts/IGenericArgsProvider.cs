@@ -6,6 +6,6 @@
 
     public interface IGenericArgsProvider
     {
-        [NotNull] IEnumerable<IEnumerable<Type>> GetGenericArgs([NotNull] ITypeInfo type);
+        [NotNull] IEnumerable<IEnumerable<Type>> GetGenericArgs([NotNull] IMemberInfo memberInfo);
     }
 }

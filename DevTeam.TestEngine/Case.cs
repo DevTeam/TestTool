@@ -1,32 +1,33 @@
-﻿namespace DevTeam.TestEngine.Dto
+﻿namespace DevTeam.TestEngine
 {
     using System;
     using System.Collections.Generic;
-    using System.IO;
     using System.Linq;
     using Contracts;
 
-    internal class CaseDto: ICase
+    internal class Case: ICase
     {
-        public CaseDto(
+        public Case(
             Guid id,
             [NotNull] string source,
             [NotNull] string fullTypeName,
             [NotNull] string typeName,
-            [NotNull] string[] typeGenericArgs,
-            [NotNull] string[] typeParameters,
+            [NotNull] IEnumerable<string> typeGenericArgs,
+            [NotNull] IEnumerable<string> typeArgs,
             [NotNull] string methodName,
-            [NotNull] string[] methodParaeters,
+            [NotNull] IEnumerable<string> methodGenericArgs,
+            [NotNull] IEnumerable<string> methodArgs,
             [CanBeNull] string codeFilePath = null,
-            [CanBeNull]int? lineNumber = null)
+            [CanBeNull] int? lineNumber = null)
         {
             if (source == null) throw new ArgumentNullException(nameof(source));
             if (fullTypeName == null) throw new ArgumentNullException(nameof(fullTypeName));
             if (typeName == null) throw new ArgumentNullException(nameof(typeName));
             if (typeGenericArgs == null) throw new ArgumentNullException(nameof(typeGenericArgs));
-            if (typeParameters == null) throw new ArgumentNullException(nameof(typeParameters));
+            if (typeArgs == null) throw new ArgumentNullException(nameof(typeArgs));
             if (methodName == null) throw new ArgumentNullException(nameof(methodName));
-            if (methodParaeters == null) throw new ArgumentNullException(nameof(methodParaeters));
+            if (methodGenericArgs == null) throw new ArgumentNullException(nameof(methodGenericArgs));
+            if (methodArgs == null) throw new ArgumentNullException(nameof(methodArgs));
             Id = id;
             Source = source;
             CodeFilePath = codeFilePath;
@@ -34,14 +35,17 @@
             FullTypeName = fullTypeName;
             TypeName = typeName;
             TypeGenericArgs = typeGenericArgs;
-            TypeParameters = typeParameters;
+            TypeArgs = typeArgs;
             MethodName = methodName;
-            MethodParaeters = methodParaeters;
+            MethodGenericArgs = methodGenericArgs;
+            MethodArgs = methodArgs;
         }
 
         public Guid Id { get; }
 
         public string Source { get; }
+
+        public string DysplayName => ToString();
 
         public string CodeFilePath { get; }
 
@@ -53,20 +57,22 @@
 
         public IEnumerable<string> TypeGenericArgs { get; }
 
-        public IEnumerable<string> TypeParameters { get; }
+        public IEnumerable<string> TypeArgs { get; }
 
         public string MethodName { get; }
 
-        public IEnumerable<string> MethodParaeters { get; }
+        public IEnumerable<string> MethodGenericArgs { get; }
+
+        public IEnumerable<string> MethodArgs { get; }
 
         [NotNull]
         public override string ToString()
         {
-            return $"{Path.GetFileName(Source)}: {FullTypeName}{GetTypesString(TypeGenericArgs)}{GetParametersString(TypeParameters)}.{MethodName}{GetParametersString(MethodParaeters)}";
+            return $"{Source}: {FullTypeName}{GetGenericArgsString(TypeGenericArgs)}{GetArgString(TypeArgs)}.{MethodName}{GetGenericArgsString(MethodGenericArgs)}{GetArgString(MethodArgs)}";
         }
 
         [NotNull]
-        private static string GetParametersString([NotNull] IEnumerable<string> parameters)
+        private static string GetArgString([NotNull] IEnumerable<string> parameters)
         {
             if (parameters == null) throw new ArgumentNullException(nameof(parameters));
             var str = string.Join(", ", parameters.ToArray());
@@ -74,7 +80,7 @@
         }
 
         [NotNull]
-        private static string GetTypesString([NotNull] IEnumerable<string> types)
+        private static string GetGenericArgsString([NotNull] IEnumerable<string> types)
         {
             if (types == null) throw new ArgumentNullException(nameof(types));
             var str = string.Join(", ", types.ToArray());

@@ -10,14 +10,20 @@
 
         ITypeInfo Type { [NotNull] get; }
 
-        IEnumerable<Type> GenericArgs { [NotNull] get; }
+        IEnumerable<Type> TypeGenericArgs { [NotNull] get; }
 
-        IEnumerable<object> TypeParameters { [NotNull] get; }
+        IEnumerable<object> TypeArgs { [NotNull] get; }
 
         IMethodInfo Method { [NotNull] get; }
 
-        IEnumerable<object> MethodParameters { [NotNull] get; }
+        IEnumerable<Type> MethodGenericArgs { [NotNull] get; }
 
-        ICase TestCase { [NotNull] get; }
+        IEnumerable<object> MethodArgs { [NotNull] get; }
+
+        ICase Case { [NotNull] get; }
+
+        bool Ignore { get; }
+
+        string IgnoreReason { [NotNull] get; }
     }
 }

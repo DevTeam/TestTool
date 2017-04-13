@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net45;net462;netcoreapp1.0</TargetFrameworks>
+	<TargetFrameworks>net45;net462;netcoreapp1.0</TargetFrameworks>
   </PropertyGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'netcoreapp1.0' or '$(TargetFramework)' == 'netstandard1.5' or '$(TargetFramework)' == 'netstandard1.6'">
@@ -15,8 +15,8 @@
   </ItemGroup>
 
   <ItemGroup>
-	<PackageReference Include="DevTeam.TestFramework" Version="1.0.6-beta" />
-    <PackageReference Include="DevTeam.TestAdapter" Version="1.0.6-beta" />
+	<PackageReference Include="DevTeam.TestFramework" Version="1.0.1-beta" />
+    <PackageReference Include="DevTeam.TestAdapter" Version="1.0.1-beta" />
   </ItemGroup>
 
 </Project>

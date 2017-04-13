@@ -3,7 +3,6 @@
     using System;
     using System.Collections.Generic;
     using Contracts;
-    using Dto;
 
     internal class MethodRunner : IMethodRunner
     {
@@ -13,13 +12,13 @@
             try
             {
                 var method = testInfo.Method;
-                messages.Add(new MessageDto(MessageType.Trace, Stage.Construction, $"Run method {method.Name} for instance #{instance.GetHashCode()}"));
-                method.Invoke(instance, testInfo.MethodParameters);
-                messages.Add(new MessageDto(MessageType.Trace, Stage.Construction, $"Method {method.Name} for instance #{instance.GetHashCode()} was finished"));
+                messages.Add(new Message(MessageType.Trace, Stage.Construction, $"Run method {method.Name} for instance #{instance.GetHashCode()}"));
+                method.Invoke(instance, testInfo.MethodArgs);
+                messages.Add(new Message(MessageType.Trace, Stage.Construction, $"Method {method.Name} for instance #{instance.GetHashCode()} was finished"));
             }
             catch (Exception exception)
             {
-                messages.Add(new MessageDto(MessageType.Exception, Stage.Test, exception.Message, exception.StackTrace));
+                messages.Add(new Message(MessageType.Exception, Stage.Test, exception.Message, exception.StackTrace));
                 return false;
             }
 

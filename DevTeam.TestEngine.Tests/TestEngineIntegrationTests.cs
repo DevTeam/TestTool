@@ -37,59 +37,63 @@
         }
 
         [Fact]
-        public void ShouldRunTestsWhenParams()
+        public void ShouldRunTestsWhenArgs()
         {
             // Given
             var session = CreateSession();
 
             // When
-            var cases = session.Discover(Integration.GetSource()).Filter(typeof(ParamsTest)).ToArray();
+            var cases = session.Discover(Integration.GetSource()).Filter(typeof(ArgsTest)).ToArray();
             var results = session.RunAll(cases);
 
             // Then
             results.Length.ShouldBe(8);
+            results.All(result => result.State == State.Passed).ShouldBe(true);
         }
 
         [Fact]
-        public void ShouldRunTestsWhenGenericArgsTest()
+        public void ShouldRunTestsWhenClassGenericArgs()
         {
             // Given
             var session = CreateSession();
 
             // When
-            var cases = session.Discover(Integration.GetSource()).Filter(typeof(GenericArgsTest<,>)).ToArray();
+            var cases = session.Discover(Integration.GetSource()).Filter(typeof(ClassGenericArgsTest<,>)).ToArray();
             var results = session.RunAll(cases);
 
             // Then
             results.Length.ShouldBe(16);
+            results.All(result => result.State == State.Passed).ShouldBe(true);
         }
 
         [Fact]
-        public void ShouldRunTestsWhenCaseSource()
+        public void ShouldRunTestsWhenArgsSource()
         {
             // Given
             var session = CreateSession();
 
             // When
-            var cases = session.Discover(Integration.GetSource()).Filter(typeof(CaseSourceTest)).ToArray();
+            var cases = session.Discover(Integration.GetSource()).Filter(typeof(ArgsSourceTest)).ToArray();
             var results = session.RunAll(cases);
 
             // Then
             results.Length.ShouldBe(4);
+            results.All(result => result.State == State.Passed).ShouldBe(true);
         }
 
         [Fact]
-        public void ShouldRunTestsWhenCaseSingleItemSource()
+        public void ShouldRunTestsWhenArgsSingleItemSource()
         {
             // Given
             var session = CreateSession();
 
             // When
-            var cases = session.Discover(Integration.GetSource()).Filter(typeof(CaseSingleItemSourceTest)).ToArray();
+            var cases = session.Discover(Integration.GetSource()).Filter(typeof(ArgsSingleItemSourceTest)).ToArray();
             var results = session.RunAll(cases);
 
             // Then
             results.Length.ShouldBe(4);
+            results.All(result => result.State == State.Passed).ShouldBe(true);
         }
 
         [Fact]
@@ -99,25 +103,88 @@
             var session = CreateSession();
 
             // When
-            var cases = session.Discover(Integration.GetSource()).Filter(typeof(GenericArgsSourceTest<,>)).ToArray();
+            var cases = session.Discover(Integration.GetSource()).Filter(typeof(ClassGenericArgsSourceTest<,>)).ToArray();
             var results = session.RunAll(cases);
 
             // Then
             results.Length.ShouldBe(2);
+            results.All(result => result.State == State.Passed).ShouldBe(true);
         }
 
         [Fact]
-        public void ShouldRunTestsWhenGenericArgsSingleItemSource()
+        public void ShouldRunTestsWhenClassTypesSingleItemSource()
         {
             // Given
             var session = CreateSession();
 
             // When
-            var cases = session.Discover(Integration.GetSource()).Filter(typeof(GenericArgsSingleItemSourceTest<>)).ToArray();
+            var cases = session.Discover(Integration.GetSource()).Filter(typeof(ClassTypesSingleItemSourceTest<>)).ToArray();
             var results = session.RunAll(cases);
 
             // Then
             results.Length.ShouldBe(2);
+            results.All(result => result.State == State.Passed).ShouldBe(true);
+        }
+
+        [Fact]
+        public void ShouldIgnoreTests()
+        {
+            // Given
+            var session = CreateSession();
+
+            // When
+            var cases = session.Discover(Integration.GetSource()).Filter(typeof(IgnoreTest)).ToArray();
+            var results = session.RunAll(cases);
+
+            // Then
+            cases.Length.ShouldBe(2);
+            results.All(result => result.State == State.Skiped).ShouldBe(true);
+            results[1].Messages.Count(i => i.Type == MessageType.State && i.Text == "some reason").ShouldBe(1);
+        }
+
+        [Fact]
+        public void ShouldIgnoreAllTests()
+        {
+            // Given
+            var session = CreateSession();
+
+            // When
+            var cases = session.Discover(Integration.GetSource()).Filter(typeof(IgnoreAllTest)).ToArray();
+            var results = session.RunAll(cases);
+
+            // Then
+            cases.Length.ShouldBe(2);
+            results.All(result => result.State == State.Skiped).ShouldBe(true);
+        }
+
+        [Fact]
+        public void ShouldRunTestsWhenMethodGenericArgs()
+        {
+            // Given
+            var session = CreateSession();
+
+            // When
+            var cases = session.Discover(Integration.GetSource()).Filter(typeof(MethodGenericArgsTest)).ToArray();
+            var results = session.RunAll(cases);
+
+            // Then
+            results.Length.ShouldBe(2);
+            results.All(result => result.State == State.Passed).ShouldBe(true);
+        }
+
+        [Fact]
+        public void ShouldRunTestsWhenMethodGenericArgsSource()
+        {
+            // Given
+            var session = CreateSession();
+
+            // When
+            var cases = session.Discover(Integration.GetSource()).Filter(typeof(MethodGenericArgsSourceTest)).ToArray();
+            var results = session.RunAll(cases);
+
+            // Then
+            results.Length.ShouldBe(3);
+            results.All(result => result.State == State.Passed).ShouldBe(true);
         }
 
         private static ISession CreateSession()

@@ -3,13 +3,15 @@
     using System;
     using System.Collections.Generic;
 
-    public interface ITypeInfo
+    public interface ITypeInfo : IMemberInfo
     {
         Type Type { [NotNull] get; }
 
         string FullName { [NotNull] get; }
 
         string Name { [NotNull] get; }
+
+        ITypeInfo BaseType { [CanBeNull] get; }
 
         bool IsGenericTypeDefinition { get; }
 
@@ -20,12 +22,9 @@
         IEnumerable<IPropertyInfo> Properties { [NotNull] get; }
 
         [NotNull]
-        ITypeInfo MakeGenericType([NotNull] IEnumerable<Type> typeArguments);
+        ITypeInfo MakeGenericType([NotNull] IEnumerable<Type> genericTypeArguments);
 
-        [NotNull]
-        IEnumerable<T> GetCustomAttributes<T>() where T : Attribute;
-
-        object CreateInstance([NotNull] IEnumerable<object> parameters);
+        object CreateInstance([NotNull] IEnumerable<object> args);
 
         bool IsAssignableFrom([NotNull] ITypeInfo type);
     }

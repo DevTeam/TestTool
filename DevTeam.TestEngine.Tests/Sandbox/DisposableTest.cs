@@ -5,12 +5,12 @@
 
     public class DisposableTest: IDisposable
     {
-        [Test.Case]
+        [Test]
         public void SuccessTest()
         {
         }
 
-        [Test.Case]
+        [Test]
         public void FailedTest()
         {
         }

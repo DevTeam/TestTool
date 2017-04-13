@@ -5,7 +5,12 @@
     public class SampleTests
     {
         [Test]
-        public void Test3()
+        public void Success()
+        {
+        }
+
+		[Test.Ignore("some reason")]
+        public void Ignored()
         {
         }
     }

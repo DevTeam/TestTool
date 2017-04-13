@@ -5,7 +5,6 @@
     using System.Linq;
     using Contracts;
     using Contracts.Reflection;
-    using Dto;
 
     internal class Discoverer : IDiscoverer
     {
@@ -40,55 +39,83 @@
             var assembly = _reflection.LoadAssembly(source);
             return
                 from type in assembly.DefinedTypes
-                from genericArgs in _genericArgsProvider.GetGenericArgs(type).DefaultIfEmpty(Enumerable.Empty<Type>())
-                from typeParameters in _parametersProvider.GetTypeParameters(type).DefaultIfEmpty(Enumerable.Empty<object>())
-                from method in type.Methods
-                from methodParameters in _parametersProvider.GetMethodParameters(method).Concat(_attributeAccessor.GetAttributes(method, _attributeMap.GetDescriptor(Wellknown.Attributes.Test)).Select(i => Enumerable.Empty<object>()))
-                from testCase in CreateTestInfo(source, assembly, type, genericArgs, typeParameters, method, methodParameters)
+                from typeGenericArgs in _genericArgsProvider.GetGenericArgs(type).DefaultIfEmpty(Enumerable.Empty<Type>())
+                let typeGenericArgsArray = typeGenericArgs.ToArray()
+                let caseType = DefineType(type, typeGenericArgsArray)
+                from typeArgs in _parametersProvider.GetTypeParameters(type).DefaultIfEmpty(Enumerable.Empty<object>())
+                from method in caseType.Methods
+                from methodGenericArgs in _genericArgsProvider.GetGenericArgs(method).DefaultIfEmpty(Enumerable.Empty<Type>())
+                let methodGenericArgsArray = methodGenericArgs.ToArray()
+                let caseMethod = DefineMethod(method, methodGenericArgsArray)
+                where _attributeAccessor.GetAttributes(caseMethod, _attributeMap.GetDescriptor(Wellknown.Attributes.Test)).Any()
+                from methodArgs in _parametersProvider.GetMethodParameters(caseMethod).DefaultIfEmpty(Enumerable.Empty<object>())
+                from testCase in CreateTestInfo(source, assembly, caseType, typeGenericArgsArray, typeArgs, caseMethod, methodGenericArgsArray, methodArgs)
                 select testCase;
+        }
+
+        private IMethodInfo DefineMethod([NotNull] IMethodInfo method, [NotNull] Type[] genericArgs)
+        {
+            if (method == null) throw new ArgumentNullException(nameof(method));
+            if (genericArgs == null) throw new ArgumentNullException(nameof(genericArgs));
+            return method.IsGenericMethodDefinition ? method.MakeGenericMethod(genericArgs) : method;
+        }
+
+        private static ITypeInfo DefineType([NotNull] ITypeInfo type, [NotNull] Type[] genericArgs)
+        {
+            if (type == null) throw new ArgumentNullException(nameof(type));
+            if (genericArgs == null) throw new ArgumentNullException(nameof(genericArgs));
+            return type.IsGenericTypeDefinition ? type.MakeGenericType(genericArgs) : type;
         }
 
         private IEnumerable<ITestInfo> CreateTestInfo(
             [NotNull] string source,
             [NotNull] IAssemblyInfo assembly,
             [NotNull] ITypeInfo type,
-            [NotNull] IEnumerable<Type> genericArgs,
-            [NotNull] IEnumerable<object> typeParameters,
+            [NotNull] IEnumerable<Type> typeGenericArgs,
+            [NotNull] IEnumerable<object> typeArgs,
             [NotNull] IMethodInfo method,
-            [NotNull] IEnumerable<object> methodParameters)
+            [NotNull] IEnumerable<Type> methodGenericArgs,
+            [NotNull] IEnumerable<object> methodArgs)
         {
             if (source == null) throw new ArgumentNullException(nameof(source));
             if (assembly == null) throw new ArgumentNullException(nameof(assembly));
             if (type == null) throw new ArgumentNullException(nameof(type));
-            if (genericArgs == null) throw new ArgumentNullException(nameof(genericArgs));
-            if (typeParameters == null) throw new ArgumentNullException(nameof(typeParameters));
+            if (typeGenericArgs == null) throw new ArgumentNullException(nameof(typeGenericArgs));
+            if (typeArgs == null) throw new ArgumentNullException(nameof(typeArgs));
             if (method == null) throw new ArgumentNullException(nameof(method));
-            if (methodParameters == null) throw new ArgumentNullException(nameof(methodParameters));
+            if (methodGenericArgs == null) throw new ArgumentNullException(nameof(methodGenericArgs));
+            if (methodArgs == null) throw new ArgumentNullException(nameof(methodArgs));
 
-            var genericArgsArray = genericArgs as Type[] ?? genericArgs.ToArray();
-            var typeParametersArray = typeParameters as object[] ?? typeParameters.ToArray();
-            var methodParametersArray = methodParameters as object[] ?? methodParameters.ToArray();
+            var typeGenericArgsArray = typeGenericArgs as Type[] ?? typeGenericArgs.ToArray();
+            var typeArgsArray = typeArgs as object[] ?? typeArgs.ToArray();
+            var methodGenericArgsArray = methodGenericArgs as Type[] ?? methodGenericArgs.ToArray();
+            var methodArgsArray = methodArgs as object[] ?? methodArgs.ToArray();
 
-            var testCase = new CaseDto(
+            var testCase = new Case(
                 Guid.NewGuid(),
                 source,
                 type.FullName,
                 type.Name,
-                genericArgsArray.Select(i => i.Name).ToArray(),
-                typeParametersArray.Select(i => i.ToString()).ToArray(),
+                typeGenericArgsArray.Select(i => i.Name),
+                typeArgsArray.Select(i => i.ToString()),
                 method.Name,
-                methodParametersArray.Select(i => i.ToString()).ToArray());
+                methodGenericArgsArray.Select(i => i.Name),
+                methodArgsArray.Select(i => i.ToString()));
 
-            // method.GetCustomAttributes<Test.IgnoreAttribute>().SingleOrDefault() ?? type.GetCustomAttributes<Test.IgnoreAttribute>().SingleOrDefault();
+            var ignoreAttribute = _attributeAccessor.GetAttributes(method, _attributeMap.GetDescriptor(Wellknown.Attributes.Ignore)).SingleOrDefault() ?? _attributeAccessor.GetAttributes(type, _attributeMap.GetDescriptor(Wellknown.Attributes.Ignore)).SingleOrDefault();
+            var ignoreReason = ignoreAttribute?.GetValue<string>(_attributeMap.GetDescriptor(Wellknown.Properties.Reason)) ?? string.Empty;
 
             yield return new TestInfo(
                 testCase,
                 assembly,
                 type,
-                genericArgsArray,
-                typeParametersArray,
+                typeGenericArgsArray,
+                typeArgsArray,
                 method,
-                methodParametersArray);
+                methodGenericArgsArray,
+                methodArgsArray,
+                ignoreAttribute != null,
+                ignoreReason);
         }
     }
 }

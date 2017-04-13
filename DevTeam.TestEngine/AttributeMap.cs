@@ -8,12 +8,14 @@
     {
         internal static readonly IPropertyDescriptor PropertyParameters = new PropertyDescriptor("Parameters", typeof(IEnumerable<object>));
         internal static readonly IPropertyDescriptor PropertyTypes = new PropertyDescriptor("Types", typeof(IEnumerable<Type>));
+        internal static readonly IPropertyDescriptor PropertyReason = new PropertyDescriptor("Reason", typeof(string));
 
         internal static readonly IAttributeDescriptor AttributeTest = new AttributeDescriptor("DevTeam.TestFramework.TestAttribute");
-        internal static readonly IAttributeDescriptor AttributeCase = new AttributeDescriptor("DevTeam.TestFramework.Test+CaseAttribute", PropertyParameters);
-        internal static readonly IAttributeDescriptor AttributeCaseSource = new AttributeDescriptor("DevTeam.TestFramework.Test+CaseSourceAttribute", PropertyTypes);
-        internal static readonly IAttributeDescriptor AttributeGenericArgs = new AttributeDescriptor("DevTeam.TestFramework.Test+GenericArgsAttribute", PropertyTypes);
-        internal static readonly IAttributeDescriptor AttributeGenericArgsSource = new AttributeDescriptor("DevTeam.TestFramework.Test+GenericArgsSourceAttribute", PropertyTypes);
+        internal static readonly IAttributeDescriptor AttributeCase = new AttributeDescriptor("DevTeam.TestFramework.Test+ArgsAttribute", PropertyParameters);
+        internal static readonly IAttributeDescriptor AttributeCaseSource = new AttributeDescriptor("DevTeam.TestFramework.Test+Args+SourceAttribute", PropertyTypes);
+        internal static readonly IAttributeDescriptor AttributeGenericArgs = new AttributeDescriptor("DevTeam.TestFramework.Test+TypesAttribute", PropertyTypes);
+        internal static readonly IAttributeDescriptor AttributeGenericArgsSource = new AttributeDescriptor("DevTeam.TestFramework.Test+Types+SourceAttribute", PropertyTypes);
+        internal static readonly IAttributeDescriptor AttributeIgnoreTest = new AttributeDescriptor("DevTeam.TestFramework.Test+IgnoreAttribute", PropertyReason);
 
         public IAttributeDescriptor GetDescriptor(Wellknown.Attributes attribute)
         {
@@ -34,6 +36,9 @@
                 case Wellknown.Attributes.GenericArgsSource:
                     return AttributeGenericArgsSource;
 
+                case Wellknown.Attributes.Ignore:
+                    return AttributeIgnoreTest;
+
                 default:
                     throw new ArgumentOutOfRangeException(nameof(attribute), attribute, null);
             }
@@ -48,6 +53,9 @@
 
                 case Wellknown.Properties.Types:
                     return PropertyTypes;
+
+                case Wellknown.Properties.Reason:
+                    return PropertyReason;
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(property), property, null);

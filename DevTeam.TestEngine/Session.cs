@@ -3,7 +3,6 @@
     using System;
     using System.Collections.Generic;
     using Contracts;
-    using Dto;
 
     internal class Session: ISession
     {
@@ -24,19 +23,33 @@
         public IEnumerable<ICase> Discover(string source)
         {
             if (source == null) throw new ArgumentNullException(nameof(source));
-            _cases.Clear();
+            lock (_cases)
+            {
+                _cases.Clear();
+            }
+
             foreach (var testInfo in _discoverer.Discover(source))
             {
-                _cases[testInfo.TestCase.Id] = testInfo;
-                yield return testInfo.TestCase;
+                lock (_cases)
+                {
+                    _cases[testInfo.Case.Id] = testInfo;
+                }
+
+                yield return testInfo.Case;
             }
         }
 
         public IResult Run(Guid testId)
         {
-            if (!_cases.TryGetValue(testId, out ITestInfo testInfo))
+            ITestInfo testInfo;
+            lock (_cases)
             {
-                return new ResultDto(State.NotFound);
+                if (!_cases.TryGetValue(testId, out testInfo))
+                {
+                    return new Result(State.NotFound);
+                }
+
+                _cases.Remove(testId);
             }
 
             return _runner.Run(testInfo);

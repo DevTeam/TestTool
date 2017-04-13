@@ -5,8 +5,6 @@
 
     public interface IAttributeAccessor
     {
-        [NotNull] IEnumerable<IAttribute> GetAttributes([NotNull] IMethodInfo method, [NotNull] IAttributeDescriptor descriptor);
-
-        [NotNull] IEnumerable<IAttribute> GetAttributes([NotNull] ITypeInfo type, [NotNull] IAttributeDescriptor descriptor);
+        [NotNull] IEnumerable<IAttribute> GetAttributes([NotNull] IMemberInfo memberInfo, [NotNull] IAttributeDescriptor descriptor);
     }
 }

@@ -3,7 +3,6 @@
     using System;
     using System.Collections.Generic;
     using Contracts;
-    using Dto;
 
     internal class Runner : IRunner
     {
@@ -29,22 +28,28 @@
             if (testInfo == null) throw new ArgumentNullException(nameof(testInfo));
             var messages = new List<IMessage>();
 
+            if (testInfo.Ignore)
+            {
+                messages.Add(new Message(MessageType.State, Stage.Test, testInfo.IgnoreReason));
+                return new Result(State.Skiped) { messages };
+            }
+
             if (!_instanceFactory.TryCreateInstance(testInfo, messages, out object testInstance))
             {
-                return new ResultDto(State.Failed).WithMessages(messages);
+                return new Result(State.Failed) { messages };
             }
 
             if (!_methodRunner.TryRun(testInfo, testInstance, messages))
             {
-                return new ResultDto(State.Failed).WithMessages(messages);
+                return new Result(State.Failed) { messages };
             }
 
             if (!_instanceDisposer.TryDispose(testInstance, messages))
             {
-                return new ResultDto(State.Failed).WithMessages(messages);
+                return new Result(State.Failed) { messages };
             }
 
-            return new ResultDto(State.Passed).WithMessages(messages);
+            return new Result(State.Passed) { messages };
         }
     }
 }

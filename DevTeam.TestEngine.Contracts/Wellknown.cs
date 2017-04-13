@@ -12,14 +12,18 @@
 
             CaseSource,
 
-            GenericArgsSource
+            GenericArgsSource,
+
+            Ignore
         }
 
         public enum Properties
         {
             Parameters,
 
-            Types
+            Types,
+
+            Reason
         }
     }
 }

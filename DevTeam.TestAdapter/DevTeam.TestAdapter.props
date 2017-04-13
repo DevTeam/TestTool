@@ -1,58 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <ItemGroup>
-    <Content Include="$(MSBuildThisFileDirectory)DevTeam.TestAdapter.dll">
-      <Link>DevTeam.TestAdapter.dll</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <Visible>False</Visible>
-    </Content>
-	<ContentWithTargetPath Include="$(MSBuildThisFileDirectory)DevTeam.TestAdapter\DevTeam.TestPlatformAdapter.dll">
-      <Link>DevTeam.TestPlatformAdapter.dll</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-	  <TargetPath>DevTeam.TestAdapter</TargetPath>
-      <Visible>False</Visible>
-    </ContentWithTargetPath>
-	<ContentWithTargetPath Include="$(MSBuildThisFileDirectory)DevTeam.TestAdapter\DevTeam.TestEngine.dll.ioc">
-      <Link>DevTeam.TestEngine.dll.ioc</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <TargetPath>DevTeam.TestAdapter</TargetPath>
-      <Visible>False</Visible>
-    </ContentWithTargetPath>
-	<ContentWithTargetPath Include="$(MSBuildThisFileDirectory)DevTeam.TestAdapter\DevTeam.IoC.dll">
-      <Link>DevTeam.IoC.dll</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <TargetPath>DevTeam.TestAdapter</TargetPath>
-      <Visible>False</Visible>
-    </ContentWithTargetPath>
-	<ContentWithTargetPath Include="$(MSBuildThisFileDirectory)DevTeam.TestAdapter\DevTeam.IoC.Contracts.dll">
-      <Link>DevTeam.IoC.Contracts.dll</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <TargetPath>DevTeam.TestAdapter</TargetPath>
-      <Visible>False</Visible>
-    </ContentWithTargetPath>
-	<ContentWithTargetPath Include="$(MSBuildThisFileDirectory)DevTeam.TestAdapter\DevTeam.IoC.Configurations.Json.dll">
-      <Link>DevTeam.IoC.Configurations.Json.dll</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <TargetPath>DevTeam.TestAdapter</TargetPath>
-      <Visible>False</Visible>
-    </ContentWithTargetPath>
-	<ContentWithTargetPath Include="$(MSBuildThisFileDirectory)DevTeam.TestAdapter\DevTeam.TestEngine.dll">
-      <Link>DevTeam.TestEngine.dll</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <TargetPath>DevTeam.TestAdapter</TargetPath>
-      <Visible>False</Visible>
-    </ContentWithTargetPath>
-	<ContentWithTargetPath Include="$(MSBuildThisFileDirectory)DevTeam.TestAdapter\DevTeam.TestEngine.Contracts.dll">
-      <Link>DevTeam.TestEngine.Contracts.dll</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <TargetPath>DevTeam.TestAdapter</TargetPath>
-      <Visible>False</Visible>
-    </ContentWithTargetPath>
-	<ContentWithTargetPath Include="$(MSBuildThisFileDirectory)DevTeam.TestAdapter\Newtonsoft.Json.dll">
-      <Link>Newtonsoft.Json.dll</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <TargetPath>DevTeam.TestAdapter</TargetPath>
-      <Visible>False</Visible>
-    </ContentWithTargetPath>
-  </ItemGroup>
+    <ItemGroup>
+        <Content Include="$(MSBuildThisFileDirectory)DevTeam.TestAdapter.dll">
+            <Link>DevTeam.TestAdapter.dll</Link>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <Visible>False</Visible>
+        </Content>
+        <DevTeamTestAdapterContent Include="$(MSBuildThisFileDirectory)DevTeam.TestAdapter\*"/>
+    </ItemGroup>
 </Project>

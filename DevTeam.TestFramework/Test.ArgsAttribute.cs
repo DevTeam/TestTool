@@ -3,14 +3,14 @@
     using System;
     using System.Collections.Generic;
 
-    public partial class Test
+    public static partial class Test
     {
         [AttributeUsage(AttributeTargets.Method | AttributeTargets.Class, AllowMultiple = true)]
-        public class CaseAttribute : Attribute
+        public class ArgsAttribute : TestAttribute
         {
-            public static readonly CaseAttribute Empty = new CaseAttribute();
+            public static readonly ArgsAttribute Empty = new ArgsAttribute();
 
-            public CaseAttribute(params object[] parameters)
+            public ArgsAttribute(params object[] parameters)
             {
                 if (parameters == null) throw new ArgumentNullException(nameof(parameters));
                 Parameters = parameters;

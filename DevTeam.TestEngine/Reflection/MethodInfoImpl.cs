@@ -30,10 +30,10 @@
 
         public IEnumerable<ITypeInfo> GetGenericArguments => _methodInfo.GetGenericArguments().Select(type => _reflection.CreateType(type));
 
-        public IMethodInfo MakeGenericMethod(IEnumerable<Type> typeArguments)
+        public IMethodInfo MakeGenericMethod(IEnumerable<Type> genericTypeArguments)
         {
-            if (typeArguments == null) throw new ArgumentNullException(nameof(typeArguments));
-            return _reflection.CreateMethod(_methodInfo.MakeGenericMethod(typeArguments.ToArray()));
+            if (genericTypeArguments == null) throw new ArgumentNullException(nameof(genericTypeArguments));
+            return _reflection.CreateMethod(_methodInfo.MakeGenericMethod(genericTypeArguments.ToArray()));
         }
 
         public IEnumerable<T> GetCustomAttributes<T>()

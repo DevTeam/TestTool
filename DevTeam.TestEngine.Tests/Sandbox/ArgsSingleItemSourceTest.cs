@@ -3,19 +3,19 @@
     using System.Collections;
     using TestFramework;
 
-    [Test.CaseSource(typeof(CaseSourceTestCases))]
-    public class CaseSingleItemSourceTest
+    [Test.Args.Source(typeof(ClassArgs))]
+    public class ArgsSingleItemSourceTest
     {
-        public CaseSingleItemSourceTest(int num)
+        public ArgsSingleItemSourceTest(int num)
         {
         }
 
-        [Test.CaseSource(typeof(SuccessTestCases))]
+        [Test.Args.Source(typeof(SuccessArgs))]
         public void SuccessTest(int num)
         {
         }
 
-        private class CaseSourceTestCases : IEnumerable
+        private class ClassArgs : IEnumerable
         {
             public IEnumerator GetEnumerator()
             {
@@ -24,11 +24,11 @@
             }
         }
 
-        private class SuccessTestCases: IEnumerable
+        private class SuccessArgs: IEnumerable
         {
             public IEnumerator GetEnumerator()
             {
-                yield return new object[] { 33, "abc"};
+                yield return new object[] { 33 };
                 yield return 44;
             }
         }

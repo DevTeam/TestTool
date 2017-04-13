@@ -34,14 +34,16 @@
 
         public string Name => _type.Name;
 
-        public object CreateInstance(IEnumerable<object> parameters)
+        public object CreateInstance(IEnumerable<object> args)
         {
-            if (parameters == null) throw new ArgumentNullException(nameof(parameters));
-            return Activator.CreateInstance(_type, parameters.ToArray());
+            if (args == null) throw new ArgumentNullException(nameof(args));
+            return Activator.CreateInstance(_type, args.ToArray());
         }
 
 
 #if NET35
+        public ITypeInfo BaseType => _type.BaseType != null ? new TypeInfoImpl(_reflection, _type.BaseType) : null;
+
         public bool IsGenericTypeDefinition => _type.IsGenericTypeDefinition;
 
         public IEnumerable<ITypeInfo> GenericTypeParameters => _type.GetGenericArguments().Select(type => _reflection.CreateType(type));
@@ -50,10 +52,10 @@
 
         public IEnumerable<IPropertyInfo> Properties => _type.GetProperties().Select(property => _reflection.CreateProperty(property));
 
-        public ITypeInfo MakeGenericType(IEnumerable<Type> typeArguments)
+        public ITypeInfo MakeGenericType(IEnumerable<Type> genericTypeArguments)
         {
-            if (typeArguments == null) throw new ArgumentNullException(nameof(typeArguments));
-            return _reflection.CreateType(_type.MakeGenericType(typeArguments.ToArray()));
+            if (genericTypeArguments == null) throw new ArgumentNullException(nameof(genericTypeArguments));
+            return _reflection.CreateType(_type.MakeGenericType(genericTypeArguments.ToArray()));
         }
 
         public IEnumerable<T> GetCustomAttributes<T>() where T : Attribute
@@ -66,6 +68,8 @@
             return _type.IsAssignableFrom(type.Type);
         }
 #else
+        public ITypeInfo BaseType => _typeInfo.BaseType != null ? new TypeInfoImpl(_reflection, _typeInfo.BaseType) : null;
+
         public bool IsGenericTypeDefinition => _typeInfo.IsGenericTypeDefinition;
 
         public IEnumerable<ITypeInfo> GenericTypeParameters => _typeInfo.GenericTypeParameters.Select(type => _reflection.CreateType(type));
@@ -74,10 +78,11 @@
 
         public IEnumerable<IPropertyInfo> Properties => _typeInfo.GetProperties().Select(property => _reflection.CreateProperty(property));
 
-        public ITypeInfo MakeGenericType(IEnumerable<Type> typeArguments)
+        public ITypeInfo MakeGenericType(IEnumerable<Type> genericTypeArguments)
         {
-            if (typeArguments == null) throw new ArgumentNullException(nameof(typeArguments));
-            return _reflection.CreateType(_type.MakeGenericType(typeArguments.ToArray()));
+            if (genericTypeArguments == null) throw new ArgumentNullException(nameof(genericTypeArguments));
+            var genericType = _type.MakeGenericType(genericTypeArguments.ToArray());
+            return _reflection.CreateType(genericType);
         }
 
         public IEnumerable<T> GetCustomAttributes<T>() where T : Attribute

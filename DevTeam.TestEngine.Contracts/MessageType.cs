@@ -2,6 +2,8 @@
 {
     public enum MessageType
     {
+        State,
+
         StdOutput,
 
         StdError,

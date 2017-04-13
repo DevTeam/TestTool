@@ -3,7 +3,6 @@
     using System;
     using System.Collections.Generic;
     using Contracts;
-    using Dto;
 
     internal class InstanceDisposer : IInstanceDisposer
     {
@@ -16,14 +15,14 @@
                 var disposable = instance as IDisposable;
                 if (disposable != null)
                 {
-                    messages.Add(new MessageDto(MessageType.Trace, Stage.Construction, $"Dispose instance #{instance.GetHashCode()}"));
+                    messages.Add(new Message(MessageType.Trace, Stage.Construction, $"Dispose instance #{instance.GetHashCode()}"));
                     disposable.Dispose();
-                    messages.Add(new MessageDto(MessageType.Trace, Stage.Construction, $"Instance #{instance.GetHashCode()} was disposed"));
+                    messages.Add(new Message(MessageType.Trace, Stage.Construction, $"Instance #{instance.GetHashCode()} was disposed"));
                 }
             }
             catch (Exception exception)
             {
-                messages.Add(new MessageDto(MessageType.Exception, Stage.Dispose, exception.Message, exception.StackTrace));
+                messages.Add(new Message(MessageType.Exception, Stage.Dispose, exception.Message, exception.StackTrace));
                 return false;
             }
 

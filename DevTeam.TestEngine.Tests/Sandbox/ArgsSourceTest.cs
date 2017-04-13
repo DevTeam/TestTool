@@ -4,19 +4,19 @@
     using System.Collections.Generic;
     using TestFramework;
 
-    [Test.CaseSource(typeof(CaseSourceTestCases))]
-    public class CaseSourceTest
+    [Test.Args.Source(typeof(ClassArgs))]
+    public class ArgsSourceTest
     {
-        public CaseSourceTest(int num)
+        public ArgsSourceTest(int num)
         {
         }
 
-        [Test.CaseSource(typeof(SuccessTestCases))]
+        [Test.Args.Source(typeof(SuccessArgs))]
         public void SuccessTest(int num, string str)
         {
         }
 
-        private class CaseSourceTestCases : IEnumerable
+        private class ClassArgs : IEnumerable
         {
             public IEnumerator GetEnumerator()
             {
@@ -25,7 +25,7 @@
             }
         }
 
-        private class SuccessTestCases: IEnumerable
+        private class SuccessArgs: IEnumerable
         {
             public IEnumerator GetEnumerator()
             {

@@ -2,10 +2,10 @@
 {
     using System;
 
-    public partial class Test
+    public static partial class Test
     {
         [AttributeUsage(AttributeTargets.Method | AttributeTargets.Class)]
-        public class IgnoreAttribute : Attribute
+        public class IgnoreAttribute : TestAttribute
         {
             public IgnoreAttribute(string reason = "")
             {

@@ -3,7 +3,7 @@
     using System;
     using System.Collections.Generic;
 
-    public interface IMethodInfo
+    public interface IMethodInfo: IMemberInfo
     {
         string Name { [NotNull] get; }
 
@@ -14,10 +14,8 @@
         IEnumerable<ITypeInfo> GetGenericArguments { get; }
 
         [NotNull]
-        IMethodInfo MakeGenericMethod([NotNull] IEnumerable<Type> typeArguments);
+        IMethodInfo MakeGenericMethod([NotNull] IEnumerable<Type> genericTypeArguments);
 
-        [NotNull]
-        IEnumerable<T> GetCustomAttributes<T>() where T : Attribute;
 
         [CanBeNull]
         object Invoke([NotNull] object obj, [NotNull] IEnumerable<object> parameters);

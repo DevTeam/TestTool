@@ -10,7 +10,7 @@
 
         DateTimeOffset Time { get; }
 
-        string Message { [NotNull] get; }
+        string Text { [NotNull] get; }
 
         string StackTrace { [CanBeNull] get; }
     }

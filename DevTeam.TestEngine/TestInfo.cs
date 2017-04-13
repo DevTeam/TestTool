@@ -11,39 +11,52 @@
             [NotNull] ICase testCase,
             [NotNull] IAssemblyInfo assembly,
             [NotNull] ITypeInfo type,
-            [NotNull] IEnumerable<Type> genericArgs,
-            [NotNull] IEnumerable<object> typeParameters,
+            [NotNull] IEnumerable<Type> typeGenericArgs,
+            [NotNull] IEnumerable<object> typeArgs,
             [NotNull] IMethodInfo method,
-            [NotNull] IEnumerable<object> methodParameters)
+            [NotNull] IEnumerable<Type> methodGenericArgs,
+            [NotNull] IEnumerable<object> methodArgs,
+            bool ignore,
+            [NotNull] string ignoreReason)
         {
             if (testCase == null) throw new ArgumentNullException(nameof(testCase));
             if (assembly == null) throw new ArgumentNullException(nameof(assembly));
             if (type == null) throw new ArgumentNullException(nameof(type));
-            if (genericArgs == null) throw new ArgumentNullException(nameof(genericArgs));
-            if (typeParameters == null) throw new ArgumentNullException(nameof(typeParameters));
+            if (typeGenericArgs == null) throw new ArgumentNullException(nameof(typeGenericArgs));
+            if (typeArgs == null) throw new ArgumentNullException(nameof(typeArgs));
             if (method == null) throw new ArgumentNullException(nameof(method));
-            if (methodParameters == null) throw new ArgumentNullException(nameof(methodParameters));
-            TestCase = testCase;
+            if (methodGenericArgs == null) throw new ArgumentNullException(nameof(methodGenericArgs));
+            if (methodArgs == null) throw new ArgumentNullException(nameof(methodArgs));
+            Case = testCase;
             Assembly = assembly;
             Type = type;
-            GenericArgs = genericArgs;
-            TypeParameters = typeParameters;
+            TypeGenericArgs = typeGenericArgs;
+            TypeArgs = typeArgs;
             Method = method;
-            MethodParameters = methodParameters;
+            MethodGenericArgs = methodGenericArgs;
+            MethodArgs = methodArgs;
+            Ignore = ignore;
+            IgnoreReason = ignoreReason;
         }
 
-        public ICase TestCase { [NotNull] get; }
+        public ICase Case { get; }
 
-        public IAssemblyInfo Assembly { [NotNull] get; }
+        public IAssemblyInfo Assembly { get; }
 
-        public ITypeInfo Type { [NotNull] get; }
+        public ITypeInfo Type { get; }
 
-        public IEnumerable<Type> GenericArgs { [NotNull] get; }
+        public IEnumerable<Type> TypeGenericArgs { get; }
 
-        public IEnumerable<object> TypeParameters { [NotNull] get; }
+        public IEnumerable<object> TypeArgs { get; }
 
         public IMethodInfo Method { [NotNull] get; }
 
-        public IEnumerable<object> MethodParameters { [NotNull] get; }
+        public IEnumerable<Type> MethodGenericArgs { get; }
+
+        public IEnumerable<object> MethodArgs { get; }
+
+        public bool Ignore { get; }
+
+        public string IgnoreReason { get; }
     }
 }

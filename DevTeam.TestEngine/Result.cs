@@ -1,15 +1,15 @@
-﻿namespace DevTeam.TestEngine.Dto
+﻿namespace DevTeam.TestEngine
 {
     using System;
     using System.Collections;
     using System.Collections.Generic;
     using Contracts;
 
-    internal class ResultDto: IResult, IEnumerable<IMessage>
+    internal class Result: IResult, IEnumerable<IMessage>
     {
         private readonly List<IMessage> _messages = new List<IMessage>();
 
-        public ResultDto(State state)
+        public Result(State state)
         {
             State = state;
         }
@@ -28,11 +28,10 @@
             return _messages.GetEnumerator();
         }
 
-        public ResultDto WithMessages([NotNull] IEnumerable<IMessage> messages)
+        public void Add([NotNull] IEnumerable<IMessage> messages)
         {
             if (messages == null) throw new ArgumentNullException(nameof(messages));
             _messages.AddRange(messages);
-            return this;
         }
     }
 }

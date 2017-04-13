@@ -26,18 +26,18 @@
             _attributeAccessor = attributeAccessor;
         }
 
-        public IEnumerable<IEnumerable<Type>> GetGenericArgs(ITypeInfo type)
+        public IEnumerable<IEnumerable<Type>> GetGenericArgs(IMemberInfo memberInfo)
         {
-            if (type == null) throw new ArgumentNullException(nameof(type));
+            if (memberInfo == null) throw new ArgumentNullException(nameof(memberInfo));
             var genericArgsFromSources =
-                from genericArgsSourceAttribute in _attributeAccessor.GetAttributes(type, _attributeMap.GetDescriptor(Wellknown.Attributes.GenericArgsSource))
+                from genericArgsSourceAttribute in _attributeAccessor.GetAttributes(memberInfo, _attributeMap.GetDescriptor(Wellknown.Attributes.GenericArgsSource))
                 from genericArgsSourceType in genericArgsSourceAttribute.GetValue<IEnumerable<Type>>(_attributeMap.GetDescriptor(Wellknown.Properties.Types))
                 let genericArgsSourceInstance = _reflection.CreateType(genericArgsSourceType).CreateInstance(Enumerable.Empty<object>()) as IEnumerable
                 from genericArgsItem in GetGenericArgs(genericArgsSourceInstance)
                 select genericArgsItem;
 
             var genericArgs =
-                from genericArgsAtr in _attributeAccessor.GetAttributes(type, _attributeMap.GetDescriptor(Wellknown.Attributes.GenericArgs))
+                from genericArgsAtr in _attributeAccessor.GetAttributes(memberInfo, _attributeMap.GetDescriptor(Wellknown.Attributes.GenericArgs))
                 select genericArgsAtr.GetValue<IEnumerable<Type>>(_attributeMap.GetDescriptor(Wellknown.Properties.Types));
 
             return genericArgsFromSources.Concat(genericArgs);

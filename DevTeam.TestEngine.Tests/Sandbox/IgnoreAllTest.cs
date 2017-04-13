@@ -2,15 +2,16 @@
 {
     using TestFramework;
 
-    public class SimpleTest
+    [Test.Ignore]
+    public class IgnoreAllTest
     {
         [Test]
-        public void FailedTest()
+        public void Ignore()
         {
         }
 
-        [Test.Args]
-        public void SuccessTest()
+        [Test]
+        public void IgnoreWithReason()
         {
         }
     }

@@ -17,6 +17,7 @@
 	<PostBuildEvent>
 		xcopy /C /Q /Y DevTeam.TestAdapter.dll ..\pack\$(TargetFramework)\
 		xcopy /C /Q /Y DevTeam.TestAdapter.props ..\pack\$(TargetFramework)\
+		xcopy /C /Q /Y DevTeam.TestAdapter.targets ..\pack\$(TargetFramework)\
 		xcopy /C /Q /Y DevTeam.IoC*.dll ..\pack\$(TargetFramework)\DevTeam.TestAdapter\
 		xcopy /C /Q /Y Newtonsoft.Json.dll ..\pack\$(TargetFramework)\DevTeam.TestAdapter\
 		xcopy /C /Q /Y DevTeam.TestEngine*.dll ..\pack\$(TargetFramework)\DevTeam.TestAdapter\
@@ -27,6 +28,7 @@
 
   <ItemGroup>
     <None Remove="DevTeam.TestAdapter.props" />
+    <None Remove="DevTeam.TestAdapter.targets" />
   </ItemGroup>
 
   <ItemGroup>
@@ -34,6 +36,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="DevTeam.TestAdapter.props">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="DevTeam.TestAdapter.targets">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

@@ -4,16 +4,16 @@
     using System.Collections.Generic;
     using TestFramework;
 
-    [Test.GenericArgsSource(typeof(GenericArgsSource))]
-    public class GenericArgsSourceTest<T1, T2>
+    [Test.Types.Source(typeof(GenericArgs))]
+    public class ClassGenericArgsSourceTest<T1, T2>
     {
-        [Test.Case(33, "abc")]
+        [Test.Args(33, "abc")]
         public void SuccessTest(int num, string str)
         {
         }
     }
 
-    internal class GenericArgsSource : IEnumerable
+    internal class GenericArgs : IEnumerable
     {
         public IEnumerator GetEnumerator()
         {
