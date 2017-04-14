@@ -12,25 +12,29 @@
         [NotNull] private readonly IAttributeMap _attributeMap;
         [NotNull] private readonly IAttributeAccessor _attributeAccessor;
         [NotNull] private readonly IGenericArgsProvider _genericArgsProvider;
-        [NotNull] private readonly IParametersProvider _parametersProvider;
+        [NotNull] private readonly IArgsProvider _argsProvider;
+        [NotNull] private readonly Func<ITestInfo, ICase> _caseFactory;
 
         public Discoverer(
             [NotNull] IReflection reflection,
             [NotNull] IAttributeMap attributeMap,
             [NotNull] IAttributeAccessor attributeAccessor,
             [NotNull] IGenericArgsProvider genericArgsProvider,
-            [NotNull] IParametersProvider parametersProvider)
+            [NotNull] IArgsProvider argsProvider,
+            [NotNull] Func<ITestInfo, ICase> caseFactory)
         {
             if (reflection == null) throw new ArgumentNullException(nameof(reflection));
             if (attributeMap == null) throw new ArgumentNullException(nameof(attributeMap));
             if (attributeAccessor == null) throw new ArgumentNullException(nameof(attributeAccessor));
             if (genericArgsProvider == null) throw new ArgumentNullException(nameof(genericArgsProvider));
-            if (parametersProvider == null) throw new ArgumentNullException(nameof(parametersProvider));
+            if (argsProvider == null) throw new ArgumentNullException(nameof(argsProvider));
+            if (caseFactory == null) throw new ArgumentNullException(nameof(caseFactory));
             _reflection = reflection;
             _attributeMap = attributeMap;
             _attributeAccessor = attributeAccessor;
             _genericArgsProvider = genericArgsProvider;
-            _parametersProvider = parametersProvider;
+            _argsProvider = argsProvider;
+            _caseFactory = caseFactory;
         }
 
         public IEnumerable<ITestInfo> Discover(string source)
@@ -42,13 +46,13 @@
                 from typeGenericArgs in _genericArgsProvider.GetGenericArgs(type).DefaultIfEmpty(Enumerable.Empty<Type>())
                 let typeGenericArgsArray = typeGenericArgs.ToArray()
                 let caseType = DefineType(type, typeGenericArgsArray)
-                from typeArgs in _parametersProvider.GetTypeParameters(type).DefaultIfEmpty(Enumerable.Empty<object>())
+                from typeArgs in _argsProvider.GetTypeParameters(type).DefaultIfEmpty(Enumerable.Empty<object>())
                 from method in caseType.Methods
                 from methodGenericArgs in _genericArgsProvider.GetGenericArgs(method).DefaultIfEmpty(Enumerable.Empty<Type>())
                 let methodGenericArgsArray = methodGenericArgs.ToArray()
                 let caseMethod = DefineMethod(method, methodGenericArgsArray)
                 where _attributeAccessor.GetAttributes(caseMethod, _attributeMap.GetDescriptor(Wellknown.Attributes.Test)).Any()
-                from methodArgs in _parametersProvider.GetMethodParameters(caseMethod).DefaultIfEmpty(Enumerable.Empty<object>())
+                from methodArgs in _argsProvider.GetMethodParameters(caseMethod).DefaultIfEmpty(Enumerable.Empty<object>())
                 from testCase in CreateTestInfo(source, assembly, caseType, typeGenericArgsArray, typeArgs, caseMethod, methodGenericArgsArray, methodArgs)
                 select testCase;
         }
@@ -86,34 +90,19 @@
             if (methodGenericArgs == null) throw new ArgumentNullException(nameof(methodGenericArgs));
             if (methodArgs == null) throw new ArgumentNullException(nameof(methodArgs));
 
-            var typeGenericArgsArray = typeGenericArgs as Type[] ?? typeGenericArgs.ToArray();
-            var typeArgsArray = typeArgs as object[] ?? typeArgs.ToArray();
-            var methodGenericArgsArray = methodGenericArgs as Type[] ?? methodGenericArgs.ToArray();
-            var methodArgsArray = methodArgs as object[] ?? methodArgs.ToArray();
-
-            var testCase = new Case(
-                Guid.NewGuid(),
-                source,
-                type.FullName,
-                type.Name,
-                typeGenericArgsArray.Select(i => i.Name),
-                typeArgsArray.Select(i => i.ToString()),
-                method.Name,
-                methodGenericArgsArray.Select(i => i.Name),
-                methodArgsArray.Select(i => i.ToString()));
-
             var ignoreAttribute = _attributeAccessor.GetAttributes(method, _attributeMap.GetDescriptor(Wellknown.Attributes.Ignore)).SingleOrDefault() ?? _attributeAccessor.GetAttributes(type, _attributeMap.GetDescriptor(Wellknown.Attributes.Ignore)).SingleOrDefault();
             var ignoreReason = ignoreAttribute?.GetValue<string>(_attributeMap.GetDescriptor(Wellknown.Properties.Reason)) ?? string.Empty;
 
             yield return new TestInfo(
-                testCase,
+                _caseFactory,
+                source,
                 assembly,
                 type,
-                typeGenericArgsArray,
-                typeArgsArray,
+                typeGenericArgs,
+                typeArgs,
                 method,
-                methodGenericArgsArray,
-                methodArgsArray,
+                methodGenericArgs,
+                methodArgs,
                 ignoreAttribute != null,
                 ignoreReason);
         }

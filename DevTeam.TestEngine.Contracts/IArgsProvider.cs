@@ -3,7 +3,7 @@
     using System.Collections.Generic;
     using Reflection;
 
-    public interface IParametersProvider
+    public interface IArgsProvider
     {
         [NotNull] IEnumerable<IEnumerable<object>> GetTypeParameters([NotNull] ITypeInfo type);
 

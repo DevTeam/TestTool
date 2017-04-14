@@ -6,6 +6,8 @@
 
     public interface ITestInfo
     {
+        string Source { [NotNull] get; }
+
         IAssemblyInfo Assembly { [NotNull] get; }
 
         ITypeInfo Type { [NotNull] get; }

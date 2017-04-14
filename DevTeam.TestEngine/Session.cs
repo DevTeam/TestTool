@@ -8,7 +8,7 @@
     {
         [NotNull] private readonly IDiscoverer _discoverer;
         [NotNull] private readonly IRunner _runner;
-        [NotNull] private readonly Dictionary<Guid, ITestInfo> _cases = new Dictionary<Guid, ITestInfo>();
+        [NotNull] private readonly Dictionary<Guid, ITestInfo> _tests = new Dictionary<Guid, ITestInfo>();
 
         public Session(
             [NotNull] IDiscoverer discoverer,
@@ -23,16 +23,16 @@
         public IEnumerable<ICase> Discover(string source)
         {
             if (source == null) throw new ArgumentNullException(nameof(source));
-            lock (_cases)
+            lock (_tests)
             {
-                _cases.Clear();
+                _tests.Clear();
             }
 
             foreach (var testInfo in _discoverer.Discover(source))
             {
-                lock (_cases)
+                lock (_tests)
                 {
-                    _cases[testInfo.Case.Id] = testInfo;
+                    _tests[testInfo.Case.Id] = testInfo;
                 }
 
                 yield return testInfo.Case;
@@ -42,14 +42,14 @@
         public IResult Run(Guid testId)
         {
             ITestInfo testInfo;
-            lock (_cases)
+            lock (_tests)
             {
-                if (!_cases.TryGetValue(testId, out testInfo))
+                if (!_tests.TryGetValue(testId, out testInfo))
                 {
                     return new Result(State.NotFound);
                 }
 
-                _cases.Remove(testId);
+                _tests.Remove(testId);
             }
 
             return _runner.Run(testInfo);

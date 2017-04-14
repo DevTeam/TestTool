@@ -14,11 +14,12 @@
     { "class": "Session: ISession" },
     { "class": "Discoverer: IDiscoverer", "configure": [ { "lifetime": "Singleton" } ] },
     { "class": "Runner: IRunner", "configure": [ { "lifetime": "Singleton" } ] },
+    { "class": "DisplayNameFactory: IDisplayNameFactory", "configure": [ { "lifetime": "Singleton" } ] },
     { "class": "InstanceFactory: IInstanceFactory", "configure": [ { "lifetime": "Singleton" } ] },
     { "class": "MethodRunner: IMethodRunner", "configure": [ { "lifetime": "Singleton" } ] },
     { "class": "InstanceDisposer: IInstanceDisposer", "configure": [ { "lifetime": "Singleton" } ] },
     { "class": "GenericArgsProvider: IGenericArgsProvider", "configure": [ { "lifetime": "Singleton" } ] },
-    { "class": "ParametersProvider: IParametersProvider", "configure": [ { "lifetime": "Singleton" } ] },
+    { "class": "ArgsProvider: IArgsProvider", "configure": [ { "lifetime": "Singleton" } ] },
     { "class": "Reflection: IReflection", "configure": [ { "lifetime": "Singleton" } ] },
     { "class": "Subject<>: IObservable<>,IObserver<>", "configure": [ { "lifetime": "Singleton" } ] },
     { "class": "AttributeAccessor: IAttributeAccessor", "configure": [ { "lifetime": "Singleton" } ] },
@@ -29,6 +30,13 @@
             { "paramType": "IAttributeDescriptor", "state": { "stateType": "IAttributeDescriptor", "index": "0" } },
             { "paramType": "Attribute", "state": { "stateType": "Attribute", "index": "1" } },
             { "paramType": "IReflection" }
+        ]
+    },
+    {
+        "class": "Case: ICase", "configure": [ { "stateType": "ITestInfo", "index": "0" } ],
+        "constructor": [
+            { "paramType": "IDisplayNameFactory" },
+            { "paramType": "ITestInfo", "state": { "stateType": "ITestInfo" } }
         ]
     },
     {

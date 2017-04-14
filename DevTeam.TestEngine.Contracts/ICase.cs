@@ -9,7 +9,7 @@ namespace DevTeam.TestEngine.Contracts
 
         string Source { [NotNull] get; }
 
-        string DysplayName { [NotNull] get; }
+        string DisplayName { [NotNull] get; }
 
         string FullTypeName { [NotNull] get; }
 

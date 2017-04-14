@@ -7,13 +7,13 @@
     using Contracts;
     using Contracts.Reflection;
 
-    internal class ParametersProvider: IParametersProvider
+    internal class ArgsProvider: IArgsProvider
     {
         private readonly IReflection _reflection;
         [NotNull] private readonly IAttributeMap _attributeMap;
         private readonly IAttributeAccessor _attributeAccessor;
 
-        public ParametersProvider(
+        public ArgsProvider(
             [NotNull] IReflection reflection,
             [NotNull] IAttributeMap attributeMap,
             [NotNull] IAttributeAccessor attributeAccessor)

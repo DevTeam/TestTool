@@ -2,13 +2,18 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using Contracts;
     using Contracts.Reflection;
 
     internal class TestInfo: ITestInfo
     {
+        [NotNull] private readonly Func<ITestInfo, ICase> _caseFactory;
+        private ICase _case;
+
         public TestInfo(
-            [NotNull] ICase testCase,
+            [NotNull] Func<ITestInfo, ICase> caseFactory,
+            [NotNull] string source,
             [NotNull] IAssemblyInfo assembly,
             [NotNull] ITypeInfo type,
             [NotNull] IEnumerable<Type> typeGenericArgs,
@@ -19,7 +24,9 @@
             bool ignore,
             [NotNull] string ignoreReason)
         {
-            if (testCase == null) throw new ArgumentNullException(nameof(testCase));
+            _caseFactory = caseFactory;
+            if (caseFactory == null) throw new ArgumentNullException(nameof(caseFactory));
+            if (source == null) throw new ArgumentNullException(nameof(source));
             if (assembly == null) throw new ArgumentNullException(nameof(assembly));
             if (type == null) throw new ArgumentNullException(nameof(type));
             if (typeGenericArgs == null) throw new ArgumentNullException(nameof(typeGenericArgs));
@@ -27,19 +34,21 @@
             if (method == null) throw new ArgumentNullException(nameof(method));
             if (methodGenericArgs == null) throw new ArgumentNullException(nameof(methodGenericArgs));
             if (methodArgs == null) throw new ArgumentNullException(nameof(methodArgs));
-            Case = testCase;
+            Source = source;
             Assembly = assembly;
             Type = type;
-            TypeGenericArgs = typeGenericArgs;
-            TypeArgs = typeArgs;
+            TypeGenericArgs = typeGenericArgs.ToArray();
+            TypeArgs = typeArgs.ToArray();
             Method = method;
-            MethodGenericArgs = methodGenericArgs;
-            MethodArgs = methodArgs;
+            MethodGenericArgs = methodGenericArgs.ToArray();
+            MethodArgs = methodArgs.ToArray();
             Ignore = ignore;
             IgnoreReason = ignoreReason;
         }
 
-        public ICase Case { get; }
+        public ICase Case => _case = _case ?? _caseFactory(this);
+
+        public string Source { [NotNull] get; }
 
         public IAssemblyInfo Assembly { get; }
 
