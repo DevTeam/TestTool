@@ -6,18 +6,14 @@
 
     internal class Session: ISession
     {
-        [NotNull] private readonly IDiscoverer _discoverer;
-        [NotNull] private readonly IRunner _runner;
+        [NotNull] private readonly IEnumerable<IDiscoverer> _discoverers;
         [NotNull] private readonly Dictionary<Guid, ITestInfo> _tests = new Dictionary<Guid, ITestInfo>();
 
         public Session(
-            [NotNull] IDiscoverer discoverer,
-            [NotNull] IRunner runner)
+            [NotNull] IEnumerable<IDiscoverer> discoverers)
         {
-            if (discoverer == null) throw new ArgumentNullException(nameof(discoverer));
-            if (runner == null) throw new ArgumentNullException(nameof(runner));
-            _discoverer = discoverer;
-            _runner = runner;
+            if (discoverers == null) throw new ArgumentNullException(nameof(discoverers));
+            _discoverers = discoverers;
         }
 
         public IEnumerable<ICase> Discover(string source)
@@ -28,14 +24,17 @@
                 _tests.Clear();
             }
 
-            foreach (var testInfo in _discoverer.Discover(source))
+            foreach (var discoverer in _discoverers)
             {
-                lock (_tests)
+                foreach (var testInfo in discoverer.Discover(source))
                 {
-                    _tests[testInfo.Case.Id] = testInfo;
-                }
+                    lock (_tests)
+                    {
+                        _tests[testInfo.Case.Id] = testInfo;
+                    }
 
-                yield return testInfo.Case;
+                    yield return testInfo.Case;
+                }
             }
         }
 
@@ -52,7 +51,7 @@
                 _tests.Remove(testId);
             }
 
-            return _runner.Run(testInfo);
+            return testInfo.Runner.Run(testInfo);
         }
     }
 }

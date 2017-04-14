@@ -5,22 +5,31 @@
     { "dependency.feature": "Default" },
 
     { "using": "DevTeam.TestEngine.Contracts" },
-    { "using": "DevTeam.TestEngine.Contracts.Reflection" },
     { "using": "DevTeam.TestEngine" },
+
+    // Discoverer & Runner for .net assemblies
+
+    {
+       "container": [
+            { "class": "Discoverer: IDiscoverer", "configure": [ { "lifetime": "Singleton" }, { "scope": "Global" }, { "tag": ".net assemblies" } ] },
+            { "class": "Runner: IRunner", "configure": [ { "lifetime": "Singleton" } ] }
+        ]
+    },
+
+    // Default implementations
+
+    { "using": "DevTeam.TestEngine.Contracts.Reflection" },
     { "using": "DevTeam.TestEngine.Reflection" },
     { "using": "System" },
     { "using": "System.Reflection" },
 
     { "class": "Session: ISession" },
-    { "class": "Discoverer: IDiscoverer", "configure": [ { "lifetime": "Singleton" } ] },
-    { "class": "Runner: IRunner", "configure": [ { "lifetime": "Singleton" } ] },
     { "class": "DisplayNameFactory: IDisplayNameFactory", "configure": [ { "lifetime": "Singleton" } ] },
     { "class": "InstanceFactory: IInstanceFactory", "configure": [ { "lifetime": "Singleton" } ] },
     { "class": "MethodRunner: IMethodRunner", "configure": [ { "lifetime": "Singleton" } ] },
     { "class": "InstanceDisposer: IInstanceDisposer", "configure": [ { "lifetime": "Singleton" } ] },
     { "class": "GenericArgsProvider: IGenericArgsProvider", "configure": [ { "lifetime": "Singleton" } ] },
     { "class": "ArgsProvider: IArgsProvider", "configure": [ { "lifetime": "Singleton" } ] },
-    { "class": "Reflection: IReflection", "configure": [ { "lifetime": "Singleton" } ] },
     { "class": "Subject<>: IObservable<>,IObserver<>", "configure": [ { "lifetime": "Singleton" } ] },
     { "class": "AttributeAccessor: IAttributeAccessor", "configure": [ { "lifetime": "Singleton" } ] },
     { "class": "AttributeMap: IAttributeMap", "configure": [ { "lifetime": "Singleton" } ] },
@@ -39,39 +48,47 @@
             { "paramType": "ITestInfo", "state": { "stateType": "ITestInfo" } }
         ]
     },
+
+    // Reflection
+
     {
-        "class": "AssemblyInfoImpl: IAssemblyInfo", "configure": [ { "stateType": "Assembly", "index": "0" } ],
-        "constructor": [
-            { "paramType": "IReflection" },
-            { "paramType": "Assembly", "state": { "stateType": "Assembly" } }
-        ]
-    },
-    {
-        "class": "TypeInfoImpl: ITypeInfo", "configure": [ { "stateType": "Type", "index": "0" } ],
-        "constructor": [
-            { "paramType": "IReflection" },
-            { "paramType": "Type", "state": { "stateType": "Type" } }
-        ]
-    },
-    {
-        "class": "MethodInfoImpl: IMethodInfo", "configure": [ { "stateType": "MethodInfo", "index": "0" } ],
-        "constructor": [
-            { "paramType": "IReflection" },
-            { "paramType": "MethodInfo", "state": { "stateType": "MethodInfo" } }
-        ]
-    },
-    {
-        "class": "PropertyInfoImpl: IPropertyInfo", "configure": [ { "stateType": "PropertyInfo", "index": "0" } ],
-        "constructor": [
-            { "paramType": "IReflection" },
-            { "paramType": "PropertyInfo", "state": { "stateType": "PropertyInfo" } }
-        ]
-    },
-    {
-        "class": "ParameterInfoImpl: IParameterInfo", "configure": [ { "stateType": "ParameterInfo", "index": "0" } ],
-        "constructor": [
-            { "paramType": "IReflection" },
-            { "paramType": "ParameterInfo", "state": { "stateType": "ParameterInfo" } }
+        "container": [
+            { "class": "Reflection: IReflection", "configure": [ { "lifetime": "Singleton" }, { "scope": "Global" } ] },
+            {
+                "class": "AssemblyInfoImpl: IAssemblyInfo", "configure": [ { "stateType": "Assembly", "index": "0" } ],
+                "constructor": [
+                    { "paramType": "IReflection" },
+                    { "paramType": "Assembly", "state": { "stateType": "Assembly" } }
+                ]
+            },
+            {
+                "class": "TypeInfoImpl: ITypeInfo", "configure": [ { "stateType": "Type", "index": "0" } ],
+                "constructor": [
+                    { "paramType": "IReflection" },
+                    { "paramType": "Type", "state": { "stateType": "Type" } }
+                ]
+            },
+            {
+                "class": "MethodInfoImpl: IMethodInfo", "configure": [ { "stateType": "MethodInfo", "index": "0" } ],
+                "constructor": [
+                    { "paramType": "IReflection" },
+                    { "paramType": "MethodInfo", "state": { "stateType": "MethodInfo" } }
+                ]
+            },
+            {
+                "class": "PropertyInfoImpl: IPropertyInfo", "configure": [ { "stateType": "PropertyInfo", "index": "0" } ],
+                "constructor": [
+                    { "paramType": "IReflection" },
+                    { "paramType": "PropertyInfo", "state": { "stateType": "PropertyInfo" } }
+                ]
+            },
+            {
+                "class": "ParameterInfoImpl: IParameterInfo", "configure": [ { "stateType": "ParameterInfo", "index": "0" } ],
+                "constructor": [
+                    { "paramType": "IReflection" },
+                    { "paramType": "ParameterInfo", "state": { "stateType": "ParameterInfo" } }
+                ]
+            }
         ]
     }
 ]

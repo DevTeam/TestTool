@@ -14,6 +14,7 @@
         [NotNull] private readonly IGenericArgsProvider _genericArgsProvider;
         [NotNull] private readonly IArgsProvider _argsProvider;
         [NotNull] private readonly Func<ITestInfo, ICase> _caseFactory;
+        [NotNull] private readonly IRunner _runner;
 
         public Discoverer(
             [NotNull] IReflection reflection,
@@ -21,7 +22,8 @@
             [NotNull] IAttributeAccessor attributeAccessor,
             [NotNull] IGenericArgsProvider genericArgsProvider,
             [NotNull] IArgsProvider argsProvider,
-            [NotNull] Func<ITestInfo, ICase> caseFactory)
+            [NotNull] Func<ITestInfo, ICase> caseFactory,
+            [NotNull] IRunner runner)
         {
             if (reflection == null) throw new ArgumentNullException(nameof(reflection));
             if (attributeMap == null) throw new ArgumentNullException(nameof(attributeMap));
@@ -29,12 +31,14 @@
             if (genericArgsProvider == null) throw new ArgumentNullException(nameof(genericArgsProvider));
             if (argsProvider == null) throw new ArgumentNullException(nameof(argsProvider));
             if (caseFactory == null) throw new ArgumentNullException(nameof(caseFactory));
+            if (runner == null) throw new ArgumentNullException(nameof(runner));
             _reflection = reflection;
             _attributeMap = attributeMap;
             _attributeAccessor = attributeAccessor;
             _genericArgsProvider = genericArgsProvider;
             _argsProvider = argsProvider;
             _caseFactory = caseFactory;
+            _runner = runner;
         }
 
         public IEnumerable<ITestInfo> Discover(string source)
@@ -94,6 +98,7 @@
             var ignoreReason = ignoreAttribute?.GetValue<string>(_attributeMap.GetDescriptor(Wellknown.Properties.Reason)) ?? string.Empty;
 
             yield return new TestInfo(
+                _runner,
                 _caseFactory,
                 source,
                 assembly,

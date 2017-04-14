@@ -12,6 +12,7 @@
         private ICase _case;
 
         public TestInfo(
+            [NotNull] IRunner runner,
             [NotNull] Func<ITestInfo, ICase> caseFactory,
             [NotNull] string source,
             [NotNull] IAssemblyInfo assembly,
@@ -24,7 +25,7 @@
             bool ignore,
             [NotNull] string ignoreReason)
         {
-            _caseFactory = caseFactory;
+            if (runner == null) throw new ArgumentNullException(nameof(runner));
             if (caseFactory == null) throw new ArgumentNullException(nameof(caseFactory));
             if (source == null) throw new ArgumentNullException(nameof(source));
             if (assembly == null) throw new ArgumentNullException(nameof(assembly));
@@ -34,6 +35,8 @@
             if (method == null) throw new ArgumentNullException(nameof(method));
             if (methodGenericArgs == null) throw new ArgumentNullException(nameof(methodGenericArgs));
             if (methodArgs == null) throw new ArgumentNullException(nameof(methodArgs));
+            _caseFactory = caseFactory;
+            Runner = runner;
             Source = source;
             Assembly = assembly;
             Type = type;
@@ -45,6 +48,8 @@
             Ignore = ignore;
             IgnoreReason = ignoreReason;
         }
+
+        public IRunner Runner { get; }
 
         public ICase Case => _case = _case ?? _caseFactory(this);
 

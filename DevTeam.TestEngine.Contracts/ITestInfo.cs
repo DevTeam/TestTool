@@ -6,6 +6,8 @@
 
     public interface ITestInfo
     {
+        IRunner Runner { [NotNull] get; }
+
         string Source { [NotNull] get; }
 
         IAssemblyInfo Assembly { [NotNull] get; }
