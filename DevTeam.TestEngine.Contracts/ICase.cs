@@ -11,20 +11,6 @@ namespace DevTeam.TestEngine.Contracts
 
         string DisplayName { [NotNull] get; }
 
-        string FullTypeName { [NotNull] get; }
-
-        string TypeName { [NotNull] get; }
-
-        IEnumerable<string> TypeGenericArgs { [NotNull] get; }
-
-        IEnumerable<string> TypeArgs { [NotNull] get; }
-
-        string MethodName { [NotNull] get; }
-
-        IEnumerable<string> MethodGenericArgs { get; }
-
-        IEnumerable<string> MethodArgs { [NotNull] get; }
-
         string CodeFilePath { [CanBeNull] get; }
 
         int? LineNumber { [CanBeNull] get; }

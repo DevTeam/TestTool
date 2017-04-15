@@ -40,10 +40,8 @@
             Source = source;
             Assembly = assembly;
             Type = type;
-            TypeGenericArgs = typeGenericArgs.ToArray();
             TypeArgs = typeArgs.ToArray();
             Method = method;
-            MethodGenericArgs = methodGenericArgs.ToArray();
             MethodArgs = methodArgs.ToArray();
             Ignore = ignore;
             IgnoreReason = ignoreReason;
@@ -59,13 +57,9 @@
 
         public ITypeInfo Type { get; }
 
-        public IEnumerable<Type> TypeGenericArgs { get; }
-
         public IEnumerable<object> TypeArgs { get; }
 
         public IMethodInfo Method { [NotNull] get; }
-
-        public IEnumerable<Type> MethodGenericArgs { get; }
 
         public IEnumerable<object> MethodArgs { get; }
 

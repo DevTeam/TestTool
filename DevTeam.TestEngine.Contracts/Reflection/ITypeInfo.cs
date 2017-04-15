@@ -9,13 +9,17 @@
 
         string FullName { [NotNull] get; }
 
+        string Namespace { [NotNull] get; }
+
         string Name { [NotNull] get; }
 
         ITypeInfo BaseType { [CanBeNull] get; }
 
         bool IsGenericTypeDefinition { get; }
 
-        IEnumerable<ITypeInfo> GenericTypeParameters { get; }
+        bool IsGenericType { get; }
+
+        IEnumerable<ITypeInfo> GenericArguments { get; }
 
         IEnumerable<IMethodInfo> Methods { [NotNull] get; }
 

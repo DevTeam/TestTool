@@ -11,7 +11,7 @@
 
         bool IsGenericMethodDefinition { get; }
 
-        IEnumerable<ITypeInfo> GetGenericArguments { get; }
+        IEnumerable<ITypeInfo> GenericArguments { get; }
 
         [NotNull]
         IMethodInfo MakeGenericMethod([NotNull] IEnumerable<Type> genericTypeArguments);

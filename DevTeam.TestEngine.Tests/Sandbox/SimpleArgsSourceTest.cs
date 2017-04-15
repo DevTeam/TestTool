@@ -5,9 +5,9 @@
     using TestFramework;
 
     [Test.Args.Source(typeof(ClassArgs))]
-    public class ArgsSourceTest
+    public class SimpleArgsSourceTest
     {
-        public ArgsSourceTest(int num)
+        public SimpleArgsSourceTest(int num)
         {
         }
 

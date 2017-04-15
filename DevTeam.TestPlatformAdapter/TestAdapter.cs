@@ -58,11 +58,6 @@
                     ComputerName = Environment.MachineName
                 };
 
-                var stateMessages = new List<string>
-                {
-                    $"{testResult.Duration.TotalMilliseconds:0} ms"
-                };
-
                 var stackTrace = new StringBuilder();
                 var errorMessage = new StringBuilder();
                 foreach (var message in result.Messages)
@@ -75,32 +70,27 @@
                     switch (message.Type)
                     {
                         case MessageType.State:
-                            stateMessages.Add(message.Text);
+                            testResult.Messages.Add(new TestResultMessage(TestResultMessage.StandardOutCategory, message.Text));
                             break;
 
                         case MessageType.StdOutput:
                             testResult.Messages.Add(new TestResultMessage(TestResultMessage.StandardOutCategory, message.Text));
-                            // frameworkHandle.SendMessage(TestMessageLevel.Informational, message.Text);
                             break;
 
                         case MessageType.StdError:
                             testResult.Messages.Add(new TestResultMessage(TestResultMessage.StandardErrorCategory, message.Text));
-                            // frameworkHandle.SendMessage(TestMessageLevel.Error, message.Text);
                             break;
 
                         case MessageType.Exception:
                             errorMessage.AppendLine(message.Text);
-                            // frameworkHandle.SendMessage(TestMessageLevel.Error, message.Text);
                             break;
 
                         case MessageType.Trace:
                             testResult.Messages.Add(new TestResultMessage(TestResultMessage.DebugTraceCategory, message.Text));
-                            // frameworkHandle.SendMessage(TestMessageLevel.Informational, message.Text);
                             break;
 
                         default:
                             testResult.Messages.Add(new TestResultMessage(TestResultMessage.AdditionalInfoCategory, message.Text));
-                            // frameworkHandle.SendMessage(TestMessageLevel.Informational, message.Text);
                             break;
                     }
                 }
@@ -132,9 +122,6 @@
 
                 frameworkHandle.RecordResult(testResult);
                 frameworkHandle.RecordEnd(testCase, testResult.Outcome);
-                var stateMessage = string.Join(", ", stateMessages.ToArray());
-                var informationalMessage = $"{testCase.DisplayName} - {testResult.Outcome} ({stateMessage})";
-                frameworkHandle.SendMessage(TestMessageLevel.Informational, informationalMessage);
                 if (_canceled)
                 {
                     _canceled = false;

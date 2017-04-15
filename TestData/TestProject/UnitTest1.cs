@@ -4,7 +4,9 @@ namespace TestProject
 
 	[Test.Args("abc")]
 	[Test.Args("xyz")]
-    public class UnitTest1
+	[Test.Types(typeof(char), typeof(int))]
+	[Test.Types(typeof(double), typeof(float))]        
+    public class UnitTest1<T1, T2>
     {
 		public UnitTest1(string str)
 		{
@@ -19,7 +21,9 @@ namespace TestProject
         }
 
 		[Test.Ignore("some reason")]
-        public void Ignored()
+        [Test.Args('a')]
+		[Test.Args('b')]		
+		public void Ignored(char ch)
         {
         }
     }

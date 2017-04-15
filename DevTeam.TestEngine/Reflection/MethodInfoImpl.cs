@@ -28,7 +28,7 @@
 
         public bool IsGenericMethodDefinition => _methodInfo.IsGenericMethodDefinition;
 
-        public IEnumerable<ITypeInfo> GetGenericArguments => _methodInfo.GetGenericArguments().Select(type => _reflection.CreateType(type));
+        public IEnumerable<ITypeInfo> GenericArguments => _methodInfo.GetGenericArguments().Select(type => _reflection.CreateType(type));
 
         public IMethodInfo MakeGenericMethod(IEnumerable<Type> genericTypeArguments)
         {

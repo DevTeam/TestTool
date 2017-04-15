@@ -43,7 +43,7 @@
             var session = CreateSession();
 
             // When
-            var cases = session.Discover(Integration.GetSource()).Filter(typeof(ArgsTest)).ToArray();
+            var cases = session.Discover(Integration.GetSource()).Filter(typeof(SimpleArgsTest)).ToArray();
             var results = session.RunAll(cases);
 
             // Then
@@ -73,7 +73,7 @@
             var session = CreateSession();
 
             // When
-            var cases = session.Discover(Integration.GetSource()).Filter(typeof(ArgsSourceTest)).ToArray();
+            var cases = session.Discover(Integration.GetSource()).Filter(typeof(SimpleArgsSourceTest)).ToArray();
             var results = session.RunAll(cases);
 
             // Then

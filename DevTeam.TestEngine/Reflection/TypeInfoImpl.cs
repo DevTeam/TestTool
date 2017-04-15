@@ -31,6 +31,7 @@
         public Type Type => _type;
 
         public string FullName => _type.FullName;
+        public string Namespace => _type.Namespace;
 
         public string Name => _type.Name;
 
@@ -46,7 +47,9 @@
 
         public bool IsGenericTypeDefinition => _type.IsGenericTypeDefinition;
 
-        public IEnumerable<ITypeInfo> GenericTypeParameters => _type.GetGenericArguments().Select(type => _reflection.CreateType(type));
+        public bool IsGenericType => _type.IsGenericType;
+
+        public IEnumerable<ITypeInfo> GenericArguments => _type.GetGenericArguments().Select(type => _reflection.CreateType(type));
 
         public IEnumerable<IMethodInfo> Methods => _type.GetMethods(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.SetProperty).Select(method => _reflection.CreateMethod(method));
 
@@ -72,7 +75,9 @@
 
         public bool IsGenericTypeDefinition => _typeInfo.IsGenericTypeDefinition;
 
-        public IEnumerable<ITypeInfo> GenericTypeParameters => _typeInfo.GenericTypeParameters.Select(type => _reflection.CreateType(type));
+        public bool IsGenericType => _typeInfo.IsGenericType;
+
+        public IEnumerable<ITypeInfo> GenericArguments => _typeInfo.GetGenericArguments().Select(type => _reflection.CreateType(type));
 
         public IEnumerable<IMethodInfo> Methods => _typeInfo.DeclaredMethods.Select(i => _reflection.CreateMethod(i));
 

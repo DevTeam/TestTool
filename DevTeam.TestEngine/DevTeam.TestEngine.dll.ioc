@@ -7,13 +7,16 @@
     { "using": "DevTeam.TestEngine.Contracts" },
     { "using": "DevTeam.TestEngine" },
 
-    // Discoverer & Runner for .net assemblies
+    // Test discoverer & runner for DevTeam tests
 
     {
        "container": [
             { "class": "Discoverer: IDiscoverer", "configure": [ { "lifetime": "Singleton" }, { "scope": "Global" }, { "tag": ".net assemblies" } ] },
-            { "class": "Runner: IRunner", "configure": [ { "lifetime": "Singleton" } ] }
-        ]
+            { "class": "Runner: IRunner", "configure": [ { "lifetime": "Singleton" } ] },
+            { "class": "GenericArgsProvider: IGenericArgsProvider", "configure": [ { "lifetime": "Singleton" } ] },
+            { "class": "ArgsProvider: IArgsProvider", "configure": [ { "lifetime": "Singleton" } ] },
+            { "class": "AttributeMap: IAttributeMap", "configure": [ { "lifetime": "Singleton" } ] }
+       ]
     },
 
     // Default implementations
@@ -28,11 +31,8 @@
     { "class": "InstanceFactory: IInstanceFactory", "configure": [ { "lifetime": "Singleton" } ] },
     { "class": "MethodRunner: IMethodRunner", "configure": [ { "lifetime": "Singleton" } ] },
     { "class": "InstanceDisposer: IInstanceDisposer", "configure": [ { "lifetime": "Singleton" } ] },
-    { "class": "GenericArgsProvider: IGenericArgsProvider", "configure": [ { "lifetime": "Singleton" } ] },
-    { "class": "ArgsProvider: IArgsProvider", "configure": [ { "lifetime": "Singleton" } ] },
     { "class": "Subject<>: IObservable<>,IObserver<>", "configure": [ { "lifetime": "Singleton" } ] },
     { "class": "AttributeAccessor: IAttributeAccessor", "configure": [ { "lifetime": "Singleton" } ] },
-    { "class": "AttributeMap: IAttributeMap", "configure": [ { "lifetime": "Singleton" } ] },
     {
         "class": "AttributeImpl: IAttribute", "configure": [ { "stateType": "IAttributeDescriptor", "index": "0" }, { "stateType": "Attribute", "index": "1" } ],
         "constructor": [

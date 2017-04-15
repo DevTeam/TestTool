@@ -22,13 +22,6 @@
             Source = testInfo.Source;
             CodeFilePath = string.Empty;
             LineNumber = null;
-            FullTypeName = testInfo.Type.FullName;
-            TypeName = testInfo.Type.Name;
-            TypeGenericArgs = testInfo.TypeGenericArgs.Select(i => i.Name);
-            TypeArgs = testInfo.TypeArgs.Select(i => i.ToString());
-            MethodName = testInfo.Method.Name;
-            MethodGenericArgs = testInfo.MethodGenericArgs.Select(i => i.Name);
-            MethodArgs = testInfo.MethodArgs.Select(i => i.ToString());
         }
 
         public Guid Id { get; }
@@ -41,21 +34,6 @@
 
         public int? LineNumber { get; }
 
-        public string FullTypeName { get; }
-
-        public string TypeName { get; }
-
-        public IEnumerable<string> TypeGenericArgs { get; }
-
-        public IEnumerable<string> TypeArgs { get; }
-
-        public string MethodName { get; }
-
-        public IEnumerable<string> MethodGenericArgs { get; }
-
-        public IEnumerable<string> MethodArgs { get; }
-
-        [NotNull]
         public override string ToString()
         {
             return DisplayName;

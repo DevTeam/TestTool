@@ -26,8 +26,8 @@
         {
             if (testCases == null) throw new ArgumentNullException(nameof(testCases));
             if (testTypes == null) throw new ArgumentNullException(nameof(testTypes));
-            var typeNames = new HashSet<string>(testTypes.Select(type => type.Name));
-            return testCases.Where(i => i.FullTypeName.Contains(".Sandbox.") && (!testTypes.Any() || typeNames.Contains(i.TypeName)));
+            var typeNames = new HashSet<string>(testTypes.Select(type => new string(type.Name.TakeWhile(i => i != '`').ToArray())));
+            return testCases.Where(i => i.DisplayName.Contains(".Sandbox.") && typeNames.Any(typeName => i.DisplayName.Contains(typeName)));
         }
 
         public static IResult[] RunAll([IoC.Contracts.NotNull] this ISession session, [IoC.Contracts.NotNull] IEnumerable<ICase> testCases)

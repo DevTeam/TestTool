@@ -4,9 +4,9 @@
 
     [Test.Args("a", 10)]
     [Test.Args("b", 20)]
-    public class ArgsTest
+    public class SimpleArgsTest
     {
-        public ArgsTest(string str, int num)
+        public SimpleArgsTest(string str, int num)
         {
         }
 
