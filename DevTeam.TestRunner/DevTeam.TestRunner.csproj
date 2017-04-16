@@ -21,9 +21,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="DevTeam.IoC" Version="1.0.177-beta" />
-    <PackageReference Include="DevTeam.IoC.Configurations.Json" Version="1.0.177-beta" />
-    <PackageReference Include="DevTeam.IoC.Contracts" Version="1.0.177-beta" />
+    <PackageReference Include="DevTeam.IoC" Version="1.0.186-beta" />
+    <PackageReference Include="DevTeam.IoC.Configurations.Json" Version="1.0.186-beta" />
+    <PackageReference Include="DevTeam.IoC.Contracts" Version="1.0.186-beta" />
   </ItemGroup>
 
   <ItemGroup>

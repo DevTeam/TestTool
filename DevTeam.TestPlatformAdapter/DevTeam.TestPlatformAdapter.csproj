@@ -1,13 +1,13 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFrameworks>net45;net462;net35;netcoreapp1.0</TargetFrameworks>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="DevTeam.IoC" Version="1.0.177-beta" />
-    <PackageReference Include="DevTeam.IoC.Configurations.Json" Version="1.0.177-beta" />
-    <PackageReference Include="DevTeam.IoC.Contracts" Version="1.0.177-beta" />
+    <PackageReference Include="DevTeam.IoC" Version="1.0.186-beta" />
+    <PackageReference Include="DevTeam.IoC.Configurations.Json" Version="1.0.186-beta" />
+    <PackageReference Include="DevTeam.IoC.Contracts" Version="1.0.186-beta" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'net462' or '$(TargetFramework)' == 'netcoreapp1.0'">
