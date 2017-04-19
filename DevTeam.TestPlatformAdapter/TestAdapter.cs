@@ -149,13 +149,12 @@
             return
                 from source in sources
                 from testCase in _session.Discover(source)
-                let testName = testCase.ToString()
                 select new TestCase(testCase.ToString(), _executorUri, testCase.Source)
                 {
                     Id = testCase.Id,
-                    DisplayName = testName,
+                    DisplayName = testCase.ToString(),
                     CodeFilePath = testCase.CodeFilePath,
-                    FullyQualifiedName = testName,
+                    FullyQualifiedName = testCase.FullyQualifiedName,
                     LineNumber = testCase.LineNumber ?? 0,
                 };
         }

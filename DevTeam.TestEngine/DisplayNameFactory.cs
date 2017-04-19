@@ -30,7 +30,7 @@
 
         public string CreateDisplayName(ITestInfo testInfo)
         {
-            return $"{testInfo.Source}: {GetTypeName(testInfo.Type)}{GetArgString(testInfo.TypeArgs)}.{testInfo.Method.Name}{GetGenericArgsString(testInfo.Method.GenericArguments)}{GetArgString(testInfo.MethodArgs)}";
+            return $"{GetTypeName(testInfo.Type)}{GetArgString(testInfo.TypeArgs)}.{testInfo.Method.Name}{GetGenericArgsString(testInfo.Method.GenericArguments)}{GetMethodParamsString(testInfo.Method.Parameters, testInfo.MethodArgs)}";
         }
 
         [NotNull]
@@ -57,6 +57,29 @@
             }
 
             return name.ToString();
+        }
+
+        [NotNull]
+        private static string GetMethodParamsString([NotNull] IEnumerable<IParameterInfo> parameters, [NotNull] IEnumerable<object> args)
+        {
+            if (parameters == null) throw new ArgumentNullException(nameof(parameters));
+            if (args == null) throw new ArgumentNullException(nameof(args));
+
+            var paramsArray = parameters.ToArray();
+            var argsArray = args.ToArray();
+            var str = new StringBuilder();
+            for (var i = 0; i < paramsArray.Length && i < argsArray.Length; i++)
+            {
+                if (i > 0)
+                {
+                    str.Append(", ");
+                }
+                str.Append(paramsArray[i].Name);
+                str.Append(": ");
+                str.Append(GetValueString(argsArray[i]));
+            }
+            
+            return str.Length == 0 ? string.Empty : $"({str})";
         }
 
         [NotNull]

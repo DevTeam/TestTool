@@ -19,11 +19,6 @@
         public IEnumerable<ICase> Discover(string source)
         {
             if (source == null) throw new ArgumentNullException(nameof(source));
-            lock (_tests)
-            {
-                _tests.Clear();
-            }
-
             foreach (var discoverer in _discoverers)
             {
                 foreach (var testInfo in discoverer.Discover(source))
@@ -47,8 +42,6 @@
                 {
                     return new Result(State.NotFound);
                 }
-
-                _tests.Remove(testId);
             }
 
             return testInfo.Runner.Run(testInfo);

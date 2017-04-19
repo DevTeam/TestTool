@@ -13,12 +13,12 @@
 		<iconUrl>https://avatars0.githubusercontent.com/u/12184234?v=3&amp;s=200</iconUrl>
 		<!--requireLicenseAcceptance>false</requireLicenseAcceptance-->
 		<summary>DevTeam test adapter.</summary>
-		<description>DevTeam test adapter.
+		<description>Simple and flexibly test tool for .NET.
 
 Supported platforms:
-  - VSTest IDE
-  - Visual Studio Test Platform 15.0.0</description>
-    <tags>DevTeam test adapter VSTest</tags>
+  - Visual Studio IDE vstest
+  - Visual Studio Test Platform</description>
+    <tags>test DevTeam unit adapter vstest TDD</tags>
   </metadata>
   <files>
 	<file src="bin\Release\pack\**" target="build\" />	

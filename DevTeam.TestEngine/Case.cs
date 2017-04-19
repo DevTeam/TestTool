@@ -1,7 +1,6 @@
 ﻿namespace DevTeam.TestEngine
 {
     using System;
-    using System.Collections.Generic;
     using System.Linq;
     using Contracts;
 
@@ -22,11 +21,19 @@
             Source = testInfo.Source;
             CodeFilePath = string.Empty;
             LineNumber = null;
+
+            var typeArgs = testInfo.TypeArgs.Select(arg => arg.ToString());
+            var methodArgs = testInfo.MethodArgs.Select(arg => arg.ToString());
+            var methodGenerics = testInfo.Method.GenericArguments.Select(type => type.FullName);
+            var args = string.Join(",", typeArgs.Concat(methodArgs).Concat(methodGenerics).ToArray());
+            FullyQualifiedName = $"{testInfo.Type.FullName}.{testInfo.Method.Name}({args})";
         }
 
         public Guid Id { get; }
 
         public string Source { get; }
+
+        public string FullyQualifiedName { get; }
 
         public string DisplayName => _displayNameFactory.CreateDisplayName(_testInfo);
 

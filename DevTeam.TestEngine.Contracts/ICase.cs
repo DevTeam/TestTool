@@ -1,13 +1,14 @@
 namespace DevTeam.TestEngine.Contracts
 {
     using System;
-    using System.Collections.Generic;
 
     public interface ICase
     {
         Guid Id { get; }
 
         string Source { [NotNull] get; }
+
+        string FullyQualifiedName { [NotNull] get; }
 
         string DisplayName { [NotNull] get; }
 

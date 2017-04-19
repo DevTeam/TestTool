@@ -95,6 +95,7 @@
 		<Exec Command="$(PackagesDirectory)\nuget.exe pack %(Package.Identity)\package.nuspec -Version %(Package.PackageVersion) -OutputDirectory $(PackagesDirectory)" Condition=" '%(Package.CustomPack)' == 'true' "/>
 		<Message Text="##teamcity[publishArtifacts '$(PackagesDirectory)\%(Package.FileName)%(Package.Extension).%(Package.PackageVersion).nupkg=>$(PackagesDirectory)']" Condition=" '%(Package.CustomPack)' == 'true' "/>
 		<Message Text="##teamcity[publishArtifacts '%(Package.Identity)\bin\$(Configuration)\%(Package.FileName)%(Package.Extension).%(Package.PackageVersion).nupkg=>$(PackagesDirectory)']" Condition=" '%(Package.CustomPack)' == '' "/>
+		<Message Text="##teamcity[publishArtifacts 'DevTeam.TestAdapter.Vsix\bin\Release\DevTeamTestAdapter.vsix=>DevTeamTestAdapter.vsix']" Condition=" '%(Package.CustomPack)' == '' "/>
 	</Target>
 
 	<Target Name="PushPackagesToNuGet" DependsOnTargets="GetNuGet">

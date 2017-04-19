@@ -27,11 +27,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="DevTeam.TestAdapter.props" />
-    <None Remove="DevTeam.TestAdapter.targets" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Content Include="..\DevTeam.TestEngine\DevTeam.TestEngine.dll.ioc" Link="DevTeam.TestEngine.dll.ioc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -61,4 +56,8 @@
     <ProjectReference Include="..\DevTeam.TestPlatformAdapter\DevTeam.TestPlatformAdapter.csproj" />
   </ItemGroup>
 
+  <Target Name="BuiltProjectOutputGroup" />
+  <Target Name="BuiltProjectOutputGroupDependencies" />
+  <Target Name="GetCopyToOutputDirectoryItems" />
+  <Target Name="SatelliteDllsProjectOutputGroup" />
 </Project>
